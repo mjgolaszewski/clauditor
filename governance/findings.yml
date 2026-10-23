@@ -9,7 +9,7 @@ document:
 reviews:
 - id: CL-REVIEW-PRECONSTRUCTION
   source_path: audits/standard-v3-readiness.yml
-  source_sha256: dbed321f53ad7b68010a5bd0e92615d86d61c5415a489f60c27ffe1d8032c81d
+  source_sha256: c70531df2f5eb2ac22b653257a93c7354525d3184c70b492891e700d60fdf6d4
   reviewer:
     kind: model
     id: home:clauditor:disco-inferno

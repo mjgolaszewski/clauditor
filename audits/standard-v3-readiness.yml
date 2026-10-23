@@ -90,27 +90,30 @@ provider_observations:
   baseline_commit_status_contexts: []
   limitation: Provider-backed PR qualification only; optional CI authority certification remains absent and no release is approved.
   candidate_commit: 942b33bca0778f05327e8ead0eed6bb4b9eaea86
+  provider_evaluated_commit: 12248438fa8071fe72ed51cad012d9c75fc38678
+  candidate_and_provider_tree: 536b45ff62d9e92ff553bf2c68eb79c618e713b5
+  binding: GitHub evaluates its PR merge commit; the verified tree exactly matches the candidate head tree.
   workflow_run: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045
   result: success
   uploaded_artifacts:
   - name: bcf-evidence-40040332045-1-shard-1
     digest: sha256:c60e9bbb43ece387c4a512345b5547b0fa66fa0bf62f3933b65405d94e500e01
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539451123
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539451123 # CI artifact
   - name: bcf-evidence-40040332045-1-shard-0
     digest: sha256:c3e28d6c99ab42d0389e364ba07304b1f3ad2040f44bed41a6069f79cb5bfd9e
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539430912
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539430912 # CI artifact
   - name: bcf-governance-truth-40040332045-1
     digest: sha256:68bfba900f2a7706444b164837b83d7702d09e1f0019a860f4fdb5211e2aab9d
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539355919
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539355919 # CI artifact
   - name: bcf-evidence-40040332045-1-shard-3
     digest: sha256:207faa34c5f10e5628dd822164b502e4c85d7061db10a1577bca52c6721d7159
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538762944
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538762944 # CI artifact
   - name: bcf-evidence-40040332045-1-shard-2
     digest: sha256:6f27506223a59e6504338cc255a08b35a84d89e461f5badc2c9a58a0fc03b7de
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538613967
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538613967 # CI artifact
   - name: bcf-session-40040332045-1
     digest: sha256:abdfe5374eeb731b0a70d915fd645840384ebc10f126a664d2c559b346d9c4d8
-    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12537964864
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12537964864 # CI artifact
 scope_boundary:
   substantial_construction_started: true
   promotion_apply_attempted: true
