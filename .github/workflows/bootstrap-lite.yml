@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   bootstrap:
-    name: Install BCF Lite and retire temporary writer
+    name: Install BCF Lite; stage workflow for authorized finalization
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout exact main
@@ -18,7 +18,7 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-      - name: Install strictly from immutable BCF release
+      - name: Install canonical Lite pack without workflow write escalation
         shell: bash
         run: |
           set -euo pipefail
@@ -29,7 +29,15 @@ jobs:
           git config user.name 'clauditor-bootstrap[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           bash scripts/bootstrap-lite.sh
-          rm .github/workflows/bootstrap-lite.yml
+          test -f .github/workflows/governance.yml
+          mkdir -p .bootstrap-handoff
+          mv .github/workflows/governance.yml .bootstrap-handoff/governance.yml
+          sha256sum .bootstrap-handoff/governance.yml
           git add -A
-          git commit -m 'chore: retire one-time BCF Lite bootstrap writer'
+          git reset --soft HEAD~1
+          git commit -m 'chore: install validated BCF Lite pack; stage generated workflow for owner admission'
+          if git diff --name-only origin/main..HEAD -- .github/workflows | grep -q .; then
+            echo 'Refusing GitHub Actions push containing workflow mutations.' >&2
+            exit 2
+          fi
           git push origin HEAD:main
