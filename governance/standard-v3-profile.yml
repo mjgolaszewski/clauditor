@@ -378,8 +378,8 @@ gates:
     - id: runtime-smoke-rejects-causal-mutation
       mutation:
         path: config/otel/qualification.yml
-        search: 'token: ${env:CLAUDITOR_INGEST_TOKEN}'
-        replace: 'token: disabled'
+        yaml_path: extensions.bearertokenauth.token
+        value: disabled
       oracle:
         kind: diagnostic
         exit_codes:
@@ -466,8 +466,8 @@ gates:
     - id: security-secret-scan-rejects-causal-mutation
       mutation:
         path: config/otel/qualification.yml
-        search: 'token: ${env:CLAUDITOR_INGEST_TOKEN}'
-        replace: 'token: AKIAIOSFODNN7EXAMPLE'
+        yaml_path: extensions.bearertokenauth.token
+        value: AKIAIOSFODNN7EXAMPLE
       oracle:
         kind: diagnostic
         exit_codes:
