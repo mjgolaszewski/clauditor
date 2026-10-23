@@ -49,7 +49,8 @@ def main() -> None:
         return
     else:
         raise SystemExit('unknown gate')
-    (ROOT / '.artifacts').mkdir(exist_ok=True)
+    output_dir = ROOT / '.artifacts'
+    output_dir.mkdir(exist_ok=True)
     result = subprocess.run(argv, cwd=ROOT, timeout=300, check=False, text=True)
     if gate == 'security-vulnerability-scan' and result.returncode:
         report = json.loads((ROOT / '.artifacts/vulnerability-scan.json').read_text())

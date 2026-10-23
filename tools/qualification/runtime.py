@@ -16,7 +16,6 @@ from urllib.error import HTTPError, URLError
 
 from clauditor.archive.domain.envelope import Signal
 from clauditor.archive.infrastructure.otlp_json import decode_json
-
 from qualification.fixtures import signal_fixture
 
 ROOT = Path(__file__).resolve().parents[2]

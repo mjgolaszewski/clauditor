@@ -4,7 +4,6 @@ import pytest
 from clauditor.archive.domain.envelope import envelope
 from clauditor.archive.infrastructure.otlp_json import SIGNALS, decode_json
 from google.protobuf.json_format import MessageToDict, ParseDict, ParseError
-
 from qualification.fixtures import signal_fixture
 
 

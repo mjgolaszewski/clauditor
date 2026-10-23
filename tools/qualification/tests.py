@@ -33,7 +33,8 @@ def main() -> None:
                                                                  'backend/tests/test_architecture.py']
     else:
         raise SystemExit('unknown test gate')
-    (ROOT / '.artifacts/junit').mkdir(parents=True, exist_ok=True)
+    output_dir = ROOT / '.artifacts/junit'
+    output_dir.mkdir(parents=True, exist_ok=True)
     raise SystemExit(pytest.main([*selectors, '-q', '--junitxml=.artifacts/junit/' + gate + '.xml']))
 
 

@@ -180,7 +180,7 @@ contracts:
       - subprocess::module.run
       - tools/qualification/quality.py::path.parent.mkdir
       - tools/qualification/quality.py::path.write_text
-      - tools/qualification/quality.py::(ROOT / '.artifacts').mkdir
+      - tools/qualification/quality.py::output_dir.mkdir
       - tools/qualification/quality.py::output.write_text
     - id: clauditor.operation.tests.v1
       population: test_qualification
@@ -198,7 +198,7 @@ contracts:
       allowed_mutation_ports: []
       allowed_authority_ports: []
       non_authoritative_output_effects:
-      - tools/qualification/tests.py::(ROOT / '.artifacts/junit').mkdir # non-authoritative until captured by BCF
+      - tools/qualification/tests.py::output_dir.mkdir # non-authoritative until captured by BCF
       - pytest::module.main
     - id: clauditor.operation.validate-plan.v1
       population: plan_validation
