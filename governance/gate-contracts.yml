@@ -11,378 +11,605 @@ claim_model:
     detectors: [scripts/**, tools/**]
     tests: [backend/tests/**, governance/test-manifests/**]
     toolchain: [requirements-*.txt, pyproject.toml]
-    trust: [AGENTS.yml, governance/**, .github/**, &a32 MEMORY.yml, phases/**, audits/**, CHANGELOG.md]
+    trust: [AGENTS.yml, governance/**, .github/**, MEMORY.yml, phases/**, audits/**, CHANGELOG.md]
   execution_groups:
     preflight:
-      producer: &a16 preflight
+      producer: preflight
       captured_by_preflight: true
       claims: [governance-contracts-valid, governance-exposure-clean, source-syntax-format, semantic-ownership-valid]
     architecture-context-membership:
-      producer: &a1 architecture-context-membership
-      claims: [*a1]
+      producer: architecture-context-membership
+      claims: [architecture-context-membership]
     architecture-cqrs-side:
-      producer: &a2 architecture-cqrs-side
-      claims: [*a2]
+      producer: architecture-cqrs-side
+      claims: [architecture-cqrs-side]
     architecture-duplication:
-      producer: &a3 architecture-duplication
-      claims: [*a3]
+      producer: architecture-duplication
+      claims: [architecture-duplication]
     architecture-import-boundaries:
-      producer: &a4 architecture-import-boundaries
-      claims: [*a4]
+      producer: architecture-import-boundaries
+      claims: [architecture-import-boundaries]
     architecture-layer-membership:
-      producer: &a5 architecture-layer-membership
-      claims: [*a5]
+      producer: architecture-layer-membership
+      claims: [architecture-layer-membership]
     architecture-module-size:
-      producer: &a6 architecture-module-size
-      claims: [*a6]
+      producer: architecture-module-size
+      claims: [architecture-module-size]
     architecture-router-thinness:
-      producer: &a7 architecture-router-thinness
-      claims: [*a7]
+      producer: architecture-router-thinness
+      claims: [architecture-router-thinness]
     architecture-test:
-      producer: &a8 architecture-test
-      claims: [*a8]
+      producer: architecture-test
+      claims: [architecture-test]
     contract-test:
-      producer: &a9 contract-test
-      claims: [*a9]
+      producer: contract-test
+      claims: [contract-test]
     runtime-smoke:
-      producer: &a10 runtime-smoke
-      claims: [*a10]
+      producer: runtime-smoke
+      claims: [runtime-smoke]
     security-dependency-audit:
-      producer: &a11 security-dependency-audit
-      claims: [*a11]
+      producer: security-dependency-audit
+      claims: [security-dependency-audit]
     security-sbom:
-      producer: &a12 security-sbom
-      claims: [*a12]
+      producer: security-sbom
+      claims: [security-sbom]
     security-secret-scan:
-      producer: &a13 security-secret-scan
-      claims: [*a13]
+      producer: security-secret-scan
+      claims: [security-secret-scan]
     security-vulnerability-scan:
-      producer: &a14 security-vulnerability-scan
-      claims: [*a14]
+      producer: security-vulnerability-scan
+      claims: [security-vulnerability-scan]
     test:
       producer: test
       claims: [test]
     typecheck:
-      producer: &a15 typecheck
-      claims: [*a15]
+      producer: typecheck
+      claims: [typecheck]
   claims:
     governance-contracts-valid:
       truth: governance-validate qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a16
-      legacy_gate: &a42 governance-validate
+      execution_group: preflight
+      legacy_gate: governance-validate
       dependencies:
-        subject: &a17 [subject]
-        detector: &a18 [detectors]
-        test_population: &a19 [tests]
-        toolchain: &a20 [toolchain]
-        trust: &a21 [trust]
+        subject: &id001 [subject]
+        detector: &id002 [detectors]
+        test_population: &id003 [tests]
+        toolchain: &id004 [toolchain]
+        trust: &id005 [trust]
       qualification_scope: none
-      profiles: &a22 [normal, regulated]
+      profiles: &id006 [normal, regulated]
     governance-exposure-clean:
       truth: governance-exposure-scan qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a16
-      legacy_gate: &a43 governance-exposure-scan
+      execution_group: preflight
+      legacy_gate: governance-exposure-scan
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: none
-      profiles: *a22
+      profiles: *id006
     source-syntax-format:
       truth: lint qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a16
+      execution_group: preflight
       legacy_gate: lint
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: none
-      profiles: *a22
+      profiles: *id006
     semantic-ownership-valid:
       truth: semantic-ownership qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a16
-      legacy_gate: &a45 semantic-ownership
+      execution_group: preflight
+      legacy_gate: semantic-ownership
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: none
-      profiles: *a22
+      profiles: *id006
     architecture-context-membership:
       truth: architecture-context-membership qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a1
-      legacy_gate: *a1
+      execution_group: architecture-context-membership
+      legacy_gate: architecture-context-membership
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-cqrs-side:
       truth: architecture-cqrs-side qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a2
-      legacy_gate: *a2
+      execution_group: architecture-cqrs-side
+      legacy_gate: architecture-cqrs-side
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-duplication:
       truth: architecture-duplication qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a3
-      legacy_gate: *a3
+      execution_group: architecture-duplication
+      legacy_gate: architecture-duplication
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-import-boundaries:
       truth: architecture-import-boundaries qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a4
-      legacy_gate: *a4
+      execution_group: architecture-import-boundaries
+      legacy_gate: architecture-import-boundaries
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-layer-membership:
       truth: architecture-layer-membership qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a5
-      legacy_gate: *a5
+      execution_group: architecture-layer-membership
+      legacy_gate: architecture-layer-membership
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-module-size:
       truth: architecture-module-size qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a6
-      legacy_gate: *a6
+      execution_group: architecture-module-size
+      legacy_gate: architecture-module-size
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-router-thinness:
       truth: architecture-router-thinness qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a7
-      legacy_gate: *a7
+      execution_group: architecture-router-thinness
+      legacy_gate: architecture-router-thinness
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     architecture-test:
       truth: architecture-test qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a8
-      legacy_gate: *a8
+      execution_group: architecture-test
+      legacy_gate: architecture-test
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     contract-test:
       truth: contract-test qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a9
-      legacy_gate: *a9
+      execution_group: contract-test
+      legacy_gate: contract-test
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     runtime-smoke:
       truth: runtime-smoke qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a10
-      legacy_gate: *a10
+      execution_group: runtime-smoke
+      legacy_gate: runtime-smoke
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     security-dependency-audit:
       truth: security-dependency-audit qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a11
-      legacy_gate: *a11
+      execution_group: security-dependency-audit
+      legacy_gate: security-dependency-audit
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     security-sbom:
       truth: security-sbom qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a12
-      legacy_gate: *a12
+      execution_group: security-sbom
+      legacy_gate: security-sbom
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     security-secret-scan:
       truth: security-secret-scan qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a13
-      legacy_gate: *a13
+      execution_group: security-secret-scan
+      legacy_gate: security-secret-scan
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     security-vulnerability-scan:
       truth: security-vulnerability-scan qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a14
-      legacy_gate: *a14
+      execution_group: security-vulnerability-scan
+      legacy_gate: security-vulnerability-scan
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     test:
       truth: test qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
       execution_group: test
       legacy_gate: test
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
     typecheck:
       truth: typecheck qualifies the declared current source/runtime slice on the exact subject; no full MVP or release claim
-      execution_group: *a15
-      legacy_gate: *a15
+      execution_group: typecheck
+      legacy_gate: typecheck
       dependencies:
-        subject: *a17
-        detector: *a18
-        test_population: *a19
-        toolchain: *a20
-        trust: *a21
+        subject: *id001
+        detector: *id002
+        test_population: *id003
+        toolchain: *id004
+        trust: *id005
       qualification_scope: subject
-      profiles: *a22
+      profiles: *id006
 gates:
   architecture-context-membership:
-    invocation: {argv: [python3, &a23 tools/qualification/tests.py, *a1], cwd: ., env: {PYTHONPATH: &a24 'backend/src:tools:.'}, required_env: []}
-    evidence: {kind: &a25 test_suite, test_contract: {junit_xml: .artifacts/junit/architecture-context-membership.xml, expected_node_manifest: governance/test-manifests/architecture-context-membership.txt, expected_nodes_mode: exact, min_collected: 1, min_executed: 1, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_map_to_exactly_one_bounded_context'], artifact_binding: &a26 non_authoritative_until_captured}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-context-membership]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-context-membership.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-context-membership.txt
+        expected_nodes_mode: exact
+        min_collected: 1
+        min_executed: 1
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_map_to_exactly_one_bounded_context']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-context-membership-rejects-causal-mutation, mutation: {path: &a29 architecture-boundaries.yml, yaml_path: architecture.bounded_contexts.context_root_tokens, value: []}, oracle: {kind: &a27 test_node_failure, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_production_modules_map_to_exactly_one_bounded_context']}}
+    - id: architecture-context-membership-rejects-causal-mutation
+      mutation:
+        path: architecture-boundaries.yml
+        yaml_path: architecture.bounded_contexts.context_root_tokens
+        value: []
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_production_modules_map_to_exactly_one_bounded_context']
   architecture-cqrs-side:
-    invocation: {argv: [python3, *a23, *a2], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-cqrs-side.xml, expected_node_manifest: governance/test-manifests/architecture-cqrs-side.txt, expected_nodes_mode: exact, min_collected: 2, min_executed: 2, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_cqrs_query_side_does_not_mutate_state', 'backend/tests/architecture/test_boundaries_ast.py::test_cqrs_command_side_does_not_return_read_model_shapes'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-cqrs-side]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-cqrs-side.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-cqrs-side.txt
+        expected_nodes_mode: exact
+        min_collected: 2
+        min_executed: 2
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_cqrs_query_side_does_not_mutate_state', 'backend/tests/architecture/test_boundaries_ast.py::test_cqrs_command_side_does_not_return_read_model_shapes']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-cqrs-side-rejects-causal-mutation, mutation: {path: backend/src/clauditor/archive/use_cases/queries/inspect_archive.py, search: '    return decoder.decode(signal, record)', replace: "    decoder.save('forbidden mutation')\n    return decoder.decode(signal, record)"}, oracle: {kind: *a27, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_cqrs_query_side_does_not_mutate_state']}}
+    - id: architecture-cqrs-side-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/use_cases/queries/inspect_archive.py, search: '    return decoder.decode(signal, record)', replace: "    decoder.save('forbidden mutation')\n    return decoder.decode(signal, record)"}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_cqrs_query_side_does_not_mutate_state']
   architecture-duplication:
-    invocation: {argv: [python3, *a23, *a3], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-duplication.xml, expected_node_manifest: governance/test-manifests/architecture-duplication.txt, expected_nodes_mode: exact, min_collected: 2, min_executed: 2, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_bounded_context_duplication_is_explicit', 'backend/tests/architecture/test_boundaries_ast.py::test_shared_abstraction_duplication_has_minimum_real_call_sites'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-duplication]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-duplication.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-duplication.txt
+        expected_nodes_mode: exact
+        min_collected: 2
+        min_executed: 2
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_bounded_context_duplication_is_explicit', 'backend/tests/architecture/test_boundaries_ast.py::test_shared_abstraction_duplication_has_minimum_real_call_sites']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-duplication-rejects-causal-mutation, mutation: {path: &a28 backend/src/clauditor/archive/domain/envelope.py, search: "\"\"\"A decoded source envelope remains distinct from indexing or durable receipt.\"\"\"\nfrom dataclasses import dataclass\nfrom typing import Literal\n\nSignal = Literal['logs', 'traces', 'metrics']\n\n\n@dataclass(frozen=True)\nclass ArchiveEnvelope:\n    \"\"\"Source-faithful protobuf bytes; no claim of authenticated source completeness.\"\"\"\n\n    signal: Signal\n    protobuf: bytes\n\n\ndef envelope(signal: Signal, protobuf: bytes) -> ArchiveEnvelope:\n    \"\"\"Construct only decoded, nonempty signal payloads.\"\"\"\n    if signal not in ('logs', 'traces', 'metrics') or not protobuf:\n        raise ValueError('empty or unsupported OTLP envelope')\n    return ArchiveEnvelope(signal=signal, protobuf=protobuf)\n", replace: "\"\"\"A decoded source envelope remains distinct from indexing or durable receipt.\"\"\"\nfrom dataclasses import dataclass\nfrom typing import Literal\n\nSignal = Literal['logs', 'traces', 'metrics']\n\n\n@dataclass(frozen=True)\nclass ArchiveEnvelope:\n    \"\"\"Source-faithful protobuf bytes; no claim of authenticated source completeness.\"\"\"\n\n    signal: Signal\n    protobuf: bytes\n\n\ndef envelope(signal: Signal, protobuf: bytes) -> ArchiveEnvelope:\n    \"\"\"Construct only decoded, nonempty signal payloads.\"\"\"\n    if signal not in ('logs', 'traces', 'metrics') or not protobuf:\n        raise ValueError('empty or unsupported OTLP envelope')\n    return ArchiveEnvelope(signal=signal, protobuf=protobuf)\n\n\"\"\"A decoded source envelope remains distinct from indexing or durable receipt.\"\"\"\nfrom dataclasses import dataclass\nfrom typing import Literal\n\nSignal = Literal['logs', 'traces', 'metrics']\n\n\n@dataclass(frozen=True)\nclass ArchiveEnvelope:\n    \"\"\"Source-faithful protobuf bytes; no claim of authenticated source completeness.\"\"\"\n\n    signal: Signal\n    protobuf: bytes\n\n\ndef envelope(signal: Signal, protobuf: bytes) -> ArchiveEnvelope:\n    \"\"\"Construct only decoded, nonempty signal payloads.\"\"\"\n    if signal not in ('logs', 'traces', 'metrics') or not protobuf:\n        raise ValueError('empty or unsupported OTLP envelope')\n    return ArchiveEnvelope(signal=signal, protobuf=protobuf)\n"}, oracle: {kind: *a27, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_bounded_context_duplication_is_explicit']}}
+    - id: architecture-duplication-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/infrastructure/otlp_json.py, search: "\"\"\"Decode the qualified Collector OTLP JSON file representation with official types.\"\"\"\nimport base64\nimport json\nfrom typing import Any\n\nfrom clauditor.archive.domain.envelope import ArchiveEnvelope, Signal, envelope\nfrom google.protobuf.json_format import ParseDict\nfrom google.protobuf.message import Message\nfrom opentelemetry.proto.collector.logs.v1.logs_service_pb2 import ExportLogsServiceRequest\nfrom opentelemetry.proto.collector.metrics.v1.metrics_service_pb2 import ExportMetricsServiceRequest\nfrom opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest\n\nMAX_RECORD_BYTES = 4 * 1024 * 1024\nSIGNALS: dict[str, type[Message]] = {\n    'logs': ExportLogsServiceRequest,\n    'metrics': ExportMetricsServiceRequest,\n    'traces': ExportTraceServiceRequest,\n}\n\n\ndef decode_json(signal: Signal, record: bytes) -> ArchiveEnvelope:\n    \"\"\"Reject malformed/unknown fields; preserve OTLP numeric and AnyValue types.\"\"\"\n    if len(record) > MAX_RECORD_BYTES:\n        raise ValueError('archive record exceeds limit')\n    if signal not in SIGNALS:\n        raise ValueError('unsupported signal')\n    value: Any = json.loads(record)\n    if not isinstance(value, dict) or not value:\n        raise ValueError('expected nonempty OTLP object')\n    normalize_ids(signal, value)\n    message = ParseDict(value, SIGNALS[signal](), ignore_unknown_fields=False)\n    return envelope(signal, message.SerializeToString(deterministic=True))\n\n\nclass OTLPJSONDecoder:\n    \"\"\"Official-protobuf adapter for the archive decoder port.\"\"\"\n\n    def decode(self, signal: str, record: bytes) -> ArchiveEnvelope:\n        from typing import cast\n        return decode_json(cast(Signal, signal), record)\n\n\ndef normalize_ids(signal: Signal, value: dict[str, Any]) -> None:\n    \"\"\"OTLP JSON uses hex IDs, unlike the protobuf JSON parser's base64 bytes.\"\"\"\n    resource_key, scope_key, record_key = (\n        ('resourceSpans', 'scopeSpans', 'spans') if signal == 'traces'\n        else ('resourceLogs', 'scopeLogs', 'logRecords')\n    )\n    if signal == 'metrics':\n        for resource in value.get('resourceMetrics', []):\n            for scope in resource.get('scopeMetrics', []):\n                for metric in scope.get('metrics', []):\n                    for kind in ('gauge', 'sum', 'histogram', 'exponentialHistogram', 'summary'):\n                        for point in metric.get(kind, {}).get('dataPoints', []):\n                            for exemplar in point.get('exemplars', []):\n                                normalize_id_fields(exemplar)\n        return\n    for resource in value.get(resource_key, []):\n        for scope in resource.get(scope_key, []):\n            for record in scope.get(record_key, []):\n                for item in [record, *record.get('links', [])]:\n                    normalize_id_fields(item)\n\n\ndef normalize_id_fields(item: dict[str, Any]) -> None:\n    \"\"\"Own the OTLP hex-byte conversion for records, links and metric exemplars.\"\"\"\n    for key, size in [('traceId', 16), ('spanId', 8), ('parentSpanId', 8)]:\n        if item.get(key):\n            raw = bytes.fromhex(item[key])\n            if len(raw) != size:\n                raise ValueError('invalid OTLP identifier length')\n            item[key] = base64.b64encode(raw).decode()\n", replace: "\"\"\"Decode the qualified Collector OTLP JSON file representation with official types.\"\"\"\nimport base64\nimport json\nfrom typing import Any\n\nfrom clauditor.archive.domain.envelope import ArchiveEnvelope, Signal, envelope\nfrom google.protobuf.json_format import ParseDict\nfrom google.protobuf.message import Message\nfrom opentelemetry.proto.collector.logs.v1.logs_service_pb2 import ExportLogsServiceRequest\nfrom opentelemetry.proto.collector.metrics.v1.metrics_service_pb2 import ExportMetricsServiceRequest\nfrom opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest\n\nMAX_RECORD_BYTES\
+          \ = 4 * 1024 * 1024\nSIGNALS: dict[str, type[Message]] = {\n    'logs': ExportLogsServiceRequest,\n    'metrics': ExportMetricsServiceRequest,\n    'traces': ExportTraceServiceRequest,\n}\n\n\ndef decode_json(signal: Signal, record: bytes) -> ArchiveEnvelope:\n    \"\"\"Reject malformed/unknown fields; preserve OTLP numeric and AnyValue types.\"\"\"\n    if len(record) > MAX_RECORD_BYTES:\n        raise ValueError('archive record exceeds limit')\n    if signal not in SIGNALS:\n        raise ValueError('unsupported signal')\n    value: Any = json.loads(record)\n    if not isinstance(value, dict) or not value:\n        raise ValueError('expected nonempty OTLP object')\n    normalize_ids(signal, value)\n    message = ParseDict(value, SIGNALS[signal](), ignore_unknown_fields=False)\n    return envelope(signal, message.SerializeToString(deterministic=True))\n\n\nclass OTLPJSONDecoder:\n    \"\"\"Official-protobuf adapter for the archive decoder port.\"\"\"\n\n    def decode(self, signal: str, record: bytes) -> ArchiveEnvelope:\n        from typing import cast\n        return decode_json(cast(Signal, signal), record)\n\n\ndef normalize_ids(signal: Signal, value: dict[str, Any]) -> None:\n    \"\"\"OTLP JSON uses hex IDs, unlike the protobuf JSON parser's base64 bytes.\"\"\"\n    resource_key, scope_key, record_key = (\n        ('resourceSpans', 'scopeSpans', 'spans') if signal == 'traces'\n        else ('resourceLogs', 'scopeLogs', 'logRecords')\n    )\n    if signal == 'metrics':\n        for resource in value.get('resourceMetrics', []):\n            for scope in resource.get('scopeMetrics', []):\n                for metric in scope.get('metrics', []):\n                    for kind in ('gauge', 'sum', 'histogram', 'exponentialHistogram', 'summary'):\n                        for point in metric.get(kind, {}).get('dataPoints', []):\n                            for exemplar in point.get('exemplars', []):\n                                normalize_id_fields(exemplar)\n        return\n    for resource in value.get(resource_key, []):\n        for scope in resource.get(scope_key, []):\n            for record in scope.get(record_key, []):\n                for item in [record, *record.get('links', [])]:\n                    normalize_id_fields(item)\n\n\ndef normalize_id_fields(item: dict[str, Any]) -> None:\n    \"\"\"Own the OTLP hex-byte conversion for records, links and metric exemplars.\"\"\"\n    for key, size in [('traceId', 16), ('spanId', 8), ('parentSpanId', 8)]:\n        if item.get(key):\n            raw = bytes.fromhex(item[key])\n            if len(raw) != size:\n                raise ValueError('invalid OTLP identifier length')\n            item[key] = base64.b64encode(raw).decode()\n\n\"\"\"A decoded source envelope remains distinct from indexing or durable receipt.\"\"\"\nfrom dataclasses import dataclass\nfrom typing import Literal\n\nSignal = Literal['logs', 'traces', 'metrics']\n\n\n@dataclass(frozen=True)\nclass ArchiveEnvelope:\n    \"\"\"Source-faithful protobuf bytes; no claim of authenticated source completeness.\"\"\"\n\n    signal: Signal\n    protobuf: bytes\n\n\ndef envelope(signal: Signal, protobuf: bytes) -> ArchiveEnvelope:\n    \"\"\"Construct only decoded, nonempty signal payloads.\"\"\"\n    if signal not in ('logs', 'traces', 'metrics') or not protobuf:\n        raise ValueError('empty or unsupported OTLP envelope')\n    return ArchiveEnvelope(signal=signal, protobuf=protobuf)\n"}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_bounded_context_duplication_is_explicit']
   architecture-import-boundaries:
-    invocation: {argv: [python3, *a23, *a4], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-import-boundaries.xml, expected_node_manifest: governance/test-manifests/architecture-import-boundaries.txt, expected_nodes_mode: exact, min_collected: 4, min_executed: 4, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_domain_layer_does_not_import_frameworks_clients_or_outer_layers', 'backend/tests/architecture/test_boundaries_ast.py::test_use_cases_do_not_import_http_objects_or_infrastructure_clients', 'backend/tests/architecture/test_boundaries_ast.py::test_ports_do_not_import_sqlalchemy_or_concrete_adapters', 'backend/tests/architecture/test_boundaries_ast.py::test_routers_do_not_import_persistence_models_or_external_clients_directly'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-import-boundaries]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-import-boundaries.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-import-boundaries.txt
+        expected_nodes_mode: exact
+        min_collected: 4
+        min_executed: 4
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_domain_layer_does_not_import_frameworks_clients_or_outer_layers', 'backend/tests/architecture/test_boundaries_ast.py::test_use_cases_do_not_import_http_objects_or_infrastructure_clients', 'backend/tests/architecture/test_boundaries_ast.py::test_ports_do_not_import_sqlalchemy_or_concrete_adapters', 'backend/tests/architecture/test_boundaries_ast.py::test_routers_do_not_import_persistence_models_or_external_clients_directly']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-import-boundaries-rejects-causal-mutation, mutation: {path: *a28, search: &a35 from dataclasses import dataclass, replace: 'from dataclasses import dataclass
+    - id: architecture-import-boundaries-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/domain/envelope.py, search: from dataclasses import dataclass, replace: 'from dataclasses import dataclass
 
-          import opentelemetry'}, oracle: {kind: *a27, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_domain_layer_does_not_import_frameworks_clients_or_outer_layers']}}
+          import opentelemetry'}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_domain_layer_does_not_import_frameworks_clients_or_outer_layers']
   architecture-layer-membership:
-    invocation: {argv: [python3, *a23, *a5], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-layer-membership.xml, expected_node_manifest: governance/test-manifests/architecture-layer-membership.txt, expected_nodes_mode: exact, min_collected: 1, min_executed: 1, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_map_to_exactly_one_layer'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-layer-membership]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-layer-membership.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-layer-membership.txt
+        expected_nodes_mode: exact
+        min_collected: 1
+        min_executed: 1
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_map_to_exactly_one_layer']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-layer-membership-rejects-causal-mutation, mutation: {path: *a29, yaml_path: architecture.layers.domain.path_tokens, value: [missing-layer]}, oracle: {kind: *a27, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_production_modules_map_to_exactly_one_layer']}}
+    - id: architecture-layer-membership-rejects-causal-mutation
+      mutation:
+        path: architecture-boundaries.yml
+        yaml_path: architecture.layers.domain.path_tokens
+        value: [missing-layer]
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_production_modules_map_to_exactly_one_layer']
   architecture-module-size:
-    invocation: {argv: [python3, *a23, *a6], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-module-size.xml, expected_node_manifest: governance/test-manifests/architecture-module-size.txt, expected_nodes_mode: exact, min_collected: 1, min_executed: 1, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_respect_loc_cap'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-module-size]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-module-size.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-module-size.txt
+        expected_nodes_mode: exact
+        min_collected: 1
+        min_executed: 1
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_production_modules_respect_loc_cap']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-module-size-rejects-causal-mutation, mutation: {path: *a29, yaml_path: &a30 architecture.production_module_policy.max_loc, value: 1}, oracle: {kind: *a27, node_ids: &a31 ['backend.tests.architecture.test_boundaries_ast::test_production_modules_respect_loc_cap']}}
+    - id: architecture-module-size-rejects-causal-mutation
+      mutation: {path: architecture-boundaries.yml, yaml_path: architecture.production_module_policy.max_loc, value: 1}
+      oracle:
+        kind: test_node_failure
+        node_ids: &id007 ['backend.tests.architecture.test_boundaries_ast::test_production_modules_respect_loc_cap']
   architecture-router-thinness:
-    invocation: {argv: [python3, *a23, *a7], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-router-thinness.xml, expected_node_manifest: governance/test-manifests/architecture-router-thinness.txt, expected_nodes_mode: exact, min_collected: 1, min_executed: 1, max_skipped: 0, selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_routers_remain_thin_transport_adapters'], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-router-thinness]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-router-thinness.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-router-thinness.txt
+        expected_nodes_mode: exact
+        min_collected: 1
+        min_executed: 1
+        max_skipped: 0
+        selectors: ['backend/tests/architecture/test_boundaries_ast.py::test_routers_remain_thin_transport_adapters']
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-router-thinness-rejects-causal-mutation, mutation: {path: backend/src/clauditor/archive/routers/cli.py, search: '    print(query(args.signal, sys.stdin.buffer.read(4 * 1024 * 1024 + 1)))', replace: "    for ignored in []:\n        print(ignored)\n    print(query(args.signal, sys.stdin.buffer.read(4 * 1024 * 1024 + 1)))"}, oracle: {kind: *a27, node_ids: ['backend.tests.architecture.test_boundaries_ast::test_routers_remain_thin_transport_adapters']}}
+    - id: architecture-router-thinness-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/routers/cli.py, search: '    print(query(args.signal, sys.stdin.buffer.read(4 * 1024 * 1024 + 1)))', replace: "    for ignored in []:\n        print(ignored)\n    print(query(args.signal, sys.stdin.buffer.read(4 * 1024 * 1024 + 1)))"}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.architecture.test_boundaries_ast::test_routers_remain_thin_transport_adapters']
   architecture-test:
-    invocation: {argv: [python3, *a23, *a8], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/architecture-test.xml, expected_node_manifest: governance/test-manifests/architecture-test.txt, expected_nodes_mode: exact, min_collected: 21, min_executed: 21, max_skipped: 0, selectors: [backend/tests/architecture, backend/tests/test_architecture.py], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, architecture-test]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/architecture-test.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/architecture-test.txt
+        expected_nodes_mode: exact
+        min_collected: 21
+        min_executed: 21
+        max_skipped: 0
+        selectors: [backend/tests/architecture, backend/tests/test_architecture.py]
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: architecture-test-rejects-causal-mutation, mutation: {path: *a29, yaml_path: *a30, value: 1}, oracle: {kind: *a27, node_ids: *a31}}
+    - id: architecture-test-rejects-causal-mutation
+      mutation: {path: architecture-boundaries.yml, yaml_path: architecture.production_module_policy.max_loc, value: 1}
+      oracle:
+        kind: test_node_failure
+        node_ids: *id007
   contract-test:
-    invocation: {argv: [python3, *a23, *a9], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/contract-test.xml, expected_node_manifest: governance/test-manifests/contract-test.txt, expected_nodes_mode: exact, min_collected: 5, min_executed: 5, max_skipped: 0, selectors: [backend/tests/test_contracts.py], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, contract-test]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/contract-test.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/contract-test.txt
+        expected_nodes_mode: exact
+        min_collected: 5
+        min_executed: 5
+        max_skipped: 0
+        selectors: [backend/tests/test_contracts.py]
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: contract-test-rejects-causal-mutation, mutation: {path: &a37 config/otel/qualification.yml, yaml_path: receivers.otlp.protocols.http.auth.authenticator, value: missing-authenticator}, oracle: {kind: *a27, node_ids: ['backend.tests.test_contracts::test_otlp_receivers_require_authentication']}}
-    - {id: retry-needs-archive-success, mutation: {path: spec/clauditor/v1/model.json, search: "\"event\": \"retry\",\n          \"to\": \"accepted\"", replace: "\"event\": \"retry\",\n          \"to\": \"archived\""}, oracle: {kind: *a27, node_ids: ['backend.tests.test_contracts::test_retry_does_not_assert_archive_success']}}
-    - {id: runtime-evidence-outside-tests, mutation: {path: spec/clauditor/v1/construction/plan.json, search: .artifacts/clauditor/CL-WO-027/report.json, replace: tests/e2e/first-vertical/report.json}, oracle: {kind: *a27, node_ids: ['backend.tests.test_contracts::test_runtime_evidence_destinations']}}
+    - id: contract-test-rejects-causal-mutation
+      mutation: {path: config/otel/qualification.yml, yaml_path: receivers.otlp.protocols.http.auth.authenticator, value: missing-authenticator}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.test_contracts::test_otlp_receivers_require_authentication']
+    - id: retry-needs-archive-success
+      mutation: {path: spec/clauditor/v1/model.json, search: "\"event\": \"retry\",\n          \"to\": \"accepted\"", replace: "\"event\": \"retry\",\n          \"to\": \"archived\""}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.test_contracts::test_retry_does_not_assert_archive_success']
+    - id: runtime-evidence-outside-tests
+      mutation: {path: spec/clauditor/v1/construction/plan.json, search: .artifacts/clauditor/CL-WO-027/report.json, replace: tests/e2e/first-vertical/report.json} # non-authoritative until captured by BCF
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.test_contracts::test_runtime_evidence_destinations']
   governance-exposure-scan:
-    invocation: {argv: [python3, scripts/check_governance_exposure.py, &a33 --repo-root, .], cwd: ., env: {}, required_env: []}
+    invocation:
+      argv: [python3, scripts/check_governance_exposure.py, --repo-root, .]
+      cwd: .
+      env: {}
+      required_env: []
     evidence: {kind: gate}
     negative_controls:
-    - {id: local-workspace-path-is-rejected, mutation: {path: *a32, yaml_path: stable_decisions.canonical_governance_guide, value_base64: L1VzZXJzL2V4YW1wbGUvcHJpdmF0ZS9BR0VOVFMueW1s}, oracle: {kind: &a34 diagnostic, exit_codes: [1], stream: stdout, regex: local_workspace_path}}
+    - id: local-workspace-path-is-rejected
+      mutation: {path: MEMORY.yml, yaml_path: stable_decisions.canonical_governance_guide, value_base64: L1VzZXJzL2V4YW1wbGUvcHJpdmF0ZS9BR0VOVFMueW1s}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stdout
+        regex: local_workspace_path
   governance-validate:
-    invocation: {argv: [python3, scripts/validate_governance_yaml.py, *a33, .], cwd: ., env: {}, required_env: []}
+    invocation:
+      argv: [python3, scripts/validate_governance_yaml.py, --repo-root, .]
+      cwd: .
+      env: {}
+      required_env: []
     evidence: {kind: gate}
     negative_controls:
-    - {id: authored-verified-state-is-rejected, mutation: {path: '@active_phase_log', yaml_path: document.status, value: verified}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: 'verified.*(?:not one of|computed)'}}
+    - id: authored-verified-state-is-rejected
+      mutation: {path: '@active_phase_log', yaml_path: document.status, value: verified}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: verified.*(?:not one of|computed)
   lint:
-    invocation: {argv: [python3, &a38 tools/qualification/quality.py, lint], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, lint]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
     evidence: {kind: gate}
     negative_controls:
-    - {id: lint-rejects-causal-mutation, mutation: {path: *a28, search: *a35, replace: 'from dataclasses import dataclass
+    - id: lint-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/domain/envelope.py, search: from dataclasses import dataclass, replace: 'from dataclasses import dataclass
 
-          import sys'}, oracle: {kind: *a34, exit_codes: [1], stream: stdout, regex: F401}}
+          import sys'}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stdout
+        regex: F401
   runtime-smoke:
-    invocation: {argv: [python3, tools/qualification/runtime.py], cwd: ., env: {BCF_EXECUTION_PROFILE: &a36 qualification, PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: runtime_health, output_requirements: [{path: .artifacts/runtime-smoke.json, media_type: &a39 application/json, authority: *a26}], environment_assertions: [{name: BCF_EXECUTION_PROFILE, operator: equals, value: *a36}]}
+    invocation:
+      argv: [python3, tools/qualification/runtime.py]
+      cwd: .
+      env: {BCF_EXECUTION_PROFILE: qualification, PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: runtime_health
+      output_requirements:
+      - {path: .artifacts/runtime-smoke.json, media_type: application/json, authority: non_authoritative_until_captured} # non-authoritative until captured by BCF
+      environment_assertions:
+      - {name: BCF_EXECUTION_PROFILE, operator: equals, value: qualification}
     negative_controls:
-    - {id: runtime-smoke-rejects-causal-mutation, mutation: {path: *a37, yaml_path: &a41 extensions.bearertokenauth.token, value: disabled}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: Collector did not become ready}}
+    - id: runtime-smoke-rejects-causal-mutation
+      mutation: {path: config/otel/qualification.yml, yaml_path: extensions.bearertokenauth.token, value: disabled}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: Collector did not become ready
   security-dependency-audit:
-    invocation: {argv: [python3, *a38, *a11], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, security-dependency-audit]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
     evidence: {kind: gate}
     negative_controls:
-    - {id: security-dependency-audit-rejects-causal-mutation, mutation: {path: &a40 requirements-runtime.txt, search: 'opentelemetry-proto==1.45.1
+    - id: security-dependency-audit-rejects-causal-mutation
+      mutation: {path: requirements-runtime.txt, search: 'opentelemetry-proto==1.45.1
 
           protobuf==7.36.2
 
@@ -392,61 +619,149 @@ gates:
 
           urllib3==1.26.5
 
-          '}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: Found .*vulnerabilit}}
+          '}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: Found .*vulnerabilit
   security-sbom:
-    invocation: {argv: [python3, *a38, *a12], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: gate, output_requirements: [{path: .artifacts/sbom.json, media_type: *a39, authority: *a26}]}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, security-sbom]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: gate
+      output_requirements:
+      - {path: .artifacts/sbom.json, media_type: application/json, authority: non_authoritative_until_captured} # non-authoritative until captured by BCF
     negative_controls:
-    - {id: security-sbom-rejects-causal-mutation, mutation: {path: *a40, search: opentelemetry-proto==1.45.1, replace: opentelemetry-proto==0.0.0}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: SBOM dependency inventory mismatch}}
+    - id: security-sbom-rejects-causal-mutation
+      mutation: {path: requirements-runtime.txt, search: opentelemetry-proto==1.45.1, replace: opentelemetry-proto==0.0.0}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: SBOM dependency inventory mismatch
   security-secret-scan:
-    invocation: {argv: [python3, *a38, *a13], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: gate, output_requirements: [{path: .artifacts/secret-scan.json, media_type: *a39, authority: *a26}]}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, security-secret-scan]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: gate
+      output_requirements:
+      - {path: .artifacts/secret-scan.json, media_type: application/json, authority: non_authoritative_until_captured} # non-authoritative until captured by BCF
     negative_controls:
-    - {id: security-secret-scan-rejects-causal-mutation, mutation: {path: *a37, yaml_path: *a41, value: AKIAIOSFODNN7EXAMPLE}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: credential candidates}}
+    - id: security-secret-scan-rejects-causal-mutation
+      mutation: {path: config/otel/qualification.yml, yaml_path: extensions.bearertokenauth.token, value: AKIAIOSFODNN7EXAMPLE}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: credential candidates
   security-vulnerability-scan:
-    invocation: {argv: [python3, *a38, *a14], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: gate, output_requirements: [{path: .artifacts/vulnerability-scan.json, media_type: *a39, authority: *a26}]}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, security-vulnerability-scan]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: gate
+      output_requirements:
+      - {path: .artifacts/vulnerability-scan.json, media_type: application/json, authority: non_authoritative_until_captured} # non-authoritative until captured by BCF
     negative_controls:
-    - {id: security-vulnerability-scan-rejects-causal-mutation, mutation: {path: backend/src/clauditor/archive/infrastructure/otlp_json.py, search: 'value: Any = json.loads(record)', replace: 'value: Any = eval(record)'}, oracle: {kind: *a34, exit_codes: [1], stream: stderr, regex: 'source vulnerability findings:.*B307'}}
+    - id: security-vulnerability-scan-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/infrastructure/otlp_json.py, search: 'value: Any = json.loads(record)', replace: 'value: Any = eval(record)'}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stderr
+        regex: source vulnerability findings:.*B307
   semantic-ownership:
-    invocation: {argv: [python3, scripts/semantic_ownership.py, *a33, .], cwd: ., env: {}, required_env: []}
-    evidence: {kind: gate, output_requirements: [{path: .artifacts/semantic-ownership/report.json, media_type: *a39, authority: *a26}]}
+    invocation:
+      argv: [python3, scripts/semantic_ownership.py, --repo-root, .]
+      cwd: .
+      env: {}
+      required_env: []
+    evidence:
+      kind: gate
+      output_requirements:
+      - {path: .artifacts/semantic-ownership/report.json, media_type: application/json, authority: non_authoritative_until_captured} # non-authoritative until captured by BCF
     negative_controls:
-    - {id: canonical-owner-1-is-enforced, mutation: {path: governance/canonical-representations.yml, yaml_path: representations.0.authorized_constructors_and_factories, value: ['scripts/_bcf_runtime/missing.py::owner']}, oracle: {kind: *a34, exit_codes: [1], stream: stdout, regex: owner must be an authorized constructor}}
+    - id: canonical-owner-1-is-enforced
+      mutation:
+        path: governance/canonical-representations.yml
+        yaml_path: representations.0.authorized_constructors_and_factories
+        value: ['scripts/_bcf_runtime/missing.py::owner']
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stdout
+        regex: owner must be an authorized constructor
   test:
-    invocation: {argv: [python3, *a23, test], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
-    evidence: {kind: *a25, test_contract: {junit_xml: .artifacts/junit/test.xml, expected_node_manifest: governance/test-manifests/test.txt, expected_nodes_mode: exact, min_collected: 10, min_executed: 10, max_skipped: 0, selectors: [backend/tests/test_archive.py], artifact_binding: *a26}}
+    invocation:
+      argv: [python3, tools/qualification/tests.py, test]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
+    evidence:
+      kind: test_suite
+      test_contract:
+        junit_xml: .artifacts/junit/test.xml # non-authoritative until captured by BCF
+        expected_node_manifest: governance/test-manifests/test.txt
+        expected_nodes_mode: exact
+        min_collected: 10
+        min_executed: 10
+        max_skipped: 0
+        selectors: [backend/tests/test_archive.py]
+        artifact_binding: non_authoritative_until_captured
     negative_controls:
-    - {id: test-rejects-causal-mutation, mutation: {path: *a28, search: or not protobuf, replace: or False}, oracle: {kind: *a27, node_ids: ['backend.tests.test_archive::test_envelope_rejects_empty_bytes']}}
+    - id: test-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/domain/envelope.py, search: or not protobuf, replace: or False}
+      oracle:
+        kind: test_node_failure
+        node_ids: ['backend.tests.test_archive::test_envelope_rejects_empty_bytes']
   typecheck:
-    invocation: {argv: [python3, *a38, *a15], cwd: ., env: {PYTHONPATH: *a24}, required_env: []}
+    invocation:
+      argv: [python3, tools/qualification/quality.py, typecheck]
+      cwd: .
+      env: {PYTHONPATH: 'backend/src:tools:.'}
+      required_env: []
     evidence: {kind: gate}
     negative_controls:
-    - {id: typecheck-rejects-causal-mutation, mutation: {path: *a28, search: 'protobuf: bytes
+    - id: typecheck-rejects-causal-mutation
+      mutation: {path: backend/src/clauditor/archive/domain/envelope.py, search: 'protobuf: bytes
 
           ', replace: 'protobuf: int
 
-          '}, oracle: {kind: *a34, exit_codes: [1], stream: stdout, regex: incompatible type}}
+          '}
+      oracle:
+        kind: diagnostic
+        exit_codes: [1]
+        stream: stdout
+        regex: incompatible type
 gate_catalog:
-  governance_validate: {target: *a42, status: &a44 required, command_policy: governance_validation, rationale: governed YAML passes schema semantic path and placeholder validation}
-  governance_exposure_scan: {target: *a43, status: *a44, command_policy: governance_exposure_scan, rationale: governed artifacts do not expose local paths or private infrastructure markers}
-  architecture_test: {target: *a8, status: *a44, command_policy: architecture_tests, rationale: architecture boundaries are executable}
-  architecture_module_size: {target: *a6, status: *a44, command_policy: architecture_module_size, rationale: production modules stay below configured LOC cap}
-  architecture_layer_membership: {target: *a5, status: *a44, command_policy: architecture_layer_membership, rationale: production modules map to one layer}
-  architecture_context_membership: {target: *a1, status: *a44, command_policy: architecture_context_membership, rationale: production modules map to one bounded context}
-  architecture_import_boundaries: {target: *a4, status: *a44, command_policy: architecture_import_boundaries, rationale: layer import purity prevents drift}
-  architecture_cqrs_side: {target: *a2, status: *a44, command_policy: architecture_cqrs_side, rationale: command and query sides stay separate}
-  architecture_router_thinness: {target: *a7, status: *a44, command_policy: architecture_router_thinness, rationale: routers remain transport adapters}
-  architecture_duplication: {target: *a3, status: *a44, command_policy: architecture_duplication, rationale: duplication and shared helpers stay explicit}
-  lint: {target: lint, status: *a44, command_policy: lint, rationale: lint rules are wired before release-check is trusted}
-  typecheck: {target: *a15, status: *a44, command_policy: *a15, rationale: static analysis is wired before release-check is trusted}
-  test: {target: test, status: *a44, command_policy: automated_tests, rationale: touched behavior has automated tests}
-  contract_test: {target: *a9, status: *a44, command_policy: contract_tests, rationale: public contracts and adapters have explicit checks}
-  security_secret_scan: {target: *a13, status: *a44, command_policy: security_secret_scan, rationale: pushed code is scanned for secrets}
-  security_dependency_audit: {target: *a11, status: *a44, command_policy: security_dependency_audit, rationale: dependencies have a vulnerability audit lane}
-  security_sbom: {target: *a12, status: *a44, command_policy: security_sbom, rationale: production-bound artifacts produce an SBOM}
-  security_vulnerability_scan: {target: *a14, status: *a44, command_policy: security_vulnerability_scan, rationale: source or image vulnerability scan is wired}
-  runtime_smoke: {target: *a10, status: *a44, command_policy: runtime_smoke, rationale: runtime behavior is proven in a declared environment}
-  semantic_ownership: {target: *a45, status: *a44, command_policy: semantic_ownership, rationale: declared canonical representations have one mechanically enforced owner}
+  governance_validate: {target: governance-validate, status: required, command_policy: governance_validation, rationale: governed YAML passes schema semantic path and placeholder validation}
+  governance_exposure_scan: {target: governance-exposure-scan, status: required, command_policy: governance_exposure_scan, rationale: governed artifacts do not expose local paths or private infrastructure markers}
+  architecture_test: {target: architecture-test, status: required, command_policy: architecture_tests, rationale: architecture boundaries are executable}
+  architecture_module_size: {target: architecture-module-size, status: required, command_policy: architecture_module_size, rationale: production modules stay below configured LOC cap}
+  architecture_layer_membership: {target: architecture-layer-membership, status: required, command_policy: architecture_layer_membership, rationale: production modules map to one layer}
+  architecture_context_membership: {target: architecture-context-membership, status: required, command_policy: architecture_context_membership, rationale: production modules map to one bounded context}
+  architecture_import_boundaries: {target: architecture-import-boundaries, status: required, command_policy: architecture_import_boundaries, rationale: layer import purity prevents drift}
+  architecture_cqrs_side: {target: architecture-cqrs-side, status: required, command_policy: architecture_cqrs_side, rationale: command and query sides stay separate}
+  architecture_router_thinness: {target: architecture-router-thinness, status: required, command_policy: architecture_router_thinness, rationale: routers remain transport adapters}
+  architecture_duplication: {target: architecture-duplication, status: required, command_policy: architecture_duplication, rationale: duplication and shared helpers stay explicit}
+  lint: {target: lint, status: required, command_policy: lint, rationale: lint rules are wired before release-check is trusted}
+  typecheck: {target: typecheck, status: required, command_policy: typecheck, rationale: static analysis is wired before release-check is trusted}
+  test: {target: test, status: required, command_policy: automated_tests, rationale: touched behavior has automated tests}
+  contract_test: {target: contract-test, status: required, command_policy: contract_tests, rationale: public contracts and adapters have explicit checks}
+  security_secret_scan: {target: security-secret-scan, status: required, command_policy: security_secret_scan, rationale: pushed code is scanned for secrets}
+  security_dependency_audit: {target: security-dependency-audit, status: required, command_policy: security_dependency_audit, rationale: dependencies have a vulnerability audit lane}
+  security_sbom: {target: security-sbom, status: required, command_policy: security_sbom, rationale: production-bound artifacts produce an SBOM}
+  security_vulnerability_scan: {target: security-vulnerability-scan, status: required, command_policy: security_vulnerability_scan, rationale: source or image vulnerability scan is wired}
+  runtime_smoke: {target: runtime-smoke, status: required, command_policy: runtime_smoke, rationale: runtime behavior is proven in a declared environment}
+  semantic_ownership: {target: semantic-ownership, status: required, command_policy: semantic_ownership, rationale: declared canonical representations have one mechanically enforced owner}
   ci_certification: {target: ci-certification, status: deferred, command_policy: ci_certification, rationale: authenticated exact-commit CI state is independently recomputed before release}
 provenance: {}
