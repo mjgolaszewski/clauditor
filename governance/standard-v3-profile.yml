@@ -12,7 +12,7 @@ gates:
       - architecture-context-membership
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -43,7 +43,7 @@ gates:
       - architecture-cqrs-side
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -75,7 +75,7 @@ gates:
       - architecture-duplication
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -125,7 +125,7 @@ gates:
       - architecture-import-boundaries
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -161,7 +161,7 @@ gates:
       - architecture-layer-membership
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -193,7 +193,7 @@ gates:
       - architecture-module-size
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -224,7 +224,7 @@ gates:
       - architecture-router-thinness
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -256,7 +256,7 @@ gates:
       - architecture-test
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -288,7 +288,7 @@ gates:
       - contract-test
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -337,7 +337,7 @@ gates:
       - lint
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate
@@ -362,7 +362,7 @@ gates:
       - tools/qualification/runtime.py
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
         BCF_EXECUTION_PROFILE: qualification
       required_env: []
     evidence:
@@ -394,7 +394,7 @@ gates:
       - security-dependency-audit
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate
@@ -428,7 +428,7 @@ gates:
       - security-sbom
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate
@@ -455,7 +455,7 @@ gates:
       - security-secret-scan
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate
@@ -482,7 +482,7 @@ gates:
       - security-vulnerability-scan
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate
@@ -509,7 +509,7 @@ gates:
       - test
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: test_suite
@@ -540,7 +540,7 @@ gates:
       - typecheck
       cwd: .
       env:
-        PYTHONPATH: backend/src:.
+        PYTHONPATH: backend/src:tools:.
       required_env: []
     evidence:
       kind: gate

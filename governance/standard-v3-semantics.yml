@@ -180,7 +180,7 @@ contracts:
       - subprocess::module.run
       - tools/qualification/quality.py::path.parent.mkdir
       - tools/qualification/quality.py::path.write_text
-      - tools/qualification/quality.py::(ROOT / '.artifacts').mkdir # non-authoritative until captured by BCF
+      - tools/qualification/quality.py::(ROOT / '.artifacts').mkdir
       - tools/qualification/quality.py::output.write_text
     - id: clauditor.operation.tests.v1
       population: test_qualification
@@ -286,9 +286,10 @@ contracts:
       cross_language_trace: not_applicable_until_declared_by_consumer
       completeness_authority: independent_exact_tree_source_inventory
       python_import_roots:
-      - .
-      - scripts
       - backend/src
+      - scripts
+      - tools
+      - spec
       authoritative_python_roots:
       - scripts/_bcf_runtime
       - backend/src/clauditor
