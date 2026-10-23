@@ -1,0 +1,109 @@
+document:
+  kind: ci_graph_extension
+  name: Clauditor qualification gates
+  id: clauditor-qualification-ci-extension
+  version: 1.0.0
+  status: active
+  path: governance/ci-extensions/clauditor-qualification.yml
+schema_version: '1.0'
+extension:
+  id: clauditor-qualification
+  owner: clauditor
+  rationale: Exact-source application, architecture, security and isolated Docker qualification for Standard contract 3.0;
+    no release authority.
+  attachment_point: evidence-lane
+  applicability:
+  - pull_request
+  - workflow_call
+  - push
+  required_controls:
+    positive:
+    - runtime-smoke
+    negative:
+    - runtime-smoke-rejects-causal-mutation
+    topology:
+    - graph-required-gate-ownership
+    cleanup:
+    - runtime-smoke-owned-project-cleanup
+artifacts:
+  governance-receipts:
+    path: .artifacts/bcf/sessions
+    kind: lane-input
+    scope: run-attempt
+    retention_days: 30
+conditions: {}
+commands: {}
+step_components: {}
+workflows: []
+jobs:
+- workflow: governance
+  id: evidence
+  display_name: Evidence / ${{ matrix.display_name }}
+  semantic_role: required-evidence-shards
+  resource_class: candidate-docker
+  trust: candidate
+  needs:
+  - preflight
+  condition: success
+  timeout_minutes: 45
+  permissions:
+    actions: read
+    contents: read
+  checkout: false
+  components: []
+  executor:
+    kind: gate_shard
+    shard_key: shard
+    shard_count: 4
+    gates:
+    - architecture-context-membership
+    - architecture-cqrs-side
+    - architecture-duplication
+    - architecture-import-boundaries
+    - architecture-layer-membership
+    - architecture-module-size
+    - architecture-router-thinness
+    - architecture-test
+    - contract-test
+    - governance-exposure-scan
+    - governance-validate
+    - lint
+    - runtime-smoke
+    - security-dependency-audit
+    - security-sbom
+    - security-secret-scan
+    - security-vulnerability-scan
+    - semantic-ownership
+    - test
+    - typecheck
+    components:
+    - checkout-candidate
+    - setup-python
+    - install-governance
+    - download-session
+    - restore-session-modes
+    - capture-shard
+    - upload-receipts
+  produces:
+  - governance-receipts
+  consumes:
+  - evidence-session
+  required: true
+  strategy:
+    fail_fast: false
+    max_parallel: 4
+    matrix:
+      shard:
+      - 0
+      - 1
+      - 2
+      - 3
+      include:
+      - shard: 0
+        display_name: Evidence shard 0
+      - shard: 1
+        display_name: Evidence shard 1
+      - shard: 2
+        display_name: Evidence shard 2
+      - shard: 3
+        display_name: Evidence shard 3

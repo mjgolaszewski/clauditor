@@ -47,3 +47,24 @@ def test_envelope_rejects_empty_bytes():
 def test_size_limit():
     with pytest.raises(ValueError, match='limit'):
         decode_json('logs', b' ' * (4 * 1024 * 1024 + 1))
+
+
+def test_read_only_query_uses_decoder_port():
+    from clauditor.archive.infrastructure.otlp_json import OTLPJSONDecoder
+    from clauditor.archive.use_cases.queries.inspect_archive import inspect_archive
+    raw = json.dumps(signal_fixture('logs')).encode()
+    before = bytes(raw)
+    result = inspect_archive('logs', raw, OTLPJSONDecoder())
+    assert result == decode_json('logs', before)
+    assert raw == before
+
+
+def test_inspection_cli_delegates_to_query():
+    import os
+    import subprocess
+    import sys
+    raw = json.dumps(signal_fixture('logs')).encode()
+    result = subprocess.run([sys.executable, '-m', 'clauditor.archive.infrastructure.inspect_cli', 'logs'],
+                            input=raw, capture_output=True, check=True,
+                            env=dict(os.environ, PYTHONPATH='backend/src:tools:.'))
+    assert bytes.fromhex(result.stdout.decode().strip()) == decode_json('logs', raw).protobuf

@@ -1,9 +1,11 @@
 backend.tests.test_archive::test_envelope_rejects_empty_bytes
+backend.tests.test_archive::test_inspection_cli_delegates_to_query
 backend.tests.test_archive::test_malformed_archive_rejected[[]]
 backend.tests.test_archive::test_malformed_archive_rejected[not JSON]
 backend.tests.test_archive::test_malformed_archive_rejected[{"unknown":true}]
 backend.tests.test_archive::test_malformed_archive_rejected[{}]
 backend.tests.test_archive::test_nested_anyvalue_precision
+backend.tests.test_archive::test_read_only_query_uses_decoder_port
 backend.tests.test_archive::test_size_limit
 backend.tests.test_archive::test_typed_roundtrip[logs]
 backend.tests.test_archive::test_typed_roundtrip[metrics]

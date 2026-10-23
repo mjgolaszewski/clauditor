@@ -40,7 +40,7 @@ The script refuses a dirty tree or an existing governance profile. Never
 use a local handmade BCF surrogate. Review and commit changes before
 pushing a locally executed bootstrap.
 
-## Later Standard v3 (not yet attempted)
+## Standard v3 (applied to the bounded qualification slice)
 
 Complete gate argv/inputs/negative controls, semantic families, application
 operations and canonical representations against real product code. Then:
@@ -61,3 +61,9 @@ bcf ci graph audit --repo-root . --format json
 
 No fake/no-op gates, invented classifications, controller Apps, self-governance
 overlays, or authored verified/closed claims.
+
+The local BCF verifier and project interpreter have separate environment custody.
+The project dependencies are pinned in `requirements-governance.txt`; the canonical
+installer requires pip 26.2.2. Use the authenticated BCF 2.3.6 wheel for the verifier.
+Current promotion and qualification observations are recorded in
+`audits/standard-v3-readiness.yml` and `phases/phase-01-log.yml`.

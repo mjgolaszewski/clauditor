@@ -1,8 +1,8 @@
+pip==26.2.2
 arrow==1.4.0
 ast_serialize==0.13.1
 attrs==26.1.0
 bandit==1.9.4
-bcf-governance @ https://github.com/mjgolaszewski/bcf-governance/releases/download/v2.3.6/bcf_governance-2.3.6-py3-none-any.whl#sha256=1ee73f7f8ba69803917ee72c0625907621d6c9b582d11d88346fd9cd5dcd5ab7
 boolean.py==5.0
 CacheControl==0.14.4
 certifi==2026.10.23

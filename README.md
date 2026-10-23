@@ -47,9 +47,9 @@ BCF manages **development governance**; Clauditor's eventual **product observabi
 
 ## Current status
 
-**BCF Lite installed; specification under review.** The owner-uploaded hero is in [`assets/clauditor-hero.png`](assets/clauditor-hero.png). The [machine-readable Clauditor v1 product requirements](spec/clauditor/v1/README.md) are a candidate specification, not a running collector, authenticated source-coverage proof or BCF Standard-v3 installation. No product runtime, login system or external ingress has been deployed.
+**BCF Standard profile contract 3.0 applied; exact-candidate qualification in progress.** The owner-uploaded hero is in [`assets/clauditor-hero.png`](assets/clauditor-hero.png). The [machine-readable Clauditor v1 product requirements](spec/clauditor/v1/README.md) remain the full MVP candidate. A bounded qualification slice now exercises authenticated OTLP, a typed archive and ClickHouse with synthetic logs, traces and metrics, plus a read-only archive-inspection CLI. Live Anthropic onboarding, Grafana reporting, alerting, retention sizing and full appliance acceptance remain planned. No production deployment or release is approved.
 
-For installed Lite governance, provenance and the future Standard-v3 promotion prerequisites, follow [the bootstrap guide](docs/BOOTSTRAP.md). The reviewed source-of-intent and executable candidate requirements are tracked under `spec/clauditor/v1/`; production gates, implementation and Standard-v3 promotion remain separate future actions.
+For bootstrap provenance and the canonical promotion procedure, follow [the bootstrap guide](docs/BOOTSTRAP.md). The reviewed source-of-intent and executable candidate requirements are tracked under `spec/clauditor/v1/`; production gates, implementation and Standard-v3 promotion remain separate future actions.
 
 ## License and security
 

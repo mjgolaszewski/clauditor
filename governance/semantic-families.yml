@@ -1,0 +1,13 @@
+schema_version: '1.0'
+document:
+  kind: semantic_family_registry
+  id: clauditor-semantic-families
+  version: 1.0.0
+  status: active
+  path: governance/semantic-families.yml
+families:
+- {id: ci_graph_compilation, significance: authoritative, ownership_required: true, canonical_semantic_ids: [governance.ci-graph-compilation.v1], material_selectors: {source_paths: [scripts/_bcf_runtime/ci_graph_contracts.py], symbols: ['scripts/_bcf_runtime/ci_graph_contracts.py::CompiledCIGraph'], secondary_paths: []}, responsibilities: {construction: ['scripts/_bcf_runtime/ci_graph_contracts.py::validate_ci_graph'], decoding: ['scripts/_bcf_runtime/ci_graph_contracts.py::validate_ci_graph'], transition: [], projection: []}}
+- {id: evidence_session_identity, significance: authoritative, ownership_required: true, canonical_semantic_ids: [governance.evidence-session.v1], material_selectors: {source_paths: [scripts/_bcf_runtime/evidence_sessions.py], symbols: ['scripts/_bcf_runtime/evidence_sessions.py::EvidenceSession'], secondary_paths: []}, responsibilities: {construction: ['scripts/_bcf_runtime/evidence_sessions.py::allocate_session'], decoding: ['scripts/_bcf_runtime/evidence_sessions.py::load_session'], transition: [], projection: []}}
+- {id: evidence_receipt_admission, significance: authoritative, ownership_required: true, canonical_semantic_ids: [governance.evidence-receipt-admission.v1], material_selectors: {source_paths: [scripts/_bcf_runtime/truth_receipts.py], symbols: ['scripts/_bcf_runtime/truth_receipts.py::ReceiptAdmission'], secondary_paths: []}, responsibilities: {construction: ['scripts/_bcf_runtime/truth_receipts.py::_receipt_admission_identity'], decoding: ['scripts/_bcf_runtime/truth_receipts.py::_receipt_admission_identity'], transition: [], projection: []}}
+- {id: archive_envelope, significance: authoritative, ownership_required: true, canonical_semantic_ids: [clauditor.archive-envelope.v1], material_selectors: {source_paths: [backend/src/clauditor/archive/domain/envelope.py], symbols: ['backend/src/clauditor/archive/domain/envelope.py::ArchiveEnvelope'], secondary_paths: []}, responsibilities: {construction: ['backend/src/clauditor/archive/domain/envelope.py::envelope'], decoding: ['backend/src/clauditor/archive/infrastructure/otlp_json.py::decode_json'], transition: [], projection: []}}
+migrations: []

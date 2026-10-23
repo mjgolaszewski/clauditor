@@ -10,13 +10,12 @@ phase:
   id: P01
   build_block: foundation
 summary:
-  outcome: qualification_construction_active
+  outcome: standard_v3_applied_verification_in_progress
   highlights:
-  - Canonical roadmap and all 45 bounded workitems adopted; 39 requirements preserved.
-  - Retry and runtime-evidence location defects repaired with causal negative controls.
-  - BCF 2.3.6 wheel authenticated; Standard 3.0 check failed with 17 missing gates.
-  - No promotion apply, substantial construction, deployment, release or successor activation.
-  - New user authorization permits qualification construction and push after verified promotion.
+  - Canonical P01-P09 roadmap and all 45 bounded workitems preserved.
+  - Owner authorized a bounded real OTLP/archive/SQL and archive-inspection qualification slice.
+  - Canonical Standard 3.0 check passed and matching apply succeeded; no persistent controller.
+  - 20 gate contracts, exact test populations, blocking semantic declarations and generated CI are being qualified before push.
 workitems:
 - id: P01-P0-01
   status: TODO
@@ -39,35 +38,34 @@ execution_evidence:
     exit_code: 0
     result: passed; local non-authoritative observation
     record:
-      path: .artifacts/standard-v3/spec-self-test.json
+      path: .artifacts/standard-v3/spec-self-test.json # non-authoritative until captured by BCF
       sha256: f92dc9139940a02a92dbc3124ccd6ae71f06ffe6bd79b6ad9529240e55dfd81c
   - command: .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
     exit_code: 0
     result: passed; local non-authoritative observation
     record:
-      path: .artifacts/standard-v3/construction-self-test.json
+      path: .artifacts/standard-v3/construction-self-test.json # non-authoritative until captured by BCF
       sha256: 4d779fd2a6d1d78a17e8e2dfdf172b2170afb1754d4fcb93491afbd26e616616
   - command: .venv/bin/python scripts/check_build_plan.py --self-test
     exit_code: 0
     result: passed; local non-authoritative observation
     record:
-      path: .artifacts/standard-v3/canonical-plan-self-test.json
+      path: .artifacts/standard-v3/canonical-plan-self-test.json # non-authoritative until captured by BCF
       sha256: cddf4ede2e2bb3522f5f9ed7d1035f65c319ca01e819d1c26e4435f5e57e4574
-  - command: .venv/bin/bcf semantic-ownership --repo-root . --output .artifacts/semantic-ownership/report.json
+  - command: .venv/bin/bcf semantic-ownership --repo-root . --output .artifacts/semantic-ownership/report.json # non-authoritative until captured by BCF
     exit_code: 0
     result: passed; local non-authoritative observation
     record:
-      path: .artifacts/standard-v3/semantic-scan.json
+      path: .artifacts/standard-v3/semantic-scan.json # non-authoritative until captured by BCF
       sha256: 5e859aa1bedffbe567fd315e875634e28bc6ae4a77bb802d741c01c4f19b371d
   - command: .venv/bin/bcf profile promote --repo-root . --to standard --contract-version 3.0 --check
     exit_code: 1
     result: blocked; no apply performed
     record:
-      path: .artifacts/standard-v3/promotion-check.json
+      path: .artifacts/standard-v3/promotion-check.json # non-authoritative until captured by BCF
       sha256: 930f4a1c5e7bc6efba48e5d695c2ababa7caace2c3d77d2a691ee924f11eda42
   notes:
-  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
-    (non-authoritative planned output; capture exact digest before use)
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority. (non-authoritative planned output; capture exact digest before use) # non-authoritative until captured by BCF
   - All observations are local and non-authoritative; successful checks do not confer BCF admission. See audits/standard-v3-readiness.yml.
 closeout_requirements:
   claims:
@@ -91,12 +89,8 @@ closeout_requirements:
     - governance-validate
   finding_registry: governance/findings.yml
 known_constraints:
-- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
-- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
-- Canonical semantic scaffold reports 297 source files and 248 discovered types requiring classification; existing scan success
-  covers only declared Lite scope.
-- Runtime smoke cannot prove an unbuilt appliance. Missing gates and additional prerequisites are enumerated in audits/standard-v3-readiness.yml.
+- Only the bounded synthetic qualification slice is implemented; all full MVP packets remain planned/not_admitted.
+- Live source eligibility, Grafana OSS audit floor, host TLS/DNS, retention and measured capacity remain future obligations.
+- Full container OS-package SBOM/vulnerability qualification remains release work; current gates cover owned source, Python dependency audit and pinned image identities.
 next_work:
-- Resolve the explicit pre-construction promotion blocker with the owner; do not construct the runtime implicitly.
-- After real prerequisites qualify, run promote --check and matching --apply, verify reconciliation/graph/provider evidence,
-  then pause.
+- Capture exact-subject positive/negative gate evidence, verify generated CI, push origin, then stop per owner instruction.

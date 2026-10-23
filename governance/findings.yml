@@ -9,7 +9,7 @@ document:
 reviews:
 - id: CL-REVIEW-PRECONSTRUCTION
   source_path: audits/standard-v3-readiness.yml
-  source_sha256: 6cc4a909587f27799c75b78bec100fa9bd473e04084c46ee0372396298ac0c6a
+  source_sha256: 3fd14564511676f1bc83a5a220b1ad1e8a78894797a431003fb2fc4004bdb0b6
   reviewer:
     kind: model
     id: home:clauditor:disco-inferno
@@ -32,7 +32,11 @@ findings:
     remediators:
     - kind: model
       id: home:clauditor:disco-inferno
-  proofs: []
+  proofs:
+  - kind: test_node
+    gate_id: contract-test
+    negative_control_id: retry-needs-archive-success
+    node_id: backend.tests.test_contracts::test_retry_does_not_assert_archive_success
 - id: CL-REVIEW-002
   review_id: CL-REVIEW-PRECONSTRUCTION
   severity: medium
@@ -47,11 +51,15 @@ findings:
     remediators:
     - kind: model
       id: home:clauditor:disco-inferno
-  proofs: []
+  proofs:
+  - kind: test_node
+    gate_id: contract-test
+    negative_control_id: runtime-evidence-outside-tests
+    node_id: backend.tests.test_contracts::test_runtime_evidence_destinations
 - id: CL-PROMOTION-001
   review_id: CL-REVIEW-PRECONSTRUCTION
   severity: high
-  disposition: open
+  disposition: remediation_completed
   provenance:
     producers:
     - kind: model
@@ -59,5 +67,10 @@ findings:
     reviewer:
       kind: model
       id: home:clauditor:disco-inferno
-    remediators: []
-  proofs: []
+    remediators:
+    - kind: model
+      id: home:clauditor:disco-inferno
+  proofs:
+  - kind: behavioral_probe
+    gate_id: runtime-smoke
+    negative_control_id: runtime-smoke-rejects-causal-mutation
