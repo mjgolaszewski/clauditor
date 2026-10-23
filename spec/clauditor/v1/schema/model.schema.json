@@ -1,0 +1,705 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clauditor.invalid/spec/v1/model.schema.json",
+  "title": "Clauditor candidate application specification",
+  "type": "object",
+  "required": [
+    "document",
+    "doctrine",
+    "owners",
+    "invariants",
+    "laws",
+    "primitives",
+    "requirements",
+    "operations",
+    "state_machines",
+    "topology",
+    "appliance",
+    "scope",
+    "verification",
+    "open_questions",
+    "bcf"
+  ],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": [
+        "id",
+        "status",
+        "source_commit",
+        "active_profile",
+        "runtime_authority",
+        "release_authority"
+      ],
+      "properties": {
+        "id": {
+          "const": "cl.spec.v1"
+        },
+        "status": {
+          "const": "review_candidate"
+        },
+        "source_commit": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": "string"
+        },
+        "active_profile": {
+          "const": "lite"
+        },
+        "runtime_authority": {
+          "const": false
+        },
+        "release_authority": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "doctrine": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "owners": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/owner"
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/invariant"
+      }
+    },
+    "laws": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/law"
+      }
+    },
+    "primitives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/primitive"
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "state_machines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/machine"
+      }
+    },
+    "topology": {
+      "type": "object",
+      "required": [
+        "nodes",
+        "producers",
+        "consumers",
+        "flow_obligations",
+        "edge_contracts",
+        "edge_profiles",
+        "exclusion"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "producers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "consumers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "flow_obligations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/flow"
+          }
+        },
+        "edge_contracts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/edge"
+          }
+        },
+        "edge_profiles": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/$defs/edge_profile"
+          }
+        },
+        "exclusion": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "appliance": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "scope": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "verification": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "minProperties": 1
+      }
+    },
+    "bcf": {
+      "type": "object",
+      "minProperties": 1
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "owner": {
+      "type": "object",
+      "required": [
+        "id",
+        "scope"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "invariant": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "property",
+        "violation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "property": {
+          "type": "string",
+          "minLength": 1
+        },
+        "violation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "law": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "invariants",
+        "property"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invariants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "property": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "primitive": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "fields",
+        "meaning"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "meaning": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "sources",
+        "invariant",
+        "statement",
+        "acceptance",
+        "verification"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "invariant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acceptance": {
+          "type": "object",
+          "required": [
+            "positive",
+            "negative"
+          ],
+          "properties": {
+            "positive": {
+              "type": "string",
+              "minLength": 1
+            },
+            "negative": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "verification": {
+          "const": "required_not_executed"
+        }
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "side",
+        "inputs",
+        "outputs",
+        "preconditions",
+        "effects",
+        "failure",
+        "recovery"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "side": {
+          "enum": [
+            "query",
+            "command",
+            "validation"
+          ]
+        },
+        "inputs": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputs": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "failure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recovery": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "transition": {
+      "type": "object",
+      "required": [
+        "id",
+        "from",
+        "event",
+        "to",
+        "operation",
+        "guard",
+        "effects",
+        "failure",
+        "recovery",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "guard": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effects": {
+          "type": "string",
+          "minLength": 1
+        },
+        "failure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recovery": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "machine": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "initial",
+        "terminal",
+        "states",
+        "events",
+        "exclusion",
+        "transitions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initial": {
+          "type": "string",
+          "minLength": 1
+        },
+        "terminal": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "exclusion": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "transitions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/transition"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "object",
+      "required": [
+        "id",
+        "producer",
+        "consumer",
+        "artifact",
+        "requires",
+        "profile"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requires": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "id",
+        "flow",
+        "producer",
+        "consumer",
+        "artifact",
+        "profile"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "flow": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge_profile": {
+      "type": "object",
+      "required": [
+        "identity",
+        "schema",
+        "provenance",
+        "applicability",
+        "authorization",
+        "lifecycle",
+        "freshness",
+        "failure",
+        "invalidation",
+        "cost"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "applicability": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lifecycle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "freshness": {
+          "type": "string",
+          "minLength": 1
+        },
+        "failure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invalidation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cost": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

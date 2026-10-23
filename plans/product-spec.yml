@@ -9,25 +9,29 @@ document:
 product:
   name: "Clauditor"
   project_name: "Clauditor"
-  positioning: "governed agent-led software delivery"
-  target_users:
-    - "operators"
+  positioning: "single-tenant Anthropic OpenTelemetry collection, preservation, compliance reporting and alerting appliance for RIAs"
+  target_users: ["RIA compliance administrators and designated reviewers (2-4 local reporting users)", "Employees emitting supported Claude/Cowork/Claude Code/API telemetry (12-24 monitored users)"]
   non_goals:
-    - "undefined_scope"
+    - "No IdP/SSO integration in MVP; use local appliance user roles."
+    - "No Compliance API integration or independent transcript fetching in MVP."
+    - "No guarantee of complete content or artifacts when Anthropic does not emit them."
+    - "No certification of SEC books-and-records retention, WORM or all-user activity."
+    - "No mandatory SaaS, paid observability or license-key-dependent runtime."
 constraints:
   operating_constraints:
-    - "repo_native_runtime"
-  known_external_dependencies:
-    - "github_actions"
+    - "Linux single-host Docker Compose, persistent storage, qualified OSS components."
+    - "OpenTelemetry protocol compliance with prompt, response and available tool-content capture prioritized."
+    - "ClickHouse SQL primary store, typed OTLP archive, Grafana OSS local role-based dashboard/reporting."
+    - "365-day target retention, explicit 90-day fallback, never silently below 31 days."
+    - "Host owns DNS, certificate services and network configuration for optional remote HTTPS ingress."
+    - "BCF Lite v2.3.6 installed; target Standard profile contract v3 without persistent controller after qualification."
+  known_external_dependencies: [github_actions, "Anthropic emitter version/plan/capture policy prerequisites", docker_engine_and_compose, host_persistent_storage_and_network, host_managed_tls_and_dns_for_remote_otel]
 architecture:
-  backend: "cqrs_lite_with_strict_ports"
-  frontend: "route_modules_thin_components"
-  data: "repo_defined"
+  backend: "OpenTelemetry Collector contrib and qualified OSS processors; minimal custom adapters only if required"
+  frontend: "Provisioned Grafana OSS with local admin and viewer accounts; no new query UI unless proven necessary"
+  data: "ClickHouse OSS SQL indexed telemetry plus source-faithful typed OTLP archive"
 execution_phases:
-  - phase_id: P01
-    build_block: "foundation"
-    objective: "establish governed foundation"
-    release_train: release_1
+  - {phase_id: P01, build_block: foundation, objective: "establish governed foundation", release_train: release_1}
 acceptance:
   release_gate: make release-check
   evidence_location: phases/

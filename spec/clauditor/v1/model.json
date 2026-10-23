@@ -1,0 +1,2328 @@
+{
+  "document": {
+    "id": "cl.spec.v1",
+    "status": "review_candidate",
+    "repo": "mjgolaszewski/clauditor",
+    "source_commit": "6fc4c5913f10f33d84f310ef1ca13e7da98a22b0",
+    "date": "2026-10-23",
+    "active_profile": "lite",
+    "target_contract": "standard v3 controller-free",
+    "runtime_authority": false,
+    "release_authority": false
+  },
+  "doctrine": {
+    "id": "cl.doctrine.v1",
+    "owner": "cl.owner.governance.v1",
+    "chain": [
+      "invariants",
+      "canonical ownership/laws",
+      "primitives",
+      "state machines",
+      "operations/contracts",
+      "producers/consumers",
+      "implementation/evidence",
+      "evaluation/admission"
+    ],
+    "construction": "Dependency-outward after mechanically closed contracts; preserve first then migrate",
+    "human_docs": "Generated only, no independent semantic authority"
+  },
+  "owners": [
+    {
+      "id": "cl.owner.source.v1",
+      "scope": "Anthropic documented emitter capability, content flags, version/plan eligibility, coverage gaps"
+    },
+    {
+      "id": "cl.owner.ingress.v1",
+      "scope": "OTLP receiver, TLS/header authentication, durable stage receipts, intake rejection"
+    },
+    {
+      "id": "cl.owner.archive.v1",
+      "scope": "Typed semantically faithful OTLP archive, custody, protected holds"
+    },
+    {
+      "id": "cl.owner.storage.v1",
+      "scope": "ClickHouse SQL analytical representation, retention, idempotency"
+    },
+    {
+      "id": "cl.owner.query.v1",
+      "scope": "Grafana OSS reporting, session correlation and evidence exports"
+    },
+    {
+      "id": "cl.owner.security.v1",
+      "scope": "Local identity, access, data confidentiality and untrusted content"
+    },
+    {
+      "id": "cl.owner.alert.v1",
+      "scope": "Rules, notifications, acknowledgements, rule provenance"
+    },
+    {
+      "id": "cl.owner.deployment.v1",
+      "scope": "Docker Compose, sizing, health, backup and restore"
+    },
+    {
+      "id": "cl.owner.governance.v1",
+      "scope": "Source interpretations, owner changes, BCF adoption and construction admissibility"
+    }
+  ],
+  "invariants": [
+    {
+      "id": "cl.invariant.semantic_owner.v1",
+      "owner": "cl.owner.governance.v1",
+      "property": "Every normative concept and transition has exactly one canonical domain owner.",
+      "violation": "cl.failure.semantic_owner.v1"
+    },
+    {
+      "id": "cl.invariant.actual_source.v1",
+      "owner": "cl.owner.source.v1",
+      "property": "No event, prompt, response, tool result or file body is considered observed unless its enabled source emitted it.",
+      "violation": "cl.failure.actual_source.v1"
+    },
+    {
+      "id": "cl.invariant.coverage.v1",
+      "owner": "cl.owner.source.v1",
+      "property": "Cloud/web/unsupported capability gaps are explicit; lack of telemetry is not proof of inactivity.",
+      "violation": "cl.failure.coverage.v1"
+    },
+    {
+      "id": "cl.invariant.content_status.v1",
+      "owner": "cl.owner.source.v1",
+      "property": "Content is classified full, metadata_only, redacted, truncated, placeholder, not_emitted or unknown from evidence.",
+      "violation": "cl.failure.content_status.v1"
+    },
+    {
+      "id": "cl.invariant.otlp_compliance.v1",
+      "owner": "cl.owner.ingress.v1",
+      "property": "OTLP traces, metrics and logs decode with standard signal types and reject malformed/unauthorized traffic.",
+      "violation": "cl.failure.otlp_compliance.v1"
+    },
+    {
+      "id": "cl.invariant.receipt_stages.v1",
+      "owner": "cl.owner.ingress.v1",
+      "property": "Ingress accepted, durable archive, SQL indexed and complete provider delivery are separate, non-equivalent propositions.",
+      "violation": "cl.failure.receipt_stages.v1"
+    },
+    {
+      "id": "cl.invariant.typed_record.v1",
+      "owner": "cl.owner.archive.v1",
+      "property": "Semantically faithful typed OTLP source envelopes are preserved independently of potentially lossy SQL projections.",
+      "violation": "cl.failure.typed_record.v1"
+    },
+    {
+      "id": "cl.invariant.exact_identity.v1",
+      "owner": "cl.owner.storage.v1",
+      "property": "Replayed delivery does not double-count one logical observation; ambiguous identities are not silently merged.",
+      "violation": "cl.failure.exact_identity.v1"
+    },
+    {
+      "id": "cl.invariant.retention.v1",
+      "owner": "cl.owner.storage.v1",
+      "property": "Retention target is 365 days, 90-day fallback requires administrative choice, 31-day floor, held records protected.",
+      "violation": "cl.failure.retention.v1"
+    },
+    {
+      "id": "cl.invariant.least_access.v1",
+      "owner": "cl.owner.security.v1",
+      "property": "Local admin/viewer identities and read-only database access protect all sensitive data; no anonymous reporting.",
+      "violation": "cl.failure.least_access.v1"
+    },
+    {
+      "id": "cl.invariant.inert_input.v1",
+      "owner": "cl.owner.security.v1",
+      "property": "Telemetry payload and prompt/tool content remain data and cannot become executable HTML, SQL, configuration or policy.",
+      "violation": "cl.failure.inert_input.v1"
+    },
+    {
+      "id": "cl.invariant.correlation.v1",
+      "owner": "cl.owner.query.v1",
+      "property": "Only authentic source-issued correlation keys justify joins; missing or conflicting keys remain visible.",
+      "violation": "cl.failure.correlation.v1"
+    },
+    {
+      "id": "cl.invariant.bounded_export.v1",
+      "owner": "cl.owner.query.v1",
+      "property": "Query/export requires authorized role, bounded filters, safe output encoding and manifest provenance.",
+      "violation": "cl.failure.bounded_export.v1"
+    },
+    {
+      "id": "cl.invariant.alerts.v1",
+      "owner": "cl.owner.alert.v1",
+      "property": "Alert rules apply to observable predicates; estimated costs, silence and content gaps cannot imply proven wrongdoing.",
+      "violation": "cl.failure.alerts.v1"
+    },
+    {
+      "id": "cl.invariant.resilience.v1",
+      "owner": "cl.owner.deployment.v1",
+      "property": "Queue pressure, backend failures, disk limits, lost signals and failed restores remain visible and recoverable where possible.",
+      "violation": "cl.failure.resilience.v1"
+    },
+    {
+      "id": "cl.invariant.no_fees.v1",
+      "owner": "cl.owner.deployment.v1",
+      "property": "Appliance ships with no license-fee or mandatory paid cloud dependencies.",
+      "violation": "cl.failure.no_fees.v1"
+    },
+    {
+      "id": "cl.invariant.edge_closure.v1",
+      "owner": "cl.owner.governance.v1",
+      "property": "Independent required flows must each have one complete 10-dimension edge contract; other pairs require typed exclusion.",
+      "violation": "cl.failure.edge_closure.v1"
+    },
+    {
+      "id": "cl.invariant.state_closure.v1",
+      "owner": "cl.owner.governance.v1",
+      "property": "Every state-event cell has one transition contract or typed exclusion and every declared state is reachable.",
+      "violation": "cl.failure.state_closure.v1"
+    },
+    {
+      "id": "cl.invariant.authority.v1",
+      "owner": "cl.owner.governance.v1",
+      "property": "No candidate specification, agent, hash or local test can grant BCF governance admission or regulator-grade certification.",
+      "violation": "cl.failure.authority.v1"
+    },
+    {
+      "id": "cl.invariant.preservation.v1",
+      "owner": "cl.owner.governance.v1",
+      "property": "Existing BCF Lite governance and unrelated files are preserved unless reviewed supersession explicitly authorizes a change.",
+      "violation": "cl.failure.preservation.v1"
+    },
+    {
+      "id": "cl.invariant.cheap_first.v1",
+      "owner": "cl.owner.deployment.v1",
+      "property": "Cheap structural checks precede costly integration, execution and evidence qualification; reuse only applicable evidence.",
+      "violation": "cl.failure.cheap_first.v1"
+    }
+  ],
+  "laws": [
+    {
+      "id": "cl.law.coverage.v1",
+      "owner": "cl.owner.source.v1",
+      "invariants": [
+        "cl.invariant.actual_source.v1",
+        "cl.invariant.coverage.v1",
+        "cl.invariant.content_status.v1"
+      ],
+      "property": "Coverage must derive from enabled, version-qualified emitters and source-origin availability indicators."
+    },
+    {
+      "id": "cl.law.transport.v1",
+      "owner": "cl.owner.ingress.v1",
+      "invariants": [
+        "cl.invariant.otlp_compliance.v1",
+        "cl.invariant.receipt_stages.v1"
+      ],
+      "property": "Decode, authenticate, qualify, accept/buffer, archive and index through separately observed stages."
+    },
+    {
+      "id": "cl.law.custody.v1",
+      "owner": "cl.owner.archive.v1",
+      "invariants": [
+        "cl.invariant.typed_record.v1",
+        "cl.invariant.exact_identity.v1"
+      ],
+      "property": "Typed OTLP archive is source-faithful after decode, not necessarily byte-identical to the received HTTP request."
+    },
+    {
+      "id": "cl.law.access.v1",
+      "owner": "cl.owner.security.v1",
+      "invariants": [
+        "cl.invariant.least_access.v1",
+        "cl.invariant.inert_input.v1",
+        "cl.invariant.bounded_export.v1"
+      ],
+      "property": "UI/backend operations use role checks, read-only SQL credentials and safe representation of content."
+    },
+    {
+      "id": "cl.law.retention.v1",
+      "owner": "cl.owner.storage.v1",
+      "invariants": [
+        "cl.invariant.retention.v1",
+        "cl.invariant.resilience.v1"
+      ],
+      "property": "Pressure creates alerts; it does not silently shorten or delete protected retention."
+    },
+    {
+      "id": "cl.law.alerts.v1",
+      "owner": "cl.owner.alert.v1",
+      "invariants": [
+        "cl.invariant.alerts.v1",
+        "cl.invariant.coverage.v1"
+      ],
+      "property": "No output confers investigative certainty beyond its observed basis."
+    },
+    {
+      "id": "cl.law.edge.v1",
+      "owner": "cl.owner.governance.v1",
+      "invariants": [
+        "cl.invariant.edge_closure.v1",
+        "cl.invariant.semantic_owner.v1"
+      ],
+      "property": "Declare independent required paths; loss of route plus contract does not convert a requirement to exclusion."
+    },
+    {
+      "id": "cl.law.state.v1",
+      "owner": "cl.owner.governance.v1",
+      "invariants": [
+        "cl.invariant.state_closure.v1",
+        "cl.invariant.authority.v1"
+      ],
+      "property": "Legal transitions require an exact owner operation; impossible states/events are typed exclusions."
+    },
+    {
+      "id": "cl.law.admission.v1",
+      "owner": "cl.owner.governance.v1",
+      "invariants": [
+        "cl.invariant.authority.v1",
+        "cl.invariant.preservation.v1",
+        "cl.invariant.cheap_first.v1"
+      ],
+      "property": "Preserve first; then migrate; BCF evaluator governs claim/evidence authority."
+    }
+  ],
+  "primitives": [
+    {
+      "id": "cl.primitive.source_capability.v1",
+      "owner": "cl.owner.source.v1",
+      "fields": [
+        "source_id",
+        "product",
+        "plan",
+        "version",
+        "signal_coverage",
+        "content_modes",
+        "last_seen"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.otel_envelope.v1",
+      "owner": "cl.owner.ingress.v1",
+      "fields": [
+        "signal_kind",
+        "resource",
+        "scope",
+        "records[AnyValue]",
+        "source_identity",
+        "arrival_time"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.transport_receipt.v1",
+      "owner": "cl.owner.ingress.v1",
+      "fields": [
+        "receipt_id",
+        "source_id",
+        "accepted",
+        "rejected",
+        "stage",
+        "observed_at"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.typed_archive_entry.v1",
+      "owner": "cl.owner.archive.v1",
+      "fields": [
+        "segment_id",
+        "otlp_semantic_encoding",
+        "payload_sha256",
+        "source_id",
+        "source_version"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.content_disposition.v1",
+      "owner": "cl.owner.source.v1",
+      "fields": [
+        "status",
+        "reason",
+        "source_policy",
+        "truncated_length",
+        "observed_payload_ref"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.observation_identity.v1",
+      "owner": "cl.owner.storage.v1",
+      "fields": [
+        "source_id",
+        "signal",
+        "event_id_or_unknown",
+        "trace_id",
+        "span_id",
+        "payload_digest"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.source_correlation.v1",
+      "owner": "cl.owner.query.v1",
+      "fields": [
+        "source_id",
+        "session_id",
+        "prompt_id",
+        "sequence",
+        "request_id",
+        "trace_id",
+        "confidence"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.retention_policy.v1",
+      "owner": "cl.owner.storage.v1",
+      "fields": [
+        "selected_days",
+        "approval_ref",
+        "effective_at",
+        "holds"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.reporter_principal.v1",
+      "owner": "cl.owner.security.v1",
+      "fields": [
+        "user_id",
+        "role",
+        "disabled",
+        "credential_verifier"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.alert_rule.v1",
+      "owner": "cl.owner.alert.v1",
+      "fields": [
+        "rule_id",
+        "predicate",
+        "window",
+        "severity",
+        "threshold",
+        "notification_route"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.export_manifest.v1",
+      "owner": "cl.owner.query.v1",
+      "fields": [
+        "subject",
+        "filter",
+        "source_range",
+        "selection_digest",
+        "output_digest",
+        "dispositions"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    },
+    {
+      "id": "cl.primitive.backup_manifest.v1",
+      "owner": "cl.owner.deployment.v1",
+      "fields": [
+        "component_snapshot_refs",
+        "schema_versions",
+        "integrity_checks",
+        "restored_at"
+      ],
+      "meaning": "Canonical typed domain value, referenced by consumers rather than redefined."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "cl.req.001.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "U01",
+        "ACW",
+        "ACWH"
+      ],
+      "invariant": "cl.invariant.coverage.v1",
+      "statement": "Receive Cowork OTLP events and supported unified-chat activity but explicitly record metadata-only cloud/web/mobile coverage.",
+      "acceptance": {
+        "positive": "Supported Cowork event is queryable",
+        "negative": "Never fabricate unavailable conversation content"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.002.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "U01",
+        "ACC"
+      ],
+      "invariant": "cl.invariant.coverage.v1",
+      "statement": "Receive Claude Code OTLP logs, metrics and opted-in detailed traces covering prompts, responses, tool actions and skills.",
+      "acceptance": {
+        "positive": "Code logs/metrics/spans round-trip",
+        "negative": "Disabled trace or content yields no invented span/body"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.003.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "U01",
+        "AAPI"
+      ],
+      "invariant": "cl.invariant.actual_source.v1",
+      "statement": "Ingest server-side Anthropic Messages API and Managed Agents traces when configured with HTTPS OTLP/protobuf.",
+      "acceptance": {
+        "positive": "API test span is visible",
+        "negative": "Best-effort dropped spans are not counted as complete"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.004.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "ASDK"
+      ],
+      "invariant": "cl.invariant.actual_source.v1",
+      "statement": "Support Claude SDK client traces when instrumented, retaining W3C trace relationship to API spans.",
+      "acceptance": {
+        "positive": "SDK plus API connected trace",
+        "negative": "Unrelated spans remain unjoined"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.005.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "U01",
+        "ACW",
+        "ACC"
+      ],
+      "invariant": "cl.invariant.content_status.v1",
+      "statement": "Capture actual supplied prompt text, assistant-response text, tool inputs, optional tool outputs and skill/plugin/MCP/connector metadata.",
+      "acceptance": {
+        "positive": "Searchable supported captured content",
+        "negative": "No artifact bytes are fetched or inferred if not emitted"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.006.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "U03",
+        "ACW",
+        "ACC"
+      ],
+      "invariant": "cl.invariant.content_status.v1",
+      "statement": "Onboard opt-in capture flags per source; raw API body export disabled by default.",
+      "acceptance": {
+        "positive": "Source capture settings documented and verifiable",
+        "negative": "Do not silently enable raw body/system prompt capture"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.007.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "ACW",
+        "ACC"
+      ],
+      "invariant": "cl.invariant.content_status.v1",
+      "statement": "Classify full, redacted, truncated, metadata-only, placeholder, absent and unknown content, including source-size limitations.",
+      "acceptance": {
+        "positive": "State accurately shown on events and exports",
+        "negative": "[image] marker cannot count as original image bytes"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.008.v1",
+      "owner": "cl.owner.source.v1",
+      "sources": [
+        "ACWH",
+        "AAPI"
+      ],
+      "invariant": "cl.invariant.coverage.v1",
+      "statement": "Expose source plan/version/settings gating and unknown coverage rather than declaring entire employee conversations captured.",
+      "acceptance": {
+        "positive": "Capture readiness matrix per source",
+        "negative": "Unavailable source not represented as healthy or complete"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.009.v1",
+      "owner": "cl.owner.ingress.v1",
+      "sources": [
+        "OTLP",
+        "U07"
+      ],
+      "invariant": "cl.invariant.otlp_compliance.v1",
+      "statement": "Provide OTLP/HTTP protobuf and JSON for logs/traces/metrics, with optional gRPC, backpressure and exact response semantics.",
+      "acceptance": {
+        "positive": "Three signal kinds decoded and validated",
+        "negative": "Reject wrong content type, malformed payload and limits"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.010.v1",
+      "owner": "cl.owner.ingress.v1",
+      "sources": [
+        "AAPI",
+        "U07"
+      ],
+      "invariant": "cl.invariant.otlp_compliance.v1",
+      "statement": "Support authenticated optional host-proxied HTTPS ingress at public hostname/443; host owns TLS and DNS.",
+      "acceptance": {
+        "positive": "Verified API destination test succeeds",
+        "negative": "Unauthorized public post fails with no trusted receipt"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.011.v1",
+      "owner": "cl.owner.ingress.v1",
+      "sources": [
+        "OTRES",
+        "AAPI"
+      ],
+      "invariant": "cl.invariant.receipt_stages.v1",
+      "statement": "Separate accepted/queued/archived/indexed/partially failed/lost states; retries and duplicates are visible.",
+      "acceptance": {
+        "positive": "Each stage has recorded identity",
+        "negative": "Receiver HTTP success is not durable receipt"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.012.v1",
+      "owner": "cl.owner.archive.v1",
+      "sources": [
+        "U03",
+        "FILE",
+        "OTLP"
+      ],
+      "invariant": "cl.invariant.typed_record.v1",
+      "statement": "Retain semantically typed OTLP envelopes alongside ClickHouse tables with rotation/manifest/backup.",
+      "acceptance": {
+        "positive": "Typed AnyValue reconstituted across archive",
+        "negative": "Flattened string-only projection does not replace archive"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.013.v1",
+      "owner": "cl.owner.storage.v1",
+      "sources": [
+        "U11",
+        "CH"
+      ],
+      "invariant": "cl.invariant.exact_identity.v1",
+      "statement": "Use self-hosted ClickHouse SQL for indexed traces, logs, metrics and correlated events; idempotent duplicate handling.",
+      "acceptance": {
+        "positive": "Retry does not double count",
+        "negative": "No silent float conversion or detail drop"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.014.v1",
+      "owner": "cl.owner.storage.v1",
+      "sources": [
+        "U04"
+      ],
+      "invariant": "cl.invariant.retention.v1",
+      "statement": "Prefer 365 days, admin-select 90-day fallback, never below 31 days automatically; honor explicit protected exports/holds.",
+      "acceptance": {
+        "positive": "Cleanup respects selected horizon and holds",
+        "negative": "Retention decrease without approval fails"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.015.v1",
+      "owner": "cl.owner.archive.v1",
+      "sources": [
+        "U04",
+        "U03"
+      ],
+      "invariant": "cl.invariant.typed_record.v1",
+      "statement": "Keep archive/export checksums and provenance; distinguish tamper-evidence from immutable WORM guarantees.",
+      "acceptance": {
+        "positive": "Archive manifest verifies selected bytes",
+        "negative": "Ordinary checksum not represented as WORM certification"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.016.v1",
+      "owner": "cl.owner.query.v1",
+      "sources": [
+        "U10",
+        "GF"
+      ],
+      "invariant": "cl.invariant.correlation.v1",
+      "statement": "Provision Grafana OSS dashboards and ClickHouse Explore/query for all observable content, source gaps and usage.",
+      "acceptance": {
+        "positive": "Filtered user/session/prompt search",
+        "negative": "Missing response not synthesized"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.017.v1",
+      "owner": "cl.owner.security.v1",
+      "sources": [
+        "U09",
+        "GFSEC"
+      ],
+      "invariant": "cl.invariant.least_access.v1",
+      "statement": "Configure local admin and reporting-viewer roles, disable anonymous access; Grafana ClickHouse SQL principal read-only.",
+      "acceptance": {
+        "positive": "Reviewer views permitted dashboards",
+        "negative": "Reviewer cannot alter DB or secrets"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.018.v1",
+      "owner": "cl.owner.query.v1",
+      "sources": [
+        "ACW",
+        "ACC"
+      ],
+      "invariant": "cl.invariant.correlation.v1",
+      "statement": "Reconstruct source-qualified timelines by session.id, prompt.id, event.sequence, trace/span/request identifiers.",
+      "acceptance": {
+        "positive": "Same-source exact-key timeline",
+        "negative": "Similar text/timestamps do not imply exact linkage"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.019.v1",
+      "owner": "cl.owner.query.v1",
+      "sources": [
+        "U04",
+        "U10"
+      ],
+      "invariant": "cl.invariant.bounded_export.v1",
+      "statement": "Produce time/user-filtered CSV or JSON with source, content-status, exact selection, digests and export metadata.",
+      "acceptance": {
+        "positive": "Deterministic safe exported selection",
+        "negative": "Formula injection, unauthorized or unbounded export rejected"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.020.v1",
+      "owner": "cl.owner.security.v1",
+      "sources": [
+        "U03",
+        "ACW"
+      ],
+      "invariant": "cl.invariant.inert_input.v1",
+      "statement": "Treat captured prompts, errors, tool parameters, files and connectors as sensitive untrusted input; never execute or echo credentials.",
+      "acceptance": {
+        "positive": "Inert rendering and protected data",
+        "negative": "HTML/XSS/SQL injected in prompts has no execution effect"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.021.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "U04",
+        "U08"
+      ],
+      "invariant": "cl.invariant.resilience.v1",
+      "statement": "Back up and cold-restore ClickHouse, archive, Grafana config, local users and secrets references with verification.",
+      "acceptance": {
+        "positive": "Clean restore reproduces known queries",
+        "negative": "Corrupt/partial restore is blocked"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.022.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "U08"
+      ],
+      "invariant": "cl.invariant.resilience.v1",
+      "statement": "Deliver one Linux Docker Compose appliance, persistent volumes, readiness checks, configuration templates and start-to-finish guide.",
+      "acceptance": {
+        "positive": "Fresh single-host install completes",
+        "negative": "Green containers without test telemetry not ready"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.023.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "U08",
+        "U04"
+      ],
+      "invariant": "cl.invariant.retention.v1",
+      "statement": "Size measured data for 12–24 monitored users and 2–4 reviewers; capacity preflight before enabling selected retention.",
+      "acceptance": {
+        "positive": "Retention horizon estimate uses actual sampled bytes",
+        "negative": "Disk shortfall triggers alert and blocks unsupported commitment"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.024.v1",
+      "owner": "cl.owner.alert.v1",
+      "sources": [
+        "U12",
+        "GF"
+      ],
+      "invariant": "cl.invariant.alerts.v1",
+      "statement": "Provide denial spikes, unexpected MCP/skill changes, error/cost anomaly and opt-in content-policy alerts.",
+      "acceptance": {
+        "positive": "Synthetic trigger fires and resolves",
+        "negative": "An inferred offense is not reported as an observed fact"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.025.v1",
+      "owner": "cl.owner.alert.v1",
+      "sources": [
+        "U12",
+        "OTRES"
+      ],
+      "invariant": "cl.invariant.coverage.v1",
+      "statement": "Alert on expected-source silence, queue/WAL pressure, exporter failures, storage exhaustion and incomplete archive/indexing.",
+      "acceptance": {
+        "positive": "Injected queue failure triggers alert",
+        "negative": "Silence is not falsely interpreted as inactivity"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.026.v1",
+      "owner": "cl.owner.security.v1",
+      "sources": [
+        "U09",
+        "U07"
+      ],
+      "invariant": "cl.invariant.least_access.v1",
+      "statement": "Protect inbound credentials, create separate ingest/write/read credentials and support source-token rotation.",
+      "acceptance": {
+        "positive": "Revoked secret stops old sender",
+        "negative": "Token never appears in app logs or evidence export"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.027.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "U10",
+        "U11"
+      ],
+      "invariant": "cl.invariant.no_fees.v1",
+      "statement": "Use ClickHouse, OpenTelemetry Collector and Grafana OSS self-hosted with no license or SaaS payment dependency.",
+      "acceptance": {
+        "positive": "Every required runtime component has qualifying OSS license",
+        "negative": "Paid/hosted-only component is excluded"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.028.v1",
+      "owner": "cl.owner.alert.v1",
+      "sources": [
+        "U12"
+      ],
+      "invariant": "cl.invariant.alerts.v1",
+      "statement": "Configure email/webhook alert notification, acknowledgement and failed-delivery monitoring.",
+      "acceptance": {
+        "positive": "Test alert reaches configured channel",
+        "negative": "Notification failure cannot be marked delivered"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.029.v1",
+      "owner": "cl.owner.governance.v1",
+      "sources": [
+        "U02"
+      ],
+      "invariant": "cl.invariant.authority.v1",
+      "statement": "Keep Compliance API connector unimplemented/disabled until separate contracts and credentials are approved.",
+      "acceptance": {
+        "positive": "Future adapter has independent source boundary",
+        "negative": "No Compliance API calls in MVP"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.030.v1",
+      "owner": "cl.owner.governance.v1",
+      "sources": [
+        "BCF"
+      ],
+      "invariant": "cl.invariant.authority.v1",
+      "statement": "Keep BCF Lite currently installed; promotion to controller-free Standard v3 only after source/edge/test/evidence qualification.",
+      "acceptance": {
+        "positive": "Each future construction task has verified prerequisites",
+        "negative": "Spec cannot mark BCF verified or release ready"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.031.v1",
+      "owner": "cl.owner.ingress.v1",
+      "sources": [
+        "OTRES"
+      ],
+      "invariant": "cl.invariant.receipt_stages.v1",
+      "statement": "Use file-backed sending queue/retries when supported and expose overflow, timeout, loss and disk failures.",
+      "acceptance": {
+        "positive": "Restart resumes committed queue entries",
+        "negative": "Loss not concealed under success"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.032.v1",
+      "owner": "cl.owner.query.v1",
+      "sources": [
+        "U04",
+        "U10"
+      ],
+      "invariant": "cl.invariant.correlation.v1",
+      "statement": "Provision dashboards: compliance overview, conversations, tools/MCP/skills/connectors, user usage, alerts and intake health.",
+      "acceptance": {
+        "positive": "Representative synthetic fixtures visible",
+        "negative": "No blank/unknown field presented as FULL"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.033.v1",
+      "owner": "cl.owner.security.v1",
+      "sources": [
+        "U09",
+        "GFSEC"
+      ],
+      "invariant": "cl.invariant.bounded_export.v1",
+      "statement": "Record supported admin/login/export events, and disclose OSS Grafana audit logging limitations.",
+      "acceptance": {
+        "positive": "Available admin actions observable",
+        "negative": "Enterprise audit-log functionality not claimed"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.034.v1",
+      "owner": "cl.owner.storage.v1",
+      "sources": [
+        "CH",
+        "OTLP"
+      ],
+      "invariant": "cl.invariant.typed_record.v1",
+      "statement": "Qualify alpha ClickHouse metrics exporter for temporality/type fidelity; require typed archive/fallback if qualification fails.",
+      "acceptance": {
+        "positive": "Histogram/counter/gauge test round trips",
+        "negative": "No hidden type loss or invalid temporality"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.035.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "U08",
+        "OTRES"
+      ],
+      "invariant": "cl.invariant.resilience.v1",
+      "statement": "Document onboarding, service health, backup/restore, update/rollback, network/TLS preconditions and smoke tests.",
+      "acceptance": {
+        "positive": "New operator proves log+metric+span test",
+        "negative": "Unqualified source never claimed monitored"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.036.v1",
+      "owner": "cl.owner.security.v1",
+      "sources": [
+        "U03",
+        "U04"
+      ],
+      "invariant": "cl.invariant.least_access.v1",
+      "statement": "Require deliberate opt-in for sensitive text with notice; content capture may be disabled per source and raw API body capture is never automatic.",
+      "acceptance": {
+        "positive": "Admin can select content mode",
+        "negative": "No role can bypass source-side privacy controls"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.037.v1",
+      "owner": "cl.owner.governance.v1",
+      "sources": [
+        "BCF"
+      ],
+      "invariant": "cl.invariant.edge_closure.v1",
+      "statement": "Maintain independent required producer/consumer inventory and schema-tested 10-dimension contracts plus typed exclusions.",
+      "acceptance": {
+        "positive": "Every pair mechanically closed",
+        "negative": "Deleting required route+contract cannot manufacture exclusion"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.038.v1",
+      "owner": "cl.owner.governance.v1",
+      "sources": [
+        "BCF"
+      ],
+      "invariant": "cl.invariant.state_closure.v1",
+      "statement": "All runtime state transitions have owner operation, guard, failure, recovery and positive/negative evidence obligations.",
+      "acceptance": {
+        "positive": "Every state/event cell classified",
+        "negative": "Missing transition cannot silently become a valid effect"
+      },
+      "verification": "required_not_executed"
+    },
+    {
+      "id": "cl.req.039.v1",
+      "owner": "cl.owner.deployment.v1",
+      "sources": [
+        "BCF"
+      ],
+      "invariant": "cl.invariant.cheap_first.v1",
+      "statement": "Use deterministic preflight, causal negative controls, exact source/evidence identities and scoped evidence reuse.",
+      "acceptance": {
+        "positive": "Unchanged claim evidence reused only when permitted",
+        "negative": "Change invalidates affected currentness before admission"
+      },
+      "verification": "required_not_executed"
+    }
+  ],
+  "operations": [
+    {
+      "id": "cl.op.receive.v1",
+      "owner": "cl.owner.ingress.v1",
+      "side": "command",
+      "inputs": "valid OTLP + source context",
+      "outputs": "acceptance/rejection stage",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "write stage receipt"
+      ],
+      "failure": "typed reject; bounded retry",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.preserve.v1",
+      "owner": "cl.owner.archive.v1",
+      "side": "command",
+      "inputs": "typed accepted signal",
+      "outputs": "archive entry",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "write typed record"
+      ],
+      "failure": "archive failure remains unknown/partial",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.index.v1",
+      "owner": "cl.owner.storage.v1",
+      "side": "command",
+      "inputs": "archived or accepted source observation",
+      "outputs": "SQL projection stage",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "insert/deduplicate"
+      ],
+      "failure": "ambiguous outcome reconcile by identity",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.classify.v1",
+      "owner": "cl.owner.source.v1",
+      "side": "validation",
+      "inputs": "emitted source content and policy",
+      "outputs": "availability status",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [],
+      "failure": "unknown when source limits unresolved",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.query.v1",
+      "owner": "cl.owner.query.v1",
+      "side": "query",
+      "inputs": "role, time and source filter",
+      "outputs": "bounded read-only SQL results",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [],
+      "failure": "deny unsafe/unbounded predicates",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.correlate.v1",
+      "owner": "cl.owner.query.v1",
+      "side": "query",
+      "inputs": "authenticated source-issued IDs",
+      "outputs": "timeline with uncertainty",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [],
+      "failure": "missing keys stay unlinked",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.export.v1",
+      "owner": "cl.owner.query.v1",
+      "side": "command",
+      "inputs": "authorized qualified query",
+      "outputs": "sealed export manifest",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "write protected export"
+      ],
+      "failure": "deny formula injection/oversize",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.configure.v1",
+      "owner": "cl.owner.security.v1",
+      "side": "command",
+      "inputs": "local admin + current revision",
+      "outputs": "approved configuration change",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "write policy and audit"
+      ],
+      "failure": "viewer/invalid credential rejected",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.evaluate_alert.v1",
+      "owner": "cl.owner.alert.v1",
+      "side": "query",
+      "inputs": "observed rule and signal",
+      "outputs": "qualified alert candidate",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [],
+      "failure": "unknown baseline remains uncertain",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.ack_alert.v1",
+      "owner": "cl.owner.alert.v1",
+      "side": "command",
+      "inputs": "local authorized actor and active alert",
+      "outputs": "acknowledgement receipt",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "transition and audit"
+      ],
+      "failure": "stale or duplicate intent reconciled",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.health.v1",
+      "owner": "cl.owner.deployment.v1",
+      "side": "query",
+      "inputs": "probe and collector/storage stats",
+      "outputs": "bounded health snapshot",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [],
+      "failure": "unknown components not marked healthy",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.backup.v1",
+      "owner": "cl.owner.deployment.v1",
+      "side": "command",
+      "inputs": "authorized stable snapshot",
+      "outputs": "verified backup manifest",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "write backup"
+      ],
+      "failure": "partial backup marked failure",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    },
+    {
+      "id": "cl.op.restore.v1",
+      "owner": "cl.owner.deployment.v1",
+      "side": "command",
+      "inputs": "qualified snapshot and admin",
+      "outputs": "isolated validated restoration",
+      "preconditions": [
+        "required canonical contract available",
+        "current actor/source authority and scope validated"
+      ],
+      "effects": [
+        "controlled restore"
+      ],
+      "failure": "reject mismatched version/partial bytes",
+      "recovery": "bounded retry or explicit reconciliation; never automatic authoritative success"
+    }
+  ],
+  "state_machines": [
+    {
+      "id": "cl.machine.ingest.v1",
+      "owner": "cl.owner.ingress.v1",
+      "initial": "received",
+      "terminal": [
+        "indexed",
+        "rejected"
+      ],
+      "states": [
+        "received",
+        "accepted",
+        "archived",
+        "indexed",
+        "partial",
+        "rejected"
+      ],
+      "events": [
+        "accept",
+        "reject",
+        "archive_ok",
+        "archive_failed",
+        "index_ok",
+        "index_failed",
+        "retry"
+      ],
+      "exclusion": {
+        "kind": "typed",
+        "bcf_reason": "no_dependency_or_event_path",
+        "law": "cl.law.state.v1"
+      },
+      "transitions": [
+        {
+          "id": "cl.transition.ingest.01.v1",
+          "from": "received",
+          "event": "accept",
+          "to": "accepted",
+          "operation": "cl.op.receive.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.02.v1",
+          "from": "received",
+          "event": "reject",
+          "to": "rejected",
+          "operation": "cl.op.receive.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.03.v1",
+          "from": "accepted",
+          "event": "archive_ok",
+          "to": "archived",
+          "operation": "cl.op.preserve.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.04.v1",
+          "from": "accepted",
+          "event": "archive_failed",
+          "to": "partial",
+          "operation": "cl.op.preserve.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.05.v1",
+          "from": "archived",
+          "event": "index_ok",
+          "to": "indexed",
+          "operation": "cl.op.index.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.06.v1",
+          "from": "archived",
+          "event": "index_failed",
+          "to": "partial",
+          "operation": "cl.op.index.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.ingest.07.v1",
+          "from": "partial",
+          "event": "retry",
+          "to": "archived",
+          "operation": "cl.op.preserve.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        }
+      ]
+    },
+    {
+      "id": "cl.machine.content.v1",
+      "owner": "cl.owner.source.v1",
+      "initial": "unclassified",
+      "terminal": [
+        "full",
+        "metadata_only",
+        "redacted",
+        "truncated",
+        "placeholder",
+        "not_emitted",
+        "unknown"
+      ],
+      "states": [
+        "unclassified",
+        "full",
+        "metadata_only",
+        "redacted",
+        "truncated",
+        "placeholder",
+        "not_emitted",
+        "unknown"
+      ],
+      "events": [
+        "full_observed",
+        "metadata_only",
+        "redaction",
+        "truncation",
+        "placeholder",
+        "not_emitted",
+        "undetermined"
+      ],
+      "exclusion": {
+        "kind": "typed",
+        "bcf_reason": "no_dependency_or_event_path",
+        "law": "cl.law.state.v1"
+      },
+      "transitions": [
+        {
+          "id": "cl.transition.content.01.v1",
+          "from": "unclassified",
+          "event": "full_observed",
+          "to": "full",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.02.v1",
+          "from": "unclassified",
+          "event": "metadata_only",
+          "to": "metadata_only",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.03.v1",
+          "from": "unclassified",
+          "event": "redaction",
+          "to": "redacted",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.04.v1",
+          "from": "unclassified",
+          "event": "truncation",
+          "to": "truncated",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.05.v1",
+          "from": "unclassified",
+          "event": "placeholder",
+          "to": "placeholder",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.06.v1",
+          "from": "unclassified",
+          "event": "not_emitted",
+          "to": "not_emitted",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.content.07.v1",
+          "from": "unclassified",
+          "event": "undetermined",
+          "to": "unknown",
+          "operation": "cl.op.classify.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        }
+      ]
+    },
+    {
+      "id": "cl.machine.alert.v1",
+      "owner": "cl.owner.alert.v1",
+      "initial": "normal",
+      "terminal": [],
+      "states": [
+        "normal",
+        "firing",
+        "acknowledged",
+        "resolved"
+      ],
+      "events": [
+        "threshold",
+        "ack",
+        "cleared",
+        "recurrence",
+        "reset"
+      ],
+      "exclusion": {
+        "kind": "typed",
+        "bcf_reason": "no_dependency_or_event_path",
+        "law": "cl.law.state.v1"
+      },
+      "transitions": [
+        {
+          "id": "cl.transition.alert.01.v1",
+          "from": "normal",
+          "event": "threshold",
+          "to": "firing",
+          "operation": "cl.op.evaluate_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.alert.02.v1",
+          "from": "firing",
+          "event": "ack",
+          "to": "acknowledged",
+          "operation": "cl.op.ack_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.alert.03.v1",
+          "from": "firing",
+          "event": "cleared",
+          "to": "resolved",
+          "operation": "cl.op.evaluate_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.alert.04.v1",
+          "from": "acknowledged",
+          "event": "cleared",
+          "to": "resolved",
+          "operation": "cl.op.evaluate_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.alert.05.v1",
+          "from": "resolved",
+          "event": "recurrence",
+          "to": "firing",
+          "operation": "cl.op.evaluate_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.alert.06.v1",
+          "from": "resolved",
+          "event": "reset",
+          "to": "normal",
+          "operation": "cl.op.evaluate_alert.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        }
+      ]
+    },
+    {
+      "id": "cl.machine.export.v1",
+      "owner": "cl.owner.query.v1",
+      "initial": "requested",
+      "terminal": [
+        "sealed",
+        "denied"
+      ],
+      "states": [
+        "requested",
+        "authorized",
+        "rendering",
+        "failed",
+        "sealed",
+        "denied"
+      ],
+      "events": [
+        "allow",
+        "deny",
+        "start",
+        "finish",
+        "fail",
+        "retry"
+      ],
+      "exclusion": {
+        "kind": "typed",
+        "bcf_reason": "no_dependency_or_event_path",
+        "law": "cl.law.state.v1"
+      },
+      "transitions": [
+        {
+          "id": "cl.transition.export.01.v1",
+          "from": "requested",
+          "event": "allow",
+          "to": "authorized",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.export.02.v1",
+          "from": "requested",
+          "event": "deny",
+          "to": "denied",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.export.03.v1",
+          "from": "authorized",
+          "event": "start",
+          "to": "rendering",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.export.04.v1",
+          "from": "rendering",
+          "event": "finish",
+          "to": "sealed",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.export.05.v1",
+          "from": "rendering",
+          "event": "fail",
+          "to": "failed",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        },
+        {
+          "id": "cl.transition.export.06.v1",
+          "from": "failed",
+          "event": "retry",
+          "to": "rendering",
+          "operation": "cl.op.export.v1",
+          "guard": "valid source/current state, exact actor/context and relevant capability",
+          "effects": "only canonical owner effect",
+          "failure": "typed reject or explicit failure",
+          "recovery": "bounded retry or reconciliation",
+          "evidence": "positive and semantic mutation obligations"
+        }
+      ]
+    }
+  ],
+  "topology": {
+    "nodes": [
+      {
+        "id": "cl.node.cowork.v1",
+        "owner": "cl.owner.source.v1"
+      },
+      {
+        "id": "cl.node.code.v1",
+        "owner": "cl.owner.source.v1"
+      },
+      {
+        "id": "cl.node.api.v1",
+        "owner": "cl.owner.source.v1"
+      },
+      {
+        "id": "cl.node.sdk.v1",
+        "owner": "cl.owner.source.v1"
+      },
+      {
+        "id": "cl.node.healthprobe.v1",
+        "owner": "cl.owner.deployment.v1"
+      },
+      {
+        "id": "cl.node.collector.v1",
+        "owner": "cl.owner.ingress.v1"
+      },
+      {
+        "id": "cl.node.archive.v1",
+        "owner": "cl.owner.archive.v1"
+      },
+      {
+        "id": "cl.node.clickhouse.v1",
+        "owner": "cl.owner.storage.v1"
+      },
+      {
+        "id": "cl.node.grafana.v1",
+        "owner": "cl.owner.query.v1"
+      },
+      {
+        "id": "cl.node.alerts.v1",
+        "owner": "cl.owner.alert.v1"
+      },
+      {
+        "id": "cl.node.reporter.v1",
+        "owner": "cl.owner.security.v1"
+      },
+      {
+        "id": "cl.node.exports.v1",
+        "owner": "cl.owner.query.v1"
+      },
+      {
+        "id": "cl.node.backups.v1",
+        "owner": "cl.owner.deployment.v1"
+      }
+    ],
+    "producers": [
+      "cl.node.cowork.v1",
+      "cl.node.code.v1",
+      "cl.node.api.v1",
+      "cl.node.sdk.v1",
+      "cl.node.healthprobe.v1",
+      "cl.node.collector.v1",
+      "cl.node.archive.v1",
+      "cl.node.clickhouse.v1",
+      "cl.node.grafana.v1",
+      "cl.node.alerts.v1",
+      "cl.node.reporter.v1",
+      "cl.node.exports.v1",
+      "cl.node.backups.v1"
+    ],
+    "consumers": [
+      "cl.node.cowork.v1",
+      "cl.node.code.v1",
+      "cl.node.api.v1",
+      "cl.node.sdk.v1",
+      "cl.node.healthprobe.v1",
+      "cl.node.collector.v1",
+      "cl.node.archive.v1",
+      "cl.node.clickhouse.v1",
+      "cl.node.grafana.v1",
+      "cl.node.alerts.v1",
+      "cl.node.reporter.v1",
+      "cl.node.exports.v1",
+      "cl.node.backups.v1"
+    ],
+    "flow_obligations": [
+      {
+        "id": "cl.flow.001.v1",
+        "producer": "cl.node.cowork.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.logs.v1",
+        "requires": "cl.req.001.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.flow.002.v1",
+        "producer": "cl.node.code.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.logs_metrics_traces.v1",
+        "requires": "cl.req.002.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.flow.003.v1",
+        "producer": "cl.node.api.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.server_traces.v1",
+        "requires": "cl.req.003.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.flow.004.v1",
+        "producer": "cl.node.sdk.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.client_traces.v1",
+        "requires": "cl.req.004.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.flow.005.v1",
+        "producer": "cl.node.healthprobe.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.synthetic.v1",
+        "requires": "cl.req.035.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.flow.006.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.archive.v1",
+        "artifact": "cl.artifact.typed_otlp.v1",
+        "requires": "cl.req.012.v1",
+        "profile": "preserve"
+      },
+      {
+        "id": "cl.flow.007.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.clickhouse.v1",
+        "artifact": "cl.artifact.sql_projections.v1",
+        "requires": "cl.req.013.v1",
+        "profile": "index"
+      },
+      {
+        "id": "cl.flow.008.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.collector_health.v1",
+        "requires": "cl.req.025.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.flow.009.v1",
+        "producer": "cl.node.archive.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.archival_segments.v1",
+        "requires": "cl.req.021.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.flow.010.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.sql_snapshot.v1",
+        "requires": "cl.req.021.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.flow.011.v1",
+        "producer": "cl.node.backups.v1",
+        "consumer": "cl.node.clickhouse.v1",
+        "artifact": "cl.artifact.verified_restore.v1",
+        "requires": "cl.req.021.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.flow.012.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.grafana.v1",
+        "artifact": "cl.artifact.sql_rows.v1",
+        "requires": "cl.req.016.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.flow.013.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.rule_observations.v1",
+        "requires": "cl.req.024.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.flow.014.v1",
+        "producer": "cl.node.grafana.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.protected_dashboard.v1",
+        "requires": "cl.req.016.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.flow.015.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.grafana.v1",
+        "artifact": "cl.artifact.local_authenticated_query.v1",
+        "requires": "cl.req.017.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.flow.016.v1",
+        "producer": "cl.node.alerts.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.notification.v1",
+        "requires": "cl.req.028.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.flow.017.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.rule_admin.v1",
+        "requires": "cl.req.028.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.flow.018.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.authorized_request.v1",
+        "requires": "cl.req.019.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.flow.019.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.selected_sql_rows.v1",
+        "requires": "cl.req.019.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.flow.020.v1",
+        "producer": "cl.node.archive.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.selected_typed_record.v1",
+        "requires": "cl.req.019.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.flow.021.v1",
+        "producer": "cl.node.exports.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.signed_manifest_and_data.v1",
+        "requires": "cl.req.019.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.flow.022.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.authorized_maintenance.v1",
+        "requires": "cl.req.021.v1",
+        "profile": "control"
+      }
+    ],
+    "edge_contracts": [
+      {
+        "id": "cl.edge.001.v1",
+        "flow": "cl.flow.001.v1",
+        "producer": "cl.node.cowork.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.logs.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.edge.002.v1",
+        "flow": "cl.flow.002.v1",
+        "producer": "cl.node.code.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.logs_metrics_traces.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.edge.003.v1",
+        "flow": "cl.flow.003.v1",
+        "producer": "cl.node.api.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.server_traces.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.edge.004.v1",
+        "flow": "cl.flow.004.v1",
+        "producer": "cl.node.sdk.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.client_traces.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.edge.005.v1",
+        "flow": "cl.flow.005.v1",
+        "producer": "cl.node.healthprobe.v1",
+        "consumer": "cl.node.collector.v1",
+        "artifact": "cl.artifact.synthetic.v1",
+        "profile": "source"
+      },
+      {
+        "id": "cl.edge.006.v1",
+        "flow": "cl.flow.006.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.archive.v1",
+        "artifact": "cl.artifact.typed_otlp.v1",
+        "profile": "preserve"
+      },
+      {
+        "id": "cl.edge.007.v1",
+        "flow": "cl.flow.007.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.clickhouse.v1",
+        "artifact": "cl.artifact.sql_projections.v1",
+        "profile": "index"
+      },
+      {
+        "id": "cl.edge.008.v1",
+        "flow": "cl.flow.008.v1",
+        "producer": "cl.node.collector.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.collector_health.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.edge.009.v1",
+        "flow": "cl.flow.009.v1",
+        "producer": "cl.node.archive.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.archival_segments.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.edge.010.v1",
+        "flow": "cl.flow.010.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.sql_snapshot.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.edge.011.v1",
+        "flow": "cl.flow.011.v1",
+        "producer": "cl.node.backups.v1",
+        "consumer": "cl.node.clickhouse.v1",
+        "artifact": "cl.artifact.verified_restore.v1",
+        "profile": "backup"
+      },
+      {
+        "id": "cl.edge.012.v1",
+        "flow": "cl.flow.012.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.grafana.v1",
+        "artifact": "cl.artifact.sql_rows.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.edge.013.v1",
+        "flow": "cl.flow.013.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.rule_observations.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.edge.014.v1",
+        "flow": "cl.flow.014.v1",
+        "producer": "cl.node.grafana.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.protected_dashboard.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.edge.015.v1",
+        "flow": "cl.flow.015.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.grafana.v1",
+        "artifact": "cl.artifact.local_authenticated_query.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.edge.016.v1",
+        "flow": "cl.flow.016.v1",
+        "producer": "cl.node.alerts.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.notification.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.edge.017.v1",
+        "flow": "cl.flow.017.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.alerts.v1",
+        "artifact": "cl.artifact.rule_admin.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.edge.018.v1",
+        "flow": "cl.flow.018.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.authorized_request.v1",
+        "profile": "control"
+      },
+      {
+        "id": "cl.edge.019.v1",
+        "flow": "cl.flow.019.v1",
+        "producer": "cl.node.clickhouse.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.selected_sql_rows.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.edge.020.v1",
+        "flow": "cl.flow.020.v1",
+        "producer": "cl.node.archive.v1",
+        "consumer": "cl.node.exports.v1",
+        "artifact": "cl.artifact.selected_typed_record.v1",
+        "profile": "query"
+      },
+      {
+        "id": "cl.edge.021.v1",
+        "flow": "cl.flow.021.v1",
+        "producer": "cl.node.exports.v1",
+        "consumer": "cl.node.reporter.v1",
+        "artifact": "cl.artifact.signed_manifest_and_data.v1",
+        "profile": "notice"
+      },
+      {
+        "id": "cl.edge.022.v1",
+        "flow": "cl.flow.022.v1",
+        "producer": "cl.node.reporter.v1",
+        "consumer": "cl.node.backups.v1",
+        "artifact": "cl.artifact.authorized_maintenance.v1",
+        "profile": "control"
+      }
+    ],
+    "edge_profiles": {
+      "source": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Canonical typed schema/version checks; reject incompatible fields or signals",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Emitter must be configured for supported signal, plan/client version and content mode",
+        "authorization": "Validated producer bearer/mTLS if enabled; no anonymous ingress",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Typed rejection/defer/recovery; unknown effects are not treated as completed",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      },
+      "preserve": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Preserve semantic OTLP AnyValue types, not guaranteed inbound HTTP byte identity",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Authenticated sender plus consumer-specific permitted use and local roles",
+        "lifecycle": "Append typed segments, rotate, checksum, hold and restore",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Typed rejection/defer/recovery; unknown effects are not treated as completed",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      },
+      "index": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "SQL indexed view plus source archive reference and explicit conversion indicators",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Authenticated sender plus consumer-specific permitted use and local roles",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Ambiguous insert/de-dup outcome must be reconciled using observation identity",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      },
+      "query": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Canonical typed schema/version checks; reject incompatible fields or signals",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Read-only ClickHouse datasource; role and bounded filter required",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Typed rejection/defer/recovery; unknown effects are not treated as completed",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Bound query time range, row count, concurrency and export size"
+      },
+      "control": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Canonical typed schema/version checks; reject incompatible fields or signals",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Local authorized actor; viewer commands cannot change protected settings",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Typed rejection/defer/recovery; unknown effects are not treated as completed",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      },
+      "notice": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Canonical typed schema/version checks; reject incompatible fields or signals",
+        "provenance": "Authenticated origin and staged custody/digest; payload possession is not trust",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Authenticated sender plus consumer-specific permitted use and local roles",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "Failed notification remains failed/unknown, never marked delivered",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      },
+      "backup": {
+        "identity": "Exact source, consumer, subject and artifact identity; no name-only substitution",
+        "schema": "Canonical typed schema/version checks; reject incompatible fields or signals",
+        "provenance": "Verified snapshot identity across archive, SQL and Grafana state",
+        "applicability": "Only supported source profile, current policy revision and qualifying context",
+        "authorization": "Authenticated sender plus consumer-specific permitted use and local roles",
+        "lifecycle": "Versioned stage and terminal statuses; retries and uncertainty explicit",
+        "freshness": "Current source, policy, contract and receipt identity; reject stale observations",
+        "failure": "No partial restore or unverified import",
+        "invalidation": "Revalidate affected outputs when source/schema/role/contract/custody changes",
+        "cost": "Payload limits, bounded concurrency/time/retries, no duplicate expensive work"
+      }
+    },
+    "exclusion": {
+      "bcf_reason": "no_dependency_or_event_path",
+      "law": "cl.law.edge.v1",
+      "predicate": "Pairs outside independently source-derived mandatory flows; a missing mandatory flow is never an exclusion",
+      "population": "all ordered pairs including self",
+      "authority": "candidate application transport only, not BCF CI graph"
+    }
+  },
+  "appliance": {
+    "deployment": "single-host Linux Docker Compose with persistent volumes",
+    "source_users": {
+      "min": 12,
+      "max": 24
+    },
+    "report_users": {
+      "min": 2,
+      "max": 4
+    },
+    "core_components": [
+      "OpenTelemetry Collector contrib, authenticated OTLP, persisted queue",
+      "ClickHouse OSS SQL store",
+      "Grafana OSS plus ClickHouse read-only datasource and alerts",
+      "typed OTLP local file archive/manifest",
+      "backup/restore and installation runbooks"
+    ],
+    "host_owned": [
+      "DNS, public ingress routing, TLS certificate issuance and renewal, firewall"
+    ],
+    "capture_modes": {
+      "primary": "source-enabled prompts, responses, tool-input and available tool-output content",
+      "raw_api_bodies": "off unless separately approved",
+      "unsupported_content": "explicit metadata-only/truncated/unavailable indicators"
+    },
+    "storage": {
+      "target_days": 365,
+      "approved_fallback_days": 90,
+      "minimum_days": 31,
+      "automatic_degradation": false,
+      "protected_exports": true
+    },
+    "cost": "no license fees; self-host infrastructure/storage still costs money",
+    "network": {
+      "default": "restricted local ingress and authenticated reporting",
+      "remote": "optional HTTPS OTLP endpoint on host port 443 with host-owned TLS"
+    },
+    "risks": [
+      "API export best-effort may drop spans",
+      "Cowork metadata-only on some web/cloud sessions",
+      "Code tool output can omit files/binary results and truncate content",
+      "Collector ClickHouse metrics exporter alpha; qualification needed",
+      "Grafana OSS does not provide Enterprise audit completeness"
+    ]
+  },
+  "scope": {
+    "included": [
+      "Cowork/Claude eligible chats",
+      "Claude Code",
+      "instrumented Claude SDK and server API traces",
+      "actual observed tool, skill, MCP, connector and artifact metadata",
+      "observed user prompts and assistant responses",
+      "SQL reports, dashboards, alerts, archival, backup"
+    ],
+    "excluded": [
+      "compliance API ingestion in MVP",
+      "identity provider integration",
+      "claim of all chat/artifact content completeness",
+      "certified WORM/SEC recordkeeping",
+      "intercepting or blocking Anthropic activity",
+      "premium managed services"
+    ]
+  },
+  "verification": {
+    "state": "proposed_tests_not_executed",
+    "required_negative_mutations": [
+      "delete source route and matching contract",
+      "alter exclusion reason",
+      "delete transition contract",
+      "forge source identity",
+      "truncate raw typed attribute",
+      "label metadata-only as full",
+      "allow viewer write",
+      "reuse stale evidence",
+      "report source silence as proven inactivity",
+      "unsafe CSV formula",
+      "fail alert delivery silently"
+    ],
+    "admission": "BCF-authorized exact evidence required; local tests cannot confer verified/closed or release authority"
+  },
+  "open_questions": [
+    {
+      "id": "cl.discovery.source",
+      "owner": "cl.owner.source.v1",
+      "issue": "Confirm firm Anthropic plan, rollout, desktop and Code versions, source enrollment and actual content flags",
+      "blocks": "Claims of full content coverage"
+    },
+    {
+      "id": "cl.discovery.capacity",
+      "owner": "cl.owner.deployment.v1",
+      "issue": "Measure actual content bytes/day in 12–24-user cohort and disk space",
+      "blocks": "365/90/31-day retention capacity qualification"
+    },
+    {
+      "id": "cl.discovery.metrics",
+      "owner": "cl.owner.storage.v1",
+      "issue": "Qualify alpha ClickHouse exporter metrics against histograms, deltas and typed data",
+      "blocks": "Metric-specific execution admission"
+    },
+    {
+      "id": "cl.discovery.oss_audit",
+      "owner": "cl.owner.security.v1",
+      "issue": "Review Grafana OSS audit limitations and approved operational audit floor",
+      "blocks": "Specific audit claims"
+    },
+    {
+      "id": "cl.discovery.remote",
+      "owner": "cl.owner.ingress.v1",
+      "issue": "Operator must supply and verify DNS, host certificate and external port 443",
+      "blocks": "Public API destination live test"
+    }
+  ],
+  "bcf": {
+    "runtime": "v2.3.6",
+    "current_profile": "lite",
+    "target_profile_contract": "standard/3.0",
+    "persistent_controller": false,
+    "root_sources": [
+      "AGENTS.yml",
+      "plans/product-spec.yml",
+      "plans/build-plan.yml",
+      "plans/phase-ledger.yml",
+      "governance/ci-graph.yml",
+      "governance/canonical-representations.yml",
+      "governance/gate-contracts.yml"
+    ],
+    "schema_refs": [
+      "schemas/application-operations.schema.json",
+      "schemas/canonical-representations.schema.json",
+      "schemas/evidence-receipt.schema.json",
+      "schemas/reuse-attestation.schema.json"
+    ],
+    "adoption_status": "proposal only; do not overwrite root BCF registries or author verified/closed"
+  }
+}
