@@ -4,7 +4,7 @@ document:
   id: "clauditor-memory"
   version: 1.0.0
   generated_at_utc: "2026-10-23T00:00:00Z"
-  status: active
+  status: paused
   path: MEMORY.yml
 regression_shield:
   purpose: keep this file as durable project memory, not as an execution transcript
@@ -61,11 +61,11 @@ environment_facts:
     active_workitem_ledger: plans/phase-01-workitems.yml
     active_phase_log: phases/phase-01-log.yml
 known_constraints:
-  - User authorizes construction through genuine Standard 3.0 eligibility; verify promotion, push origin, then stop.
+  - Paused by owner after Standard 3.0 promotion and provider verification; branch pushed, next construction requires a new task.
   - All 45 construction packets remain not_admitted; canonical phase records own execution state.
   - Pinned BCF 2.3.6 Standard contract 3.0 applied; 20 gates and all three semantic capabilities are blocking.
   - Synthetic OTLP archive/SQL and restart smoke passes; full MVP and live source coverage remain planned.
-  - See audits/standard-v3-readiness.yml for exact prerequisites and phase-01-log.yml for observations.
+  - Verified candidate 942b33bca0778f05327e8ead0eed6bb4b9eaea86; provider run 40040332045. See audits/standard-v3-readiness.yml.
   - replace fail-closed release command placeholders before first release gate
   - update architecture-boundaries.yml when source roots or layer names differ from the starter layout
   - specialize repo_identity_provider and repo_observability_backend in the observability contracts before production use

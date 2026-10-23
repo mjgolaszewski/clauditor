@@ -4,7 +4,7 @@ document:
   id: clauditor-phase-ledger
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: active_phase_active
+  status: active_phase_paused
   path: plans/phase-ledger.yml
 build_plan_mandate:
   format: yaml
@@ -24,7 +24,7 @@ active_phase:
   memory: MEMORY.yml
   spec: plans/product-spec.yml
   build_plan: plans/build-plan.yml
-  lifecycle_status: active
+  lifecycle_status: paused
   owner: codex
   validation_commands:
   - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
@@ -32,6 +32,8 @@ active_phase:
   - .venv/bin/python scripts/check_build_plan.py --self-test
   - make governance-validate
   - make governance-exposure-scan
+  paused_reason: Owner requested stop after Standard 3.0 promotion verification and push.
+  resume_condition: Owner assigns the next construction task.
 hotfix_lane:
   scaffold_script: scripts/scaffold_governance_artifacts.py
   default_mode: full
@@ -52,14 +54,12 @@ operator_requirements_choices_disambiguations:
 - type: decision
   statement: all governance, memory, specs, plans, workitem ledgers, and phase logs remain YAML-native
 - type: authorization
-  statement: Adopt canonical roadmap; attempt Standard profile contract 3.0 before substantial construction, then pause. If
-    actual prerequisites require construction, stop and report blockers.
+  statement: Adopt canonical roadmap; attempt Standard profile contract 3.0 before substantial construction, then pause. If actual prerequisites require construction, stop and report blockers.
 - type: authorization
-  statement: User now authorizes construction through genuine Standard-v3 promotion eligibility, promotion and verification,
-    push to origin, then end turn. No product release.
+  statement: User now authorizes construction through genuine Standard-v3 promotion eligibility, promotion and verification, push to origin, then end turn. No product release.
 active_delivery_priorities:
   current_tranche:
-  - Construct and test the smallest qualification slice; promote and verify Standard 3.0, push origin, then stop.
+  - Paused after verified Standard 3.0 promotion; no further construction, deployment or release.
 release_trains:
   release_1:
     target_version: 0.2.0

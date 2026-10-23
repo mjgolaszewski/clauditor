@@ -28,15 +28,13 @@ workitems:
   - contract-test
 - id: P01-P0-03
   priority: P0
-  status: IN_PROGRESS
+  status: DONE
   summary: Qualify and promote Standard profile contract 3.0 before substantial construction, then pause
   acceptance:
   - requires-workitem-closure:P01-P0-02
-  - Pinned BCF 2.3.6, real required gates and causal negatives, actual semantic inventory, claim model and runner/provider
-    authority qualify.
+  - Pinned BCF 2.3.6, real required gates and causal negatives, actual semantic inventory, claim model and runner/provider authority qualify.
   - Canonical promote --check then matching --apply succeed; reconciliation and CI graph/provider checks pass.
   - Immediately pause after successful verified promotion; do not activate application construction.
-  - Latest user authorization permits the minimum actual construction needed for eligibility; verify promotion then push origin
-    and stop.
+  - Latest user authorization permits the minimum actual construction needed for eligibility; verify promotion then push origin and stop.
   acceptance_evidence:
   - contract-test

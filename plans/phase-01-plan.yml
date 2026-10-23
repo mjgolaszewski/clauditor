@@ -4,7 +4,7 @@ document:
   id: clauditor-phase-01-plan
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: active
+  status: paused
   path: plans/phase-01-plan.yml
 phase:
   id: P01
@@ -26,22 +26,17 @@ delivery_contract:
   - id: P01-WS1
     name: Qualified dependency-first packets; isolated resources and no overlapping write roots
   hard_dependencies: []
-  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
-    checks
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning checks
   completeness_standard: full_completeness_for_declared_scope
 scope_lock:
 - order: 1
-  statement: Latest user authorization permits minimum actual construction needed for genuine Standard-v3 eligibility, promotion,
-    verification and push; stop after success. Full MVP remains planned.
+  statement: Latest user authorization permits minimum actual construction needed for genuine Standard-v3 eligibility, promotion, verification and push; stop after success. Full MVP remains planned.
 - order: 2
-  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
-    references. (non-authoritative planned output; capture exact digest before use)
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log references. (non-authoritative planned output; capture exact digest before use)
 - order: 3
-  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
-    governance-validate alone cannot accept product behavior.
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution; governance-validate alone cannot accept product behavior.
 - order: 4
-  statement: 'Qualification cut: archive domain/decoder/port/query/CLI, isolated native Collector/ClickHouse runtime, scoped
-    real tests/security gates and canonical BCF configs; no full product release or hand-edited workflows.'
+  statement: 'Qualification cut: archive domain/decoder/port/query/CLI, isolated native Collector/ClickHouse runtime, scoped real tests/security gates and canonical BCF configs; no full product release or hand-edited workflows.'
 verification_plan:
 - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
 - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test

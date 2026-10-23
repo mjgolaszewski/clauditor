@@ -1,7 +1,7 @@
 document:
   kind: planning_review
   id: clauditor-preconstruction-review
-  status: local_observations_not_bcf_evidence
+  status: promotion_verified_construction_paused
   path: audits/standard-v3-readiness.yml
 authority: User authorizes canonical planning, specification repairs and bounded qualification; stop before substantial construction.
 baseline_commit: 48ffb9f70be0dd7d4d1b2d142fc3873bface97ec
@@ -17,47 +17,43 @@ amendments:
   negative_control: retry_without_archive_success
 - id: CL-REVIEW-002
   before: Runtime evidence/report outputs mixed with test sources
-  after: Runtime outputs in .artifacts/clauditor/<order>/ with durable phase references; non-authoritative until exact evidence capture # non-authoritative until captured by BCF
+  after: Runtime outputs in .artifacts/clauditor/<order>/ with durable phase references; non-authoritative until exact evidence capture
   paths:
     tests/e2e/first-vertical/report.json:
-      path: .artifacts/clauditor/CL-WO-027/report.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-027/report.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
     tests/conformance/source/evidence.json:
-      path: .artifacts/clauditor/CL-WO-037/evidence.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-037/evidence.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
     tests/security/hostile-input/evidence.json:
-      path: .artifacts/clauditor/CL-WO-038/evidence.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-038/evidence.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
     tests/reliability/chaos/evidence.json:
-      path: .artifacts/clauditor/CL-WO-039/evidence.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-039/evidence.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
     tests/alerts/integration/evidence.json:
-      path: .artifacts/clauditor/CL-WO-040/evidence.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-040/evidence.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
     tests/e2e/compliance-workflow/report.json:
-      path: .artifacts/clauditor/CL-WO-041/report.json # non-authoritative until captured by BCF
+      path: .artifacts/clauditor/CL-WO-041/report.json # non-authoritative local artifact; provider proof is linked separately
       authority: non-authoritative planned output
   negative_control: evidence_in_test_tree
 promotion:
-  status: applied_verification_in_progress
+  status: applied_provider_verified
   initial_check: 'profile gate set mismatch: 17 missing executable gates'
   remaining:
-  - Execute all canonical gates and causal controls on the committed promoted candidate.
-  - Obtain provider-backed CI for the exact pushed candidate.
-  - Full MVP, live-provider coverage, Grafana reporting, production retention/capacity and release remain planned.
+  - Full MVP, live-provider coverage, dashboards/alerts, production retention/capacity, container OS-package scanning and release remain planned.
   semantic_scaffold:
     source_files: 297
     discovered_types: 248
-    unresolved: human_semantic_classification_required
-    missing_canonical_artifacts:
-    - governance/semantic-families.yml
-    - governance/application-operations.yml
-    note: Existing canonical representations preserved; no invented product symbols or N/A classifications.
+    unresolved: resolved_for_actual_qualification_source
+    missing_canonical_artifacts: []
+    note: Historical pre-promotion inventory; resolved by current_semantic_inventory.
     scope: Declared source inventory only; not full application semantic qualification.
   additional_prerequisites:
   - Profile check and apply succeeded with 20 real gates, claim/interpreter contracts and blocking semantic capabilities.
   - Generated CI is reconciled with an explicit hosted Docker qualification lane and exact run-attempt fan-in.
-  - Final exact-subject gate capture and provider verification are in progress.
+  - Exact-subject positive/negative receipts and terminal truth passed on the provider.
   initial_missing_gates:
   - architecture-context-membership
   - architecture-cqrs-side
@@ -92,7 +88,29 @@ provider_observations:
     push: true
     triage: true
   baseline_commit_status_contexts: []
-  limitation: Read-only GitHub connector observation; no status contexts does not enumerate Actions checks. No provider-backed proof exists for these unpushed changes.
+  limitation: Provider-backed PR qualification only; optional CI authority certification remains absent and no release is approved.
+  candidate_commit: 942b33bca0778f05327e8ead0eed6bb4b9eaea86
+  workflow_run: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045
+  result: success
+  uploaded_artifacts:
+  - name: bcf-evidence-40040332045-1-shard-1
+    digest: sha256:c60e9bbb43ece387c4a512345b5547b0fa66fa0bf62f3933b65405d94e500e01
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539451123
+  - name: bcf-evidence-40040332045-1-shard-0
+    digest: sha256:c3e28d6c99ab42d0389e364ba07304b1f3ad2040f44bed41a6069f79cb5bfd9e
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539430912
+  - name: bcf-governance-truth-40040332045-1
+    digest: sha256:68bfba900f2a7706444b164837b83d7702d09e1f0019a860f4fdb5211e2aab9d
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12539355919
+  - name: bcf-evidence-40040332045-1-shard-3
+    digest: sha256:207faa34c5f10e5628dd822164b502e4c85d7061db10a1577bca52c6721d7159
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538762944
+  - name: bcf-evidence-40040332045-1-shard-2
+    digest: sha256:6f27506223a59e6504338cc255a08b35a84d89e461f5badc2c9a58a0fc03b7de
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12538613967
+  - name: bcf-session-40040332045-1
+    digest: sha256:abdfe5374eeb731b0a70d915fd645840384ebc10f126a664d2c559b346d9c4d8
+    url: https://github.com/mjgolaszewski/clauditor/actions/runs/40040332045/artifacts/12537964864
 scope_boundary:
   substantial_construction_started: true
   promotion_apply_attempted: true
@@ -100,7 +118,7 @@ scope_boundary:
   released: false
   generated_workflow_edited: false
   persistent_controller_added: false
-  success_pause_reached: false
+  success_pause_reached: true
   stop_reason: User authorized construction through eligibility; stop after verified promotion and push. Full MVP remains planned.
 agentbus:
   identity: home:clauditor:disco-inferno
@@ -113,31 +131,31 @@ local_checks:
   exit_code: 0
   result: passed; local non-authoritative observation
   record:
-    path: .artifacts/standard-v3/spec-self-test.json # non-authoritative until captured by BCF
+    path: .artifacts/standard-v3/spec-self-test.json # non-authoritative local artifact; provider proof is linked separately
     sha256: f92dc9139940a02a92dbc3124ccd6ae71f06ffe6bd79b6ad9529240e55dfd81c
 - command: .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
   exit_code: 0
   result: passed; local non-authoritative observation
   record:
-    path: .artifacts/standard-v3/construction-self-test.json # non-authoritative until captured by BCF
+    path: .artifacts/standard-v3/construction-self-test.json # non-authoritative local artifact; provider proof is linked separately
     sha256: 4d779fd2a6d1d78a17e8e2dfdf172b2170afb1754d4fcb93491afbd26e616616
 - command: .venv/bin/python scripts/check_build_plan.py --self-test
   exit_code: 0
   result: passed; local non-authoritative observation
   record:
-    path: .artifacts/standard-v3/canonical-plan-self-test.json # non-authoritative until captured by BCF
+    path: .artifacts/standard-v3/canonical-plan-self-test.json # non-authoritative local artifact; provider proof is linked separately
     sha256: cddf4ede2e2bb3522f5f9ed7d1035f65c319ca01e819d1c26e4435f5e57e4574
-- command: .venv/bin/bcf semantic-ownership --repo-root . --output .artifacts/semantic-ownership/report.json # non-authoritative until captured by BCF
+- command: .venv/bin/bcf semantic-ownership --repo-root . --output .artifacts/semantic-ownership/report.json # non-authoritative local artifact; provider proof is linked separately
   exit_code: 0
   result: passed; local non-authoritative observation
   record:
-    path: .artifacts/standard-v3/semantic-scan.json # non-authoritative until captured by BCF
+    path: .artifacts/standard-v3/semantic-scan.json # non-authoritative local artifact; provider proof is linked separately
     sha256: 5e859aa1bedffbe567fd315e875634e28bc6ae4a77bb802d741c01c4f19b371d
 - command: .venv/bin/bcf profile promote --repo-root . --to standard --contract-version 3.0 --check
   exit_code: 1
   result: blocked; no apply performed
   record:
-    path: .artifacts/standard-v3/promotion-check.json # non-authoritative until captured by BCF
+    path: .artifacts/standard-v3/promotion-check.json # non-authoritative local artifact; provider proof is linked separately
     sha256: 930f4a1c5e7bc6efba48e5d695c2ababa7caace2c3d77d2a691ee924f11eda42
 qualification_slice:
   runtime: Pinned Collector v0.148.0, ClickHouse 26.3 and Python volume-init helper; synthetic isolated tests only.

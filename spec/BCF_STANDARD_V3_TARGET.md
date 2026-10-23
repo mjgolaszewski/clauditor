@@ -1,6 +1,6 @@
 # BCF Standard-v3 target: ordinary adopter, no persistent controller
 
-**Status:** Standard profile contract 3.0 applied to the bounded qualification slice; exact-subject/provider verification is in progress. This is not full product acceptance or release certification.
+**Status:** Standard profile contract 3.0 promoted and provider-verified for the bounded qualification slice; construction is paused. This is not full product acceptance or release certification.
 
 **Canonical source:** [BCF Governance](https://github.com/mjgolaszewski/bcf-governance), verified at upstream `main` commit `e39d72a0b0e2e849317e284a674848bbb7fcf000` on 2026-10-23. **Pin for bootstrap:** immutable `v2.3.6` release and its wheel digest recorded in `docs/BOOTSTRAP.md`. No repo-local reinterpretation of BCF schemas, lifecycle states, or provider authority is authorized.
 
@@ -68,12 +68,12 @@ The next agent/developer task should complete and record these in BCF's *install
 - [x] The seed was committed at a clean Git HEAD.
 - [x] Canonical BCF v2.3.6 wheel digest was authenticated and Lite was installed with strict validation.
 - [x] `bcf validate` and `bcf exposure-scan` passed during canonical Lite installation; initial Lite artifacts and the generated workflow were committed.
-- [ ] The GitHub repository is confirmed **public** and contains the hero and this README.
+- [x] The GitHub repository is confirmed **public** and contains the hero and this README.
 - [ ] Product invariants, operations, and source/sink scope are approved.
 - [x] Standard-v3 gate and actual-source semantic configs are complete and accepted by the canonical promotion checker (not an independent release review).
 - [x] `bcf profile promote ... --check` passed and the matching `--apply` succeeded.
-- [ ] `bcf reconcile --repo-root . --check` and `bcf ci graph validate/audit` pass after any canonical apply/reconciliation.
+- [x] `bcf reconcile --repo-root . --check` and `bcf ci graph validate/audit` pass after any canonical apply/reconciliation.
 - [x] No persistent controller or self-governance overlay was introduced.
 - [ ] Provider-backed CI adoption and protection, if chosen, are explicitly reviewed; no fabricated `verified`, `closed`, or release claims.
 
-**Current stop point:** the owner authorized construction through genuine promotion eligibility. Verify the applied profile and exact candidate, push origin, then stop; do not proceed to full MVP construction or release.
+**Current stop point:** Standard 3.0 was promoted and provider-verified; construction is paused by owner request. The qualification branch is pushed. Full MVP construction and release require subsequent work.
