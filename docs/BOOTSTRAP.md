@@ -19,8 +19,7 @@ The repository's initial bootstrap workflow invokes
 downloads the immutable BCF wheel, independently checks its exact digest,
 installs the canonical BCF pack in a local ignored virtual environment,
 runs strict Lite validation and exposure scan, and commits only the
-canonical generated outputs. The workflow retires itself in the successful
-bootstrap commit, so it does not become a persistent writer/controller.
+canonical generated outputs. The initial bootstrap passed canonical strict Lite validation, but the GitHub Actions token could not itself introduce the generated governance workflow. The generated workflow bytes were therefore staged and admitted through the authenticated repository connection, which then removed the one-time bootstrap workflow. No persistent bootstrap writer remains.
 
 The workflow is not itself proof that the install succeeded. Check the
 latest `main` contents for `governance-profile.yml` with
