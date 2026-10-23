@@ -1,0 +1,232 @@
+{
+  "document": {
+    "id": "cl.source_registry.v1",
+    "date": "2026-10-23",
+    "kind": "owner_and_canonical_external_sources"
+  },
+  "sources": [
+    {
+      "id": "U01",
+      "reference": "Owner scope: Cowork/chat, prompts/responses/tools, skills/connectors/artifacts and later Claude Code inclusion (2026-10-23)"
+    },
+    {
+      "id": "U02",
+      "reference": "Owner scope: OTLP MVP, future Compliance API connector only"
+    },
+    {
+      "id": "U03",
+      "reference": "Owner: content-bearing prompt, response, tool input/output primary; raw API bodies not auto-enabled"
+    },
+    {
+      "id": "U04",
+      "reference": "Owner: backup compliance/dashboard/reporting; 365/90/31-day horizon"
+    },
+    {
+      "id": "U07",
+      "reference": "Owner: host-managed DNS/certificate/network; local and external optional ingress"
+    },
+    {
+      "id": "U08",
+      "reference": "Owner: Linux Docker single tenant, 12–24 emitters and 2–4 viewers"
+    },
+    {
+      "id": "U09",
+      "reference": "Owner: local admin/reviewer accounts, IdP deferred"
+    },
+    {
+      "id": "U10",
+      "reference": "Owner: avoid custom functionality when OSS covers it"
+    },
+    {
+      "id": "U11",
+      "reference": "Owner: SQL ClickHouse with no license fee"
+    },
+    {
+      "id": "U12",
+      "reference": "Owner: extensive alerts"
+    },
+    {
+      "id": "ACW",
+      "reference": "https://claude.com/docs/cowork/monitoring"
+    },
+    {
+      "id": "ACWH",
+      "reference": "https://support.claude.com/en/articles/14477985-monitor-claude-cowork-activity-with-opentelemetry"
+    },
+    {
+      "id": "ACC",
+      "reference": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "AAPI",
+      "reference": "https://platform.claude.com/docs/en/manage-claude/opentelemetry/api"
+    },
+    {
+      "id": "ASDK",
+      "reference": "https://platform.claude.com/docs/en/manage-claude/opentelemetry/sdk"
+    },
+    {
+      "id": "OTLP",
+      "reference": "https://opentelemetry.io/docs/specs/otlp/"
+    },
+    {
+      "id": "OTRES",
+      "reference": "https://opentelemetry.io/docs/collector/resiliency/"
+    },
+    {
+      "id": "FILE",
+      "reference": "https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/fileexporter/README.md"
+    },
+    {
+      "id": "CH",
+      "reference": "https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/clickhouseexporter/README.md"
+    },
+    {
+      "id": "GF",
+      "reference": "https://grafana.com/docs/plugins/grafana-clickhouse-datasource/latest/"
+    },
+    {
+      "id": "GFSEC",
+      "reference": "https://grafana.com/docs/plugins/grafana-clickhouse-datasource/latest/configure/"
+    },
+    {
+      "id": "BCF",
+      "reference": "https://github.com/mjgolaszewski/bcf-governance/releases/tag/v2.3.6"
+    }
+  ],
+  "independent_required_source_edges": [
+    {
+      "producer": "cl.node.cowork.v1",
+      "consumer": "cl.node.collector.v1",
+      "source_ref": "ACW",
+      "signals": [
+        "logs"
+      ]
+    },
+    {
+      "producer": "cl.node.code.v1",
+      "consumer": "cl.node.collector.v1",
+      "source_ref": "ACC",
+      "signals": [
+        "logs",
+        "metrics",
+        "traces_when_enabled"
+      ]
+    },
+    {
+      "producer": "cl.node.api.v1",
+      "consumer": "cl.node.collector.v1",
+      "source_ref": "AAPI",
+      "signals": [
+        "traces"
+      ]
+    },
+    {
+      "producer": "cl.node.sdk.v1",
+      "consumer": "cl.node.collector.v1",
+      "source_ref": "ASDK",
+      "signals": [
+        "traces_when_instrumented"
+      ]
+    },
+    {
+      "producer": "cl.node.healthprobe.v1",
+      "consumer": "cl.node.collector.v1",
+      "source_ref": "U08",
+      "signals": [
+        "synthetic_health"
+      ]
+    }
+  ],
+  "independent_required_safety_edges": [
+    {
+      "producer": "cl.node.collector.v1",
+      "consumer": "cl.node.archive.v1",
+      "source_ref": "U03"
+    },
+    {
+      "producer": "cl.node.collector.v1",
+      "consumer": "cl.node.clickhouse.v1",
+      "source_ref": "U11"
+    },
+    {
+      "producer": "cl.node.clickhouse.v1",
+      "consumer": "cl.node.grafana.v1",
+      "source_ref": "U10"
+    },
+    {
+      "producer": "cl.node.clickhouse.v1",
+      "consumer": "cl.node.alerts.v1",
+      "source_ref": "U12"
+    },
+    {
+      "producer": "cl.node.archive.v1",
+      "consumer": "cl.node.backups.v1",
+      "source_ref": "U04"
+    },
+    {
+      "producer": "cl.node.clickhouse.v1",
+      "consumer": "cl.node.backups.v1",
+      "source_ref": "U04"
+    },
+    {
+      "producer": "cl.node.alerts.v1",
+      "consumer": "cl.node.reporter.v1",
+      "source_ref": "U12"
+    },
+    {
+      "producer": "cl.node.reporter.v1",
+      "consumer": "cl.node.exports.v1",
+      "source_ref": "U04"
+    }
+  ],
+  "independent_transition_population": [
+    {
+      "machine": "cl.machine.ingest.v1",
+      "required_transition_ids": [
+        "cl.transition.ingest.01.v1",
+        "cl.transition.ingest.02.v1",
+        "cl.transition.ingest.03.v1",
+        "cl.transition.ingest.04.v1",
+        "cl.transition.ingest.05.v1",
+        "cl.transition.ingest.06.v1",
+        "cl.transition.ingest.07.v1"
+      ]
+    },
+    {
+      "machine": "cl.machine.content.v1",
+      "required_transition_ids": [
+        "cl.transition.content.01.v1",
+        "cl.transition.content.02.v1",
+        "cl.transition.content.03.v1",
+        "cl.transition.content.04.v1",
+        "cl.transition.content.05.v1",
+        "cl.transition.content.06.v1",
+        "cl.transition.content.07.v1"
+      ]
+    },
+    {
+      "machine": "cl.machine.alert.v1",
+      "required_transition_ids": [
+        "cl.transition.alert.01.v1",
+        "cl.transition.alert.02.v1",
+        "cl.transition.alert.03.v1",
+        "cl.transition.alert.04.v1",
+        "cl.transition.alert.05.v1",
+        "cl.transition.alert.06.v1"
+      ]
+    },
+    {
+      "machine": "cl.machine.export.v1",
+      "required_transition_ids": [
+        "cl.transition.export.01.v1",
+        "cl.transition.export.02.v1",
+        "cl.transition.export.03.v1",
+        "cl.transition.export.04.v1",
+        "cl.transition.export.05.v1",
+        "cl.transition.export.06.v1"
+      ]
+    }
+  ],
+  "scope_reconstruction_rule": "The independent source/transition obligations are authored against owner decisions and public emitter docs; deleting candidate routes and their edge contracts cannot eliminate these obligations. Changing this registry requires an owner-reviewed normative amendment."
+}

@@ -1,19 +1,11 @@
-# Approved Clauditor hero — binary publication pending
+# Clauditor hero — current repository source
 
-The project owner supplied the final, corrected Clauditor hero PNG on
-2026-10-23. This record supersedes all previous hero drafts.
-
-- Intended repository path: `docs/assets/clauditor-hero.png`
-- Original file: `clauditor_hero_final_verified(1).png`
-- Format: PNG, RGB
-- Dimensions: 1983 × 793 px
-- Size: 1,701,442 bytes
-- **SHA-256:** `a0ad59fd24badf1e630ba632a427df9a2f9c408dfd3a2605847c05276110c764`
-- Publication status: **pending exact binary upload** (the GitHub connector
-  available for this task could commit ordinary files but did not support
-  uploading the raw PNG bytes from the conversation attachment).
-
-Do not substitute a previous generated image, compressed preview, or redrawn
-approximation. After uploading the PNG, confirm its SHA-256 matches exactly
-and the README image resolves from the canonical path above. This document
-is not a BCF validation receipt or a claim of product implementation.
+The owner correctly uploaded the final hero to
+[assets/clauditor-hero.png](../../assets/clauditor-hero.png).
+The current Git blob on the owner-confirmed baseline
+`6fc4c5913f10f33d84f310ef1ca13e7da98a22b0` is
+`76207a0a296670b38183a869517a96e7a7e3bdfb`
+(1,700,151 bytes). Git object identity here is provenance of the
+repository file, not a newly established image-content hash or external
+design approval. The earlier copy/hash/pending-upload instructions in
+this location are obsolete. Do not overwrite the owner-uploaded asset.

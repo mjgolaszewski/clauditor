@@ -1,0 +1,39 @@
+{
+  "id": "cl.bcf.binding.v1",
+  "status": "candidate_not_root_adopted",
+  "runtime": "v2.3.6",
+  "profile": "lite",
+  "target_contract": "3.0",
+  "persistent_controller": false,
+  "root_owned": {
+    "product_intent": "plans/product-spec.yml",
+    "policy": "AGENTS.yml",
+    "delivery": "plans/build-plan.yml",
+    "semantic": "governance/canonical-representations.yml",
+    "operation": "governance/application-operations.yml",
+    "ci": "governance/ci-graph.yml",
+    "evidence": "schemas/evidence-receipt.schema.json",
+    "truth": "scripts/governance_truth.py"
+  },
+  "referenced_schemas": [
+    "schemas/application-operations.schema.json",
+    "schemas/canonical-representations.schema.json",
+    "schemas/evidence-receipt.schema.json",
+    "schemas/reuse-attestation.schema.json"
+  ],
+  "application_graph": "model.json#/topology; not the BCF CI job graph",
+  "forbidden": [
+    "controller installation or rotation",
+    "editing generated workflow YAML",
+    "authored verified or closed states",
+    "local candidate verifier conferring BCF admission",
+    "replacing root registries without preservation"
+  ],
+  "adoption_pending": [
+    "owner review",
+    "current schema mapping",
+    "root registry reconciliation",
+    "actual executable profile gates and negative controls",
+    "BCF Standard v3 promotion check then apply when fully qualified"
+  ]
+}

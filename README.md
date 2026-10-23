@@ -1,7 +1,7 @@
 # Clauditor
 
 <p align="center">
-  <img src="docs/assets/clauditor-hero.png" alt="Clauditor — OpenTelemetry observability and audit for Anthropic" width="960">
+  <img src="assets/clauditor-hero.png" alt="Clauditor — OpenTelemetry observability and audit for Anthropic" width="960">
 </p>
 
 <p align="center"><strong>Every invocation leaves evidence.</strong></p>
@@ -26,6 +26,10 @@ See [the scoped Standard-v3 target](spec/BCF_STANDARD_V3_TARGET.md) and [bootstr
 
 <br clear="right">
 
+## Product target
+
+The MVP is a **single-tenant, self-hosted Linux Docker Compose appliance** for an RIA compliance administrator, covering eligible Cowork/Claude sessions, Claude Code, Anthropic API traces and instrumented SDK traces. It aims to retain source-emitted prompts, responses, tools, skills, connectors and artifacts, with explicit coverage and content-truncation indicators. The candidate design uses the OpenTelemetry Collector, ClickHouse OSS and Grafana OSS for SQL reporting and alerting, with 365-day target retention (90-day approved fallback; 31-day minimum). These remain product requirements, not deployed features.
+
 ## What Clauditor aims to make observable
 
 - **Traces:** correlated model requests, operations, tool calls, and service boundaries, where instruments can actually observe them.
@@ -43,9 +47,9 @@ BCF manages **development governance**; Clauditor's eventual **product observabi
 
 ## Current status
 
-**BCF Lite installed.** The public README, licensing notice, canonical BCF Lite pack, and controller-free Standard-v3 adoption target are present. This is not a functioning collector or an installed Standard-v3 profile. The supplied, SHA-256-verified hero PNG is approved, but its exact binary bytes are still awaiting upload to `docs/assets/clauditor-hero.png`; see [hero asset provenance](docs/assets/HERO.md).
+**BCF Lite installed; specification under review.** The owner-uploaded hero is in [`assets/clauditor-hero.png`](assets/clauditor-hero.png). The [machine-readable Clauditor v1 product requirements](spec/clauditor/v1/README.md) are a candidate specification, not a running collector, authenticated source-coverage proof or BCF Standard-v3 installation. No product runtime, login system or external ingress has been deployed.
 
-For installed Lite governance, provenance and the future Standard-v3 promotion prerequisites, follow [the bootstrap guide](docs/BOOTSTRAP.md). The next project task will define the product contract and the actual gates needed to promote to Standard v3.
+For installed Lite governance, provenance and the future Standard-v3 promotion prerequisites, follow [the bootstrap guide](docs/BOOTSTRAP.md). The reviewed source-of-intent and executable candidate requirements are tracked under `spec/clauditor/v1/`; production gates, implementation and Standard-v3 promotion remain separate future actions.
 
 ## License and security
 
