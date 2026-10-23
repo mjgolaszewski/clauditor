@@ -10,9 +10,7 @@ product:
   name: "Clauditor"
   project_name: "Clauditor"
   positioning: "single-tenant Anthropic OpenTelemetry collection, preservation, compliance reporting and alerting appliance for RIAs"
-  target_users:
-    - "RIA compliance administrators and designated reviewers (2-4 local reporting users)"
-    - "Employees emitting supported Claude/Cowork/Claude Code/API telemetry (12-24 monitored users)"
+  target_users: ["RIA compliance administrators and designated reviewers (2-4 local reporting users)", "Employees emitting supported Claude/Cowork/Claude Code/API telemetry (12-24 monitored users)"]
   non_goals:
     - "No IdP/SSO integration in MVP; use local appliance user roles."
     - "No Compliance API integration or independent transcript fetching in MVP."
@@ -27,21 +25,13 @@ constraints:
     - "365-day target retention, explicit 90-day fallback, never silently below 31 days."
     - "Host owns DNS, certificate services and network configuration for optional remote HTTPS ingress."
     - "BCF Lite v2.3.6 installed; target Standard profile contract v3 without persistent controller after qualification."
-  known_external_dependencies:
-    - "github_actions"
-    - "Anthropic emitter version/plan/capture policy prerequisites"
-    - "docker_engine_and_compose"
-    - "host_persistent_storage_and_network"
-    - "host_managed_tls_and_dns_for_remote_otel"
+  known_external_dependencies: [github_actions, "Anthropic emitter version/plan/capture policy prerequisites", docker_engine_and_compose, host_persistent_storage_and_network, host_managed_tls_and_dns_for_remote_otel]
 architecture:
   backend: "OpenTelemetry Collector contrib and qualified OSS processors; minimal custom adapters only if required"
   frontend: "Provisioned Grafana OSS with local admin and viewer accounts; no new query UI unless proven necessary"
   data: "ClickHouse OSS SQL indexed telemetry plus source-faithful typed OTLP archive"
 execution_phases:
-  - phase_id: P01
-    build_block: "foundation"
-    objective: "establish governed foundation"
-    release_train: release_1
+  - {phase_id: P01, build_block: foundation, objective: "establish governed foundation", release_train: release_1}
 acceptance:
   release_gate: make release-check
   evidence_location: phases/
