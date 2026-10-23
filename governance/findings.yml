@@ -1,10 +1,63 @@
 document:
   kind: finding_registry
-  name: "Clauditor Finding Registry"
-  id: "clauditor-findings"
+  name: Clauditor Finding Registry
+  id: clauditor-findings
   version: 1.0.0
-  generated_at_utc: "2026-10-23T00:00:00Z"
+  generated_at_utc: '2026-10-23T00:00:00Z'
   status: active
   path: governance/findings.yml
-reviews: []
-findings: []
+reviews:
+- id: CL-REVIEW-PRECONSTRUCTION
+  source_path: audits/standard-v3-readiness.yml
+  source_sha256: 6cc4a909587f27799c75b78bec100fa9bd473e04084c46ee0372396298ac0c6a
+  reviewer:
+    kind: model
+    id: home:clauditor:disco-inferno
+  finding_ids:
+  - CL-REVIEW-001
+  - CL-REVIEW-002
+  - CL-PROMOTION-001
+findings:
+- id: CL-REVIEW-001
+  review_id: CL-REVIEW-PRECONSTRUCTION
+  severity: high
+  disposition: remediation_completed
+  provenance:
+    producers:
+    - kind: model
+      id: home:clauditor:disco-inferno
+    reviewer:
+      kind: model
+      id: home:clauditor:disco-inferno
+    remediators:
+    - kind: model
+      id: home:clauditor:disco-inferno
+  proofs: []
+- id: CL-REVIEW-002
+  review_id: CL-REVIEW-PRECONSTRUCTION
+  severity: medium
+  disposition: remediation_completed
+  provenance:
+    producers:
+    - kind: model
+      id: home:clauditor:disco-inferno
+    reviewer:
+      kind: model
+      id: home:clauditor:disco-inferno
+    remediators:
+    - kind: model
+      id: home:clauditor:disco-inferno
+  proofs: []
+- id: CL-PROMOTION-001
+  review_id: CL-REVIEW-PRECONSTRUCTION
+  severity: high
+  disposition: open
+  provenance:
+    producers:
+    - kind: model
+      id: home:clauditor:disco-inferno
+    reviewer:
+      kind: model
+      id: home:clauditor:disco-inferno
+    remediators: []
+  proofs: []

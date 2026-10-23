@@ -1,0 +1,203 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 02 Plan
+  id: clauditor-phase-02-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-02-plan.yml
+phase:
+  id: P02
+  build_block: qualified_contracts
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - Bind owner intent, baseline and change authority before constructing dependent contracts.
+  - Qualify Cowork, Claude Code, API and SDK signal/content capabilities and source enrollment prerequisites.
+  - Qualify free self-hosted image/plugin versions, dependencies, stability and ClickHouse exporter behavior.
+  - Fix local admin/viewer, secret, SQL, content privacy and OSS audit expectations.
+  - Reconcile canonical semantics, independent required paths and typed state/edge exclusions.
+  - Build anonymized fixtures for OTLP signals, content limits and provider source types.
+  - Contract OTLP authorization, partial success, durable queues and multi-stage receipts.
+  - Contract semantically typed OTLP preservation, ClickHouse projections and deduplication.
+  - Define 365/90/31-day retention, holds, export custody and capacity downgrade controls.
+  - Contract reviewer SQL access, correlation confidence, native Grafana capability and bounded exports.
+  - Contract observed compliance and health alert predicates, notification and uncertainty.
+  - Specify one-host runtime budgets, persistent volumes, backup/restore and host TLS responsibilities.
+  - Review and reconcile approved candidate ownership with existing BCF root authorities without destructive replacement.
+  parallelizable_workstreams:
+  - id: P02-WS1
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
+  hard_dependencies:
+  - P01
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: Substantial construction is not authorized in this run. P01 must qualify Standard 3.0 then pause; later packets
+    remain planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: 'CL-WO-001: read construction/context.json and construction/orders/CL-WO-001.json with exact model/source blob
+    bindings.'
+- order: 5
+  statement: 'CL-WO-001: predecessor outputs none require actual identity/currentness before consumption; output spec/clauditor/v1/construction/authority/decisions.json.'
+- order: 6
+  statement: 'CL-WO-001: owner cl.owner.governance.v1; permitted roots spec/clauditor/v1/construction/authority/; locks owner-review.'
+- order: 7
+  statement: 'CL-WO-001: steps Reconcile 39 source requirements with decisions; record unresolved owner approvals and exact
+    canonical BCF constraints'
+- order: 8
+  statement: 'CL-WO-002: read construction/context.json and construction/orders/CL-WO-002.json with exact model/source blob
+    bindings.'
+- order: 9
+  statement: 'CL-WO-002: predecessor outputs none require actual identity/currentness before consumption; output spec/clauditor/v1/research/sources/capability-matrix.json.'
+- order: 10
+  statement: 'CL-WO-002: owner cl.owner.source.v1; permitted roots spec/clauditor/v1/research/sources/; locks source-research.'
+- order: 11
+  statement: 'CL-WO-002: steps Enumerate published fields by plan/version; distinguish desktop/cloud and source capture flags;
+    record unsupported content'
+- order: 12
+  statement: 'CL-WO-003: read construction/context.json and construction/orders/CL-WO-003.json with exact model/source blob
+    bindings.'
+- order: 13
+  statement: 'CL-WO-003: predecessor outputs none require actual identity/currentness before consumption; output spec/clauditor/v1/research/components/pins-and-licenses.json.'
+- order: 14
+  statement: 'CL-WO-003: owner cl.owner.deployment.v1; permitted roots spec/clauditor/v1/research/components/; locks license-review.'
+- order: 15
+  statement: 'CL-WO-003: steps Inspect official component BOM and OSS licenses; pin digests and compatibility; record alpha
+    metrics and archive format gaps'
+- order: 16
+  statement: 'CL-WO-004: read construction/context.json and construction/orders/CL-WO-004.json with exact model/source blob
+    bindings.'
+- order: 17
+  statement: 'CL-WO-004: predecessor outputs CL-WO-001 require actual identity/currentness before consumption; output spec/clauditor/v1/design/security/roles-and-sensitive-content.json.'
+- order: 18
+  statement: 'CL-WO-004: owner cl.owner.security.v1; permitted roots spec/clauditor/v1/design/security/; locks privacy-review.'
+- order: 19
+  statement: 'CL-WO-004: steps Classify sensitive events and roles; establish safe SQL and UI boundaries; record Grafana OSS
+    audit limitations'
+- order: 20
+  statement: 'CL-WO-005: read construction/context.json and construction/orders/CL-WO-005.json with exact model/source blob
+    bindings.'
+- order: 21
+  statement: 'CL-WO-005: predecessor outputs CL-WO-001, CL-WO-002, CL-WO-004 require actual identity/currentness before consumption;
+    output spec/clauditor/v1/reviews/closure/proof.json.'
+- order: 22
+  statement: 'CL-WO-005: owner cl.owner.governance.v1; permitted roots spec/clauditor/v1/model.json, spec/clauditor/v1/schema/,
+    spec/clauditor/v1/reviews/closure/; locks canonical-source-writer.'
+- order: 23
+  statement: 'CL-WO-005: steps Propose only owner-approved model amendments; run exact schema/closure checks; mutation-test
+    route+contract co-deletion and false exclusions'
+- order: 24
+  statement: 'CL-WO-006: read construction/context.json and construction/orders/CL-WO-006.json with exact model/source blob
+    bindings.'
+- order: 25
+  statement: 'CL-WO-006: predecessor outputs CL-WO-002, CL-WO-005 require actual identity/currentness before consumption;
+    output tests/fixtures/anthropic/manifest.json.'
+- order: 26
+  statement: 'CL-WO-006: owner cl.owner.source.v1; permitted roots tests/fixtures/anthropic/; locks fixture-writer.'
+- order: 27
+  statement: 'CL-WO-006: steps Derive log/span/metric samples; encode nested AnyValue and source versions; construct duplicate,
+    missing-content and malformed negatives'
+- order: 28
+  statement: 'CL-WO-007: read construction/context.json and construction/orders/CL-WO-007.json with exact model/source blob
+    bindings.'
+- order: 29
+  statement: 'CL-WO-007: predecessor outputs CL-WO-003, CL-WO-005, CL-WO-006 require actual identity/currentness before consumption;
+    output spec/clauditor/v1/design/ingress/transport-receipts.json.'
+- order: 30
+  statement: 'CL-WO-007: owner cl.owner.ingress.v1; permitted roots spec/clauditor/v1/design/ingress/; locks ingress-contract.'
+- order: 31
+  statement: 'CL-WO-007: steps Close transport and source auth modes; distinguish accepted/queued/archived/indexed; define
+    retry, replay and saturation states'
+- order: 32
+  statement: 'CL-WO-008: read construction/context.json and construction/orders/CL-WO-008.json with exact model/source blob
+    bindings.'
+- order: 33
+  statement: 'CL-WO-008: predecessor outputs CL-WO-003, CL-WO-005, CL-WO-006 require actual identity/currentness before consumption;
+    output spec/clauditor/v1/design/storage/typed-archive-sql.json.'
+- order: 34
+  statement: 'CL-WO-008: owner cl.owner.storage.v1; permitted roots spec/clauditor/v1/design/storage/; locks storage-contract.'
+- order: 35
+  statement: 'CL-WO-008: steps Design OTLP AnyValue roundtrip, source identity and SQL mapping; define metric temporality/precision;
+    reject exporter-only fidelity assumptions'
+- order: 36
+  statement: 'CL-WO-009: read construction/context.json and construction/orders/CL-WO-009.json with exact model/source blob
+    bindings.'
+- order: 37
+  statement: 'CL-WO-009: predecessor outputs CL-WO-003, CL-WO-004, CL-WO-005, CL-WO-008 require actual identity/currentness
+    before consumption; output spec/clauditor/v1/design/retention/holds-capacity.json.'
+- order: 38
+  statement: 'CL-WO-009: owner cl.owner.storage.v1; permitted roots spec/clauditor/v1/design/retention/; locks retention-contract.'
+- order: 39
+  statement: 'CL-WO-009: steps Specify selected horizon, fallback approval and TTL; preserve holds and manifest hashes; define
+    measured sizing precondition'
+- order: 40
+  statement: 'CL-WO-010: read construction/context.json and construction/orders/CL-WO-010.json with exact model/source blob
+    bindings.'
+- order: 41
+  statement: 'CL-WO-010: predecessor outputs CL-WO-004, CL-WO-005, CL-WO-008 require actual identity/currentness before consumption;
+    output spec/clauditor/v1/design/query/roles-correlation-export.json.'
+- order: 42
+  statement: 'CL-WO-010: owner cl.owner.query.v1; permitted roots spec/clauditor/v1/design/query/; locks query-contract.'
+- order: 43
+  statement: 'CL-WO-010: steps Specify authenticated source joins, read-only SQL and query limits; classify data/export confidentiality;
+    document any justified export shim'
+- order: 44
+  statement: 'CL-WO-011: read construction/context.json and construction/orders/CL-WO-011.json with exact model/source blob
+    bindings.'
+- order: 45
+  statement: 'CL-WO-011: predecessor outputs CL-WO-004, CL-WO-005, CL-WO-008 require actual identity/currentness before consumption;
+    output spec/clauditor/v1/design/alerts/rule-policy.json.'
+- order: 46
+  statement: 'CL-WO-011: owner cl.owner.alert.v1; permitted roots spec/clauditor/v1/design/alerts/; locks alert-contract.'
+- order: 47
+  statement: 'CL-WO-011: steps Specify known source enrollment health vs silence, thresholds, cost estimates and alert state;
+    define user-configured outbound destinations'
+- order: 48
+  statement: 'CL-WO-012: read construction/context.json and construction/orders/CL-WO-012.json with exact model/source blob
+    bindings.'
+- order: 49
+  statement: 'CL-WO-012: predecessor outputs CL-WO-003, CL-WO-007, CL-WO-008, CL-WO-009 require actual identity/currentness
+    before consumption; output spec/clauditor/v1/design/operations/host-and-recovery.json.'
+- order: 50
+  statement: 'CL-WO-012: owner cl.owner.deployment.v1; permitted roots spec/clauditor/v1/design/operations/; locks operations-contract.'
+- order: 51
+  statement: 'CL-WO-012: steps Identify Docker resources, Linux variants and isolation; define measured capacity and rollback/snapshot
+    boundaries'
+- order: 52
+  statement: 'CL-WO-013: read construction/context.json and construction/orders/CL-WO-013.json with exact model/source blob
+    bindings.'
+- order: 53
+  statement: 'CL-WO-013: predecessor outputs CL-WO-005, CL-WO-007, CL-WO-008, CL-WO-009, CL-WO-010, CL-WO-011, CL-WO-012 require
+    actual identity/currentness before consumption; output spec/clauditor/v1/adoption/root-contract-proposal.json.'
+- order: 54
+  statement: 'CL-WO-013: owner cl.owner.governance.v1; permitted roots plans/product-spec.yml, plans/build-plan.yml, governance/canonical-representations.yml,
+    spec/clauditor/v1/adoption/; locks bcf-root-writer.'
+- order: 55
+  statement: 'CL-WO-013: steps Resolve 2.3.6 Lite vocabulary and schema; propose additive product/operation registry binding
+    and evidence gates; obtain owner approval before apply'
+- order: 56
+  statement: Phase hard_dependencies identify upstream output providers, not whole-phase barriers; independently admitted
+    ready packets may run with disjoint locks. No successor phase activation in this run.
+verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
+- make governance-validate
+- make governance-exposure-scan
+- Each packet target_tests invocation, environment, timeouts and outputs must qualify before admission.

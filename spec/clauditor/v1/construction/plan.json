@@ -4,7 +4,7 @@
     "status": "draft_not_admitted",
     "source_branch": "spec/clauditor-otel-compliance-v1-20261023",
     "source_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
-    "source_model_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+    "source_model_blob": "3e516bcb3468ebbbb03a08ec4309e226e1c3a14b",
     "source_registry_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
     "active_bcf_profile": "lite",
     "bcf_release": "v2.3.6",
@@ -750,9 +750,10 @@
         "CL-WO-025",
         "CL-WO-026"
       ],
-      "primary_output": "tests/e2e/first-vertical/report.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-027/report.json",
       "write_roots": [
-        "tests/e2e/first-vertical/"
+        "tests/e2e/first-vertical/",
+        ".artifacts/clauditor/CL-WO-027/"
       ],
       "locks": [
         "isolated-first-vertical"
@@ -1035,9 +1036,10 @@
         "CL-WO-024",
         "CL-WO-025"
       ],
-      "primary_output": "tests/conformance/source/evidence.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-037/evidence.json",
       "write_roots": [
-        "tests/conformance/source/"
+        "tests/conformance/source/",
+        ".artifacts/clauditor/CL-WO-037/"
       ],
       "locks": [
         "isolated-source-probes"
@@ -1063,9 +1065,10 @@
         "CL-WO-026",
         "CL-WO-030"
       ],
-      "primary_output": "tests/security/hostile-input/evidence.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-038/evidence.json",
       "write_roots": [
-        "tests/security/hostile-input/"
+        "tests/security/hostile-input/",
+        ".artifacts/clauditor/CL-WO-038/"
       ],
       "locks": [
         "isolated-security-probes"
@@ -1094,9 +1097,10 @@
         "CL-WO-035",
         "CL-WO-036"
       ],
-      "primary_output": "tests/reliability/chaos/evidence.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-039/evidence.json",
       "write_roots": [
-        "tests/reliability/chaos/"
+        "tests/reliability/chaos/",
+        ".artifacts/clauditor/CL-WO-039/"
       ],
       "locks": [
         "isolated-reliability"
@@ -1121,9 +1125,10 @@
         "CL-WO-032",
         "CL-WO-033"
       ],
-      "primary_output": "tests/alerts/integration/evidence.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-040/evidence.json",
       "write_roots": [
-        "tests/alerts/integration/"
+        "tests/alerts/integration/",
+        ".artifacts/clauditor/CL-WO-040/"
       ],
       "locks": [
         "isolated-alerts"
@@ -1157,9 +1162,10 @@
         "CL-WO-039",
         "CL-WO-040"
       ],
-      "primary_output": "tests/e2e/compliance-workflow/report.json",
+      "primary_output": ".artifacts/clauditor/CL-WO-041/report.json",
       "write_roots": [
-        "tests/e2e/compliance-workflow/"
+        "tests/e2e/compliance-workflow/",
+        ".artifacts/clauditor/CL-WO-041/"
       ],
       "locks": [
         "isolated-full-vertical"

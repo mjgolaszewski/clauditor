@@ -1,0 +1,111 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 08 Workitems
+  id: clauditor-phase-08-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-08-workitems.yml
+  phase_id: P08
+workitems:
+- id: CL-WO-041
+  priority: P0
+  status: TODO
+  summary: Demonstrate complete RIA compliance search, alert, export, hold, backup and retrieval workflow.
+  acceptance:
+  - packet:CL-WO-041
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.032.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-027
+  - predecessor-output:CL-WO-028
+  - predecessor-output:CL-WO-029
+  - predecessor-output:CL-WO-030
+  - predecessor-output:CL-WO-033
+  - predecessor-output:CL-WO-037
+  - predecessor-output:CL-WO-038
+  - predecessor-output:CL-WO-039
+  - predecessor-output:CL-WO-040
+  - Reviewer can answer who/what/when with source completeness limitations
+  - Supported Cowork event is queryable
+  - Searchable supported captured content
+  - Filtered user/session/prompt search
+  - Same-source exact-key timeline
+  - Deterministic safe exported selection
+  - Fresh single-host install completes
+  - Representative synthetic fixtures visible
+  - New operator proves log+metric+span test
+  - 'Reject: Unsupported artifact, broken export, privilege leak or lost hold fails'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: No blank/unknown field presented as FULL'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-042
+  priority: P0
+  status: TODO
+  summary: Publish operator-ready one-shot installation, enrollment, permissions, alert and recovery instructions.
+  acceptance:
+  - packet:CL-WO-042
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.007.v1
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.027.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-020
+  - predecessor-output:CL-WO-021
+  - predecessor-output:CL-WO-022
+  - predecessor-output:CL-WO-023
+  - predecessor-output:CL-WO-027
+  - predecessor-output:CL-WO-033
+  - predecessor-output:CL-WO-035
+  - requires-workitem-closure:CL-WO-041
+  - Operator reaches verified OTLP log/span/metric and dashboard readiness
+  - Source capture settings documented and verifiable
+  - State accurately shown on events and exports
+  - Fresh single-host install completes
+  - Every required runtime component has qualifying OSS license
+  - New operator proves log+metric+span test
+  - 'Reject: Containers green with zero source telemetry cannot pass onboarding'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: [image] marker cannot count as original image bytes'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: Paid/hosted-only component is excluded'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-043
+  priority: P0
+  status: TODO
+  summary: Measure 12–24-source retention horizon and 2–4-reviewer query load with source-content distributions.
+  acceptance:
+  - packet:CL-WO-043
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.023.v1
+  - requirement:cl.req.031.v1
+  - predecessor-output:CL-WO-019
+  - predecessor-output:CL-WO-027
+  - predecessor-output:CL-WO-034
+  - predecessor-output:CL-WO-035
+  - predecessor-output:CL-WO-039
+  - requires-workitem-closure:CL-WO-041
+  - Chosen host meets approved retention/performance targets
+  - Cleanup respects selected horizon and holds
+  - Retention horizon estimate uses actual sampled bytes
+  - Restart resumes committed queue entries
+  - 'Reject: Unmeasured storage or automatic TTL fallback cannot be deemed compliant'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  - 'Reject: Loss not concealed under success'
+  acceptance_evidence:
+  - governance-validate

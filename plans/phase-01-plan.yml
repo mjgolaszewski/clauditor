@@ -4,7 +4,7 @@ document:
   id: clauditor-phase-01-plan
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: planned
+  status: active
   path: plans/phase-01-plan.yml
 phase:
   id: P01
@@ -19,16 +19,32 @@ phase:
   - MEMORY.yml
 delivery_contract:
   tightly_scoped_deliverables:
-  - initial governed foundation
+  - deliver initial governed foundation
+  - Adopt canonical P01-P09 roadmap and repair specification admission defects
+  - Qualify and promote Standard profile contract 3.0 before substantial construction, then pause
   parallelizable_workstreams:
   - id: P01-WS1
-    name: bootstrap governance pack
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
   hard_dependencies: []
-  docker_first_local_runtime: repo_native_validation_and_governance_commands
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
   completeness_standard: full_completeness_for_declared_scope
 scope_lock:
 - order: 1
-  statement: keep the phase narrowly scoped to declared deliverables and update canonical
-    governed artifacts in the same change
+  statement: Substantial construction is not authorized in this run. P01 must qualify Standard 3.0 then pause; later packets
+    remain planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: Only planning records, specification validator repairs, bounded tests and promotion qualification. No application
+    services, deployment, release or hand-edited generated workflows.
 verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
 - make governance-validate
+- make governance-exposure-scan

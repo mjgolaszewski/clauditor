@@ -117,6 +117,8 @@ def validate(plan, orders, index, model, src):
                 w["locks"]==sched["exclusive_resource_locks"],
                 "dependency_or_writer_drift",oid)
         path=D["primary_output"]
+        require(not path.startswith("tests/") or path.startswith("tests/fixtures/"),
+                "evidence_location", oid)
         require(path==w["primary_output"]==J["primary_output"]["path"] and
                 J["primary_output"]["id"]==oid+":primary" and
                 E["outputs"]==[oid+":primary"] and
@@ -231,6 +233,10 @@ def mutations(plan, orders, index, model, src):
     denied("wave_tamper",lambda p,o,i:p["waves"][10]
            ["work_orders"].append("CL-WO-015"),
            "wave_dependency_or_resource_conflict")
+    denied("evidence_in_test_tree",lambda p,o,i:o["CL-WO-037"]
+           ["D_proposed_permitted_cut"].__setitem__(
+               "primary_output", "tests/conformance/source/evidence.json"),
+           "evidence_location")
     return {"causal_negative_controls":len(passed),
             "detected":passed,"runtime_authority":False}
 

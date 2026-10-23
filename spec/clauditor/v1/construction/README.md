@@ -1,7 +1,9 @@
 # Clauditor — candidate dependency-first construction plan
 
 **Planning only; no implementation, authenticated BCF evidence, release approval or Standard-v3 promotion.**
-The source is the exact Anthropic OTLP requirements candidate at `44ca22d86ea15b6c9e76d84217cbabf37bd5cda9`.
+The source baseline is the Anthropic OTLP requirements candidate at `44ca22d86ea15b6c9e76d84217cbabf37bd5cda9`.
+The reviewed retry-contract amendment and refreshed exact model blob are recorded
+in `audits/standard-v3-readiness.yml`; `plan.json` and packets bind the amended blob.
 
 ## Authoritative candidate records
 
@@ -30,9 +32,16 @@ The generated Markdown and digest manifest belong outside the repository; do not
 
 ## Preservation and acceptance
 
-Existing `main`, the correctly uploaded `assets/clauditor-hero.png`, all BCF Lite files and the current P01 phase are untouched.
-P02–P09 are **proposed stage labels only**; root `plans/build-plan.yml` and `plans/phase-ledger.yml` remain operative and cannot be overwritten or advanced by this document.
+The correctly uploaded `assets/clauditor-hero.png` and installed BCF Lite runtime are preserved.
+The root YAML roadmap and planned P02–P09 phase artifacts now adopt this delivery
+sequence. Root `plans/build-plan.yml` and `plans/phase-ledger.yml` own execution;
+these candidate packets cannot activate phases or confer admission.
+P01 attempts Standard profile contract 3.0 qualification before substantial
+construction and must pause after successful promotion and verification. If
+required prerequisites need substantial construction, P01 stops blocked instead.
 All 45 packets are `not_admitted`. A BCF evaluator and authorized owner must qualify exact dependencies, current schemas, evidence and actual execution scope.
+Runtime reports use ignored `.artifacts/clauditor/` destinations with exact digest
+references retained in phase logs; test sources never serve as runtime receipts.
 
 Known blockers: source plan/version/content eligibility; API inbound host TLS/DNS on port 443; ClickHouse alpha metrics export qualification; Grafana OSS detailed audit limits; actual disk sizing for 365/90/31 days; owner approval.
 Absent provider data, tool outputs or file bytes cannot be fabricated, and a valid hash does not establish semantic or SEC-recordkeeping completeness.

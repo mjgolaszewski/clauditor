@@ -1,0 +1,139 @@
+document:
+  kind: planning_review
+  id: clauditor-preconstruction-review
+  status: local_observations_not_bcf_evidence
+  path: audits/standard-v3-readiness.yml
+authority: User authorizes canonical planning, specification repairs and bounded qualification; stop before substantial construction.
+baseline_commit: 48ffb9f70be0dd7d4d1b2d142fc3873bface97ec
+runtime:
+  version: 2.3.6
+  wheel_sha256: 1ee73f7f8ba69803917ee72c0625907621d6c9b582d11d88346fd9cd5dcd5ab7
+amendments:
+- id: CL-REVIEW-001
+  before: partial + retry -> archived asserted success without archive confirmation
+  after: partial + retry -> accepted; archive_ok must be observed before archived
+  old_model_blob: c5a2894c4767e7ff3595461a0d28b656e07879de
+  amended_model_blob: 3e516bcb3468ebbbb03a08ec4309e226e1c3a14b
+  negative_control: retry_without_archive_success
+- id: CL-REVIEW-002
+  before: Runtime evidence/report outputs mixed with test sources
+  after: Runtime outputs in .artifacts/clauditor/<order>/ with durable phase references; non-authoritative until exact evidence
+    capture
+  paths:
+    tests/e2e/first-vertical/report.json:
+      path: .artifacts/clauditor/CL-WO-027/report.json
+      authority: non-authoritative planned output
+    tests/conformance/source/evidence.json:
+      path: .artifacts/clauditor/CL-WO-037/evidence.json
+      authority: non-authoritative planned output
+    tests/security/hostile-input/evidence.json:
+      path: .artifacts/clauditor/CL-WO-038/evidence.json
+      authority: non-authoritative planned output
+    tests/reliability/chaos/evidence.json:
+      path: .artifacts/clauditor/CL-WO-039/evidence.json
+      authority: non-authoritative planned output
+    tests/alerts/integration/evidence.json:
+      path: .artifacts/clauditor/CL-WO-040/evidence.json
+      authority: non-authoritative planned output
+    tests/e2e/compliance-workflow/report.json:
+      path: .artifacts/clauditor/CL-WO-041/report.json
+      authority: non-authoritative planned output
+  negative_control: evidence_in_test_tree
+promotion:
+  status: blocked_not_applied
+  initial_check: 'profile gate set mismatch: 17 missing executable gates'
+  remaining:
+  - Qualify mandatory real architecture, lint/type/test/contract/security/runtime gates and causal controls.
+  - Complete current-source semantic-family, operation, representation/provenance and v3 claim/interpreter contracts.
+  - Qualify canonical CI graph runner resources and exact provider/run authority.
+  - A live appliance runtime-smoke cannot be claimed for the currently unbuilt runtime; stop before constructing it.
+  missing_gates:
+  - architecture-context-membership
+  - architecture-cqrs-side
+  - architecture-duplication
+  - architecture-import-boundaries
+  - architecture-layer-membership
+  - architecture-module-size
+  - architecture-router-thinness
+  - architecture-test
+  - contract-test
+  - lint
+  - runtime-smoke
+  - security-dependency-audit
+  - security-sbom
+  - security-secret-scan
+  - security-vulnerability-scan
+  - test
+  - typecheck
+  semantic_scaffold:
+    source_files: 297
+    discovered_types: 248
+    unresolved: human_semantic_classification_required
+    missing_canonical_artifacts:
+    - governance/semantic-families.yml
+    - governance/application-operations.yml
+    note: Existing canonical representations preserved; no invented product symbols or N/A classifications.
+    scope: Declared source inventory only; not full application semantic qualification.
+  additional_prerequisites:
+  - Complete contract 3.0 claim_model and interpreter_contract accepted by canonical promoter.
+  - Real test populations and causal negative controls with exact runtime dependencies.
+  - Provider-backed candidate/run-attempt qualification after reviewed CI graph wiring.
+provider_observations:
+  repository: mjgolaszewski/clauditor
+  visibility: public
+  connection_permissions:
+    admin: true
+    maintain: true
+    pull: true
+    push: true
+    triage: true
+  baseline_commit_status_contexts: []
+  limitation: Read-only GitHub connector observation; no status contexts does not enumerate Actions checks. No provider-backed
+    proof exists for these unpushed changes.
+scope_boundary:
+  substantial_construction_started: false
+  promotion_apply_attempted: false
+  deployed: false
+  released: false
+  generated_workflow_edited: false
+  persistent_controller_added: false
+  success_pause_reached: false
+  stop_reason: Mandatory appliance runtime-smoke cannot be truthfully qualified against an unbuilt appliance within the authorized
+    pre-construction scope.
+agentbus:
+  identity: home:clauditor:disco-inferno
+  join_retried: true
+  observed_result: HTTP 403
+  announcement_sent: false
+  note: Original staged enrollment retained; no credential or identity reset.
+local_checks:
+- command: .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  exit_code: 0
+  result: passed; local non-authoritative observation
+  record:
+    path: .artifacts/standard-v3/spec-self-test.json
+    sha256: f92dc9139940a02a92dbc3124ccd6ae71f06ffe6bd79b6ad9529240e55dfd81c
+- command: .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  exit_code: 0
+  result: passed; local non-authoritative observation
+  record:
+    path: .artifacts/standard-v3/construction-self-test.json
+    sha256: 4d779fd2a6d1d78a17e8e2dfdf172b2170afb1754d4fcb93491afbd26e616616
+- command: .venv/bin/python scripts/check_build_plan.py --self-test
+  exit_code: 0
+  result: passed; local non-authoritative observation
+  record:
+    path: .artifacts/standard-v3/canonical-plan-self-test.json
+    sha256: cddf4ede2e2bb3522f5f9ed7d1035f65c319ca01e819d1c26e4435f5e57e4574
+- command: .venv/bin/bcf semantic-ownership --repo-root . --output .artifacts/semantic-ownership/report.json
+  exit_code: 0
+  result: passed; local non-authoritative observation
+  record:
+    path: .artifacts/standard-v3/semantic-scan.json
+    sha256: 5e859aa1bedffbe567fd315e875634e28bc6ae4a77bb802d741c01c4f19b371d
+- command: .venv/bin/bcf profile promote --repo-root . --to standard --contract-version 3.0 --check
+  exit_code: 1
+  result: blocked; no apply performed
+  record:
+    path: .artifacts/standard-v3/promotion-check.json
+    sha256: 930f4a1c5e7bc6efba48e5d695c2ababa7caace2c3d77d2a691ee924f11eda42

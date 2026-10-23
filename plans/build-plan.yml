@@ -1,31 +1,13 @@
-document:
-  kind: machine_readable_build_plan
-  name: "Clauditor Build Plan"
-  id: "clauditor-build-plan"
-  version: 1.0.0
-  generated_at_utc: "2026-10-23T00:00:00Z"
-  status: active
-  path: plans/build-plan.yml
+document: {kind: machine_readable_build_plan, name: Clauditor Build Plan, id: clauditor-build-plan, version: 1.0.0, generated_at_utc: '2026-10-23T00:00:00Z', status: active, path: plans/build-plan.yml}
 planning_contract:
   format: yaml
-  mandatory_properties:
-    - tightly_scoped_deliverables
-    - parallelizable_workstreams
-    - hard_dependency_ordering
-    - docker_first_local_runtime
-    - ast_architecture_tests
-    - strict_boundaries
-    - observability_reference_model
-    - completeness_standard
+  mandatory_properties: [tightly_scoped_deliverables, parallelizable_workstreams, hard_dependency_ordering, docker_first_local_runtime, ast_architecture_tests, strict_boundaries, observability_reference_model, completeness_standard]
   completeness_standard: full_completeness_for_declared_scope
 planning_inputs:
-  date: "2026-10-23"
-  planner: "codex"
+  date: '2026-10-23'
+  planner: codex
   primary_source_of_truth: plans/product-spec.yml
-  governance_references:
-    - AGENTS.yml
-    - MEMORY.yml
-    - plans/phase-ledger.yml
+  governance_references: [AGENTS.yml, MEMORY.yml, plans/phase-ledger.yml, spec/clauditor/v1/model.json, spec/clauditor/v1/construction/plan.json]
 global_delivery_rules:
   - change units default to the smallest valid vertical slice with low blast radius
   - every behavior change must update specs, plans, MEMORY, and tests together
@@ -34,7 +16,7 @@ global_delivery_rules:
   - governed artifacts must pass structural schema validation before semantic cross-artifact validation
   - architecture boundaries must be encoded in tests, not left as convention-only prose
   - backend delivery defaults to CQRS-lite with strict ports unless repo governance changes it explicitly
-  - "backend delivery follows contract-first sequencing: contracts, ports, tests, use case, router, and infrastructure only as required"
+  - 'backend delivery follows contract-first sequencing: contracts, ports, tests, use case, router, and infrastructure only as required'
   - governance changes must pass semantic validation, not only YAML parse checks
   - observability changes must preserve the shared telemetry and logging contract baseline
   - active phase lifecycle uses the governed taxonomy and records control metadata when work is blocked, paused, or abandoned
@@ -43,24 +25,28 @@ global_delivery_rules:
   - new abstractions require proven reuse across at least two real call sites unless explicitly authorized
   - emergency red-CI and release-blocking fixes must use the governed hotfix lane
   - lite hotfix mode is reserved for a single-commit repair with no public-contract or security-scope change; all other hotfixes use full mode
+  - Invariant -> unique canonical owner -> primitive -> contract/state -> producer/consumer -> exact evidence; preserve existing BCF owners.
+  - Canonical phase records own lifecycle; candidate A-J packets provide bounded source context only. All 39 requirements and 45 packet IDs remain traceable.
+  - Only planning, governance tools, tests and minimal qualification probes are authorized before Standard 3.0 promotion; substantial construction is gated.
+  - No no-op, all-skipped, invented-symbol or broad N/A promotion shortcuts. Required unavailable gates block promotion.
+  - After successful promotion plus reconciliation, graph and provider verification, pause before construction; no deploy or release.
+  - Contract-first CQRS/ports for custom code; use qualified OSS before adding helpers; 800 LOC source cap and AST boundary gates.
+  - Docker-first isolated Linux projects, credentials and volumes; parallel work requires admitted exact predecessors and disjoint paths and locks.
+  - Execute cheap structural checks before integration/provider tests; reuse only current BCF-qualified dependency-bound evidence.
+  - Target retention 365 days, explicit 90-day fallback, 31-day floor; holds survive deletion and capacity pressure.
+  - Content is source-emitted only; raw API bodies off; no SSO, Compliance API, premium services, persistent controller or WORM/completeness claims.
+  - Runtime evidence goes to .artifacts/ with durable phase references; review reports go to audits/. Never author verified or closed. (non-authoritative planned output; capture exact digest before use)
+  - Future commands and symbols qualify during admission; acceptance obligations are planned, never evidence of unbuilt behavior.
 global_gates:
-  - id: G1
-    name: governed_foundation
-    applies_before: P02
-    required_completion_criteria:
-      - canonical governance artifacts exist
-      - phase ledger points to active phase artifacts
-      - semantic governance validation passes
-      - architecture boundary test lane exists
+  - {id: G1, name: foundation_closeout, applies_before: P02, required_completion_criteria: [Canonical validation and exact evidence qualify P01; phase rollover reconciles ledger and MEMORY.]}
+  - {id: G2, name: standard_v3_before_construction, applies_before: P02, required_completion_criteria: ['Real mandatory gates, causal negatives, semantic inventories, runner/provider authority and exact candidate qualify canonical promote --check then --apply.', Reconcile and CI graph validation/audit plus provider checks pass; pause before any substantial construction., 'If qualification requires substantial construction, stop blocked in P01 and report exact missing prerequisites.']}
 phase_sequence:
-  - phase_id: P01
-    build_block: "foundation"
-    objective: "establish governed foundation"
-    hard_dependencies: []
-    tightly_scoped_deliverables:
-      - "initial governed foundation"
-    parallelizable_workstreams:
-      - "bootstrap governance pack"
-    verification_commands:
-      - make governance-validate
-      - make test
+  - {phase_id: P01, build_block: foundation, objective: Governed foundation and pre-construction Standard-v3 qualification, hard_dependencies: [], tightly_scoped_deliverables: [P01 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python spec/clauditor/v1/tools/check.py --self-test, .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test, .venv/bin/python scripts/check_build_plan.py --self-test, make governance-validate, make governance-exposure-scan]}
+  - {phase_id: P02, build_block: qualified_contracts, objective: 'Source, semantic, privacy and operations contracts', hard_dependencies: [P01], tightly_scoped_deliverables: [P02 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python spec/clauditor/v1/tools/check.py --self-test, .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test, .venv/bin/python scripts/check_build_plan.py --self-test, make governance-validate, make governance-exposure-scan]}
+  - {phase_id: P03, build_block: durable_intake, objective: 'Collector, typed archive, ClickHouse and executable application gates', hard_dependencies: [P01, P02], tightly_scoped_deliverables: [P03 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P04, build_block: source_onboarding, objective: 'Qualified Cowork, Claude Code, API and SDK onboarding', hard_dependencies: [P01, P02, P03], tightly_scoped_deliverables: [P04 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P05, build_block: reviewer_vertical, objective: 'Authenticated review, correlation, dashboards and bounded exports', hard_dependencies: [P01, P02, P03, P04], tightly_scoped_deliverables: [P05 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P06, build_block: operational_controls, objective: 'Alerts, notifications, approved retention and protected holds', hard_dependencies: [P01, P02, P03, P05], tightly_scoped_deliverables: [P06 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P07, build_block: failure_qualification, objective: 'Restore, upgrade, source conformance, hostile input and outage proofs', hard_dependencies: [P01, P02, P03, P04, P05, P06], tightly_scoped_deliverables: [P07 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P08, build_block: appliance_acceptance, objective: 'Integrated compliance workflow, operator guide and measured capacity', hard_dependencies: [P01, P03, P04, P05, P06, P07], tightly_scoped_deliverables: [P08 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}
+  - {phase_id: P09, build_block: final_assurance, objective: Final Standard-v3 requalification and independent release handoff, hard_dependencies: [P01, P02, P07, P08], tightly_scoped_deliverables: [P09 bounded workitems and their complete positive/negative acceptance contracts], parallelizable_workstreams: ['Disjoint ready packet scopes only; observe predecessor outputs, path and resource locks.'], verification_commands: [.venv/bin/python scripts/check_build_plan.py --self-test, make release-check]}

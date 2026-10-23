@@ -1,0 +1,73 @@
+document:
+  kind: execution_phase_log
+  name: Phase 07 Log
+  id: clauditor-phase-07-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-07-log.yml
+phase:
+  id: P07
+  build_block: failure_qualification
+summary:
+  outcome: planned
+  highlights:
+  - Restore, upgrade, source conformance, hostile input and outage proofs
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-035
+  status: TODO
+  summary: Deliver complete verifiable backup/cold restore across SQL, archive, Grafana and settings.
+- id: CL-WO-036
+  status: TODO
+  summary: Provide pinned upgrade, preservation-first migration and rollback.
+- id: CL-WO-037
+  status: TODO
+  summary: Qualify each applicable Anthropic source against content, metadata-only, omitted and truncated events.
+- id: CL-WO-038
+  status: TODO
+  summary: Test OTLP auth, read-only SQL, XSS, CSV formula, credential privacy and export boundaries.
+- id: CL-WO-039
+  status: TODO
+  summary: Qualify replay, partial archive/SQL, disk pressure, backend outage and restore failures.
+- id: CL-WO-040
+  status: TODO
+  summary: Qualify rule thresholds, alert lifecycle, notification and uncertainty semantics.
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- Standard-v3 qualification and the requested pause precede substantial construction.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.

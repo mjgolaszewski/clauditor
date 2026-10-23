@@ -149,6 +149,8 @@ def validate(model: dict, source: dict) -> dict:
         slots: dict[tuple[str, str], dict] = {}
         for t in machine["transitions"]:
             key = (t["from"], t["event"])
+            if mid == "cl.machine.ingest.v1" and t["event"] == "retry":
+                require(t["to"] == "accepted", "retry_cannot_assert_archive", t["id"])
             require(key not in slots, "ambiguous_state_event", f"{mid}:{key}")
             require(t["from"] in states and t["to"] in states and t["event"] in events
                     and t["from"] not in machine["terminal"],
@@ -279,6 +281,10 @@ def mutation_controls(model: dict, source: dict) -> dict:
     negative("missing_transition",
              lambda m,s: m["state_machines"][0]["transitions"].pop(0),
              {"transition_contract_closure"})
+    negative("retry_without_archive_success",
+             lambda m,s: next(t for t in m["state_machines"][0]["transitions"]
+                              if t["event"] == "retry").__setitem__("to", "archived"),
+             {"retry_cannot_assert_archive"})
     negative("missing_cost_dimension",
              lambda m,s: m["topology"]["edge_profiles"]["source"].pop("cost"),
              {"schema_rejected"})

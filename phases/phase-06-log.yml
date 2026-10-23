@@ -1,0 +1,67 @@
+document:
+  kind: execution_phase_log
+  name: Phase 06 Log
+  id: clauditor-phase-06-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-06-log.yml
+phase:
+  id: P06
+  build_block: operational_controls
+summary:
+  outcome: planned
+  highlights:
+  - Alerts, notifications, approved retention and protected holds
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-031
+  status: TODO
+  summary: Alert on configured source loss, queue pressure, archive/SQL gap, exporter errors and disk exhaustion.
+- id: CL-WO-032
+  status: TODO
+  summary: Implement opt-in source-grounded compliance patterns and cost/permission/tool anomaly alerts.
+- id: CL-WO-033
+  status: TODO
+  summary: Provide configured email/webhook routing and observable failed delivery.
+- id: CL-WO-034
+  status: TODO
+  summary: Apply approved 365/90/31-day SQL/archive TTL and hold-aware deletion with pressure alerts.
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- Standard-v3 qualification and the requested pause precede substantial construction.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.

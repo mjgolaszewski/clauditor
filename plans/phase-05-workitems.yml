@@ -1,0 +1,200 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 05 Workitems
+  id: clauditor-phase-05-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-05-workitems.yml
+  phase_id: P05
+workitems:
+- id: CL-WO-024
+  priority: P0
+  status: TODO
+  summary: Project exact source-available prompts, response, tool, connector, skill and artifact metadata with content-availability
+    states.
+  acceptance:
+  - packet:CL-WO-024
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.008.v1
+  - requirement:cl.req.012.v1
+  - requirement:cl.req.034.v1
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-008
+  - predecessor-output:CL-WO-015
+  - predecessor-output:CL-WO-017
+  - predecessor-output:CL-WO-018
+  - All recognized content states remain distinguishable and searchable
+  - Searchable supported captured content
+  - Source capture settings documented and verifiable
+  - Capture readiness matrix per source
+  - Typed AnyValue reconstituted across archive
+  - Histogram/counter/gauge test round trips
+  - 'Reject: Placeholder/no-emission cannot look like complete file/result'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  - 'Reject: Flattened string-only projection does not replace archive'
+  - 'Reject: No hidden type loss or invalid temporality'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-025
+  priority: P0
+  status: TODO
+  summary: Create source-bound timeline reconstruction with session, prompt and trace sequence uncertainty.
+  acceptance:
+  - packet:CL-WO-025
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.032.v1
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-010
+  - predecessor-output:CL-WO-019
+  - requires-workitem-closure:CL-WO-024
+  - Known events yield reproducible ordered timeline and uncertainty
+  - Searchable supported captured content
+  - Same-source exact-key timeline
+  - Representative synthetic fixtures visible
+  - 'Reject: Approximate time/email matching cannot create false provenance'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-026
+  priority: P0
+  status: TODO
+  summary: Provision Grafana OSS local administrator/reviewer roles and non-writable SQL datasource.
+  acceptance:
+  - packet:CL-WO-026
+  - requirement:cl.req.017.v1
+  - requirement:cl.req.026.v1
+  - requirement:cl.req.033.v1
+  - predecessor-output:CL-WO-004
+  - predecessor-output:CL-WO-010
+  - predecessor-output:CL-WO-014
+  - predecessor-output:CL-WO-015
+  - Reviewer sees permitted data but cannot mutate underlying SQL or secrets
+  - Reviewer views permitted dashboards
+  - Revoked secret stops old sender
+  - Available admin actions observable
+  - 'Reject: Any viewer INSERT/DROP or anonymous access fails'
+  - 'Reject: Reviewer cannot alter DB or secrets'
+  - 'Reject: Token never appears in app logs or evidence export'
+  - 'Reject: Enterprise audit-log functionality not claimed'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-027
+  priority: P0
+  status: TODO
+  summary: Prove first MVP Cowork/Claude Code prompt→archive→SQL→authenticated session view using fixtures.
+  acceptance:
+  - packet:CL-WO-027
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.002.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.032.v1
+  - predecessor-output:CL-WO-019
+  - predecessor-output:CL-WO-020
+  - predecessor-output:CL-WO-021
+  - requires-workitem-closure:CL-WO-024
+  - requires-workitem-closure:CL-WO-025
+  - requires-workitem-closure:CL-WO-026
+  - Compliance viewer reconstructs observed source event with provenance
+  - Supported Cowork event is queryable
+  - Code logs/metrics/spans round-trip
+  - Searchable supported captured content
+  - Filtered user/session/prompt search
+  - Same-source exact-key timeline
+  - Representative synthetic fixtures visible
+  - 'Reject: Healthy containers alone or fabricated missing response fails'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: Disabled trace or content yields no invented span/body'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-028
+  priority: P0
+  status: TODO
+  summary: Provision Grafana views for conversation, tools, MCP, connectors, skills, content and coverage.
+  acceptance:
+  - packet:CL-WO-028
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.008.v1
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.032.v1
+  - requires-workitem-closure:CL-WO-024
+  - requires-workitem-closure:CL-WO-025
+  - requires-workitem-closure:CL-WO-026
+  - requires-workitem-closure:CL-WO-027
+  - Every observed content view links its source and status
+  - Searchable supported captured content
+  - Capture readiness matrix per source
+  - Filtered user/session/prompt search
+  - Same-source exact-key timeline
+  - Representative synthetic fixtures visible
+  - 'Reject: No summarized or truncated field presented as verbatim complete text'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-029
+  priority: P0
+  status: TODO
+  summary: Provide per-user/source/model token, latency, cost estimate and storage dashboarding.
+  acceptance:
+  - packet:CL-WO-029
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.023.v1
+  - requirement:cl.req.032.v1
+  - predecessor-output:CL-WO-015
+  - requires-workitem-closure:CL-WO-024
+  - requires-workitem-closure:CL-WO-025
+  - requires-workitem-closure:CL-WO-026
+  - Usage charts match reconciled synthetic totals
+  - Filtered user/session/prompt search
+  - Retention horizon estimate uses actual sampled bytes
+  - Representative synthetic fixtures visible
+  - 'Reject: Duplicate events or missing prices cannot inflate certain spend'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-030
+  priority: P0
+  status: TODO
+  summary: Deliver role-protected bounded CSV/JSON exports with exact query scope and signed or hashed source manifest.
+  acceptance:
+  - packet:CL-WO-030
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.020.v1
+  - requirement:cl.req.033.v1
+  - predecessor-output:CL-WO-009
+  - predecessor-output:CL-WO-010
+  - predecessor-output:CL-WO-017
+  - requires-workitem-closure:CL-WO-025
+  - requires-workitem-closure:CL-WO-026
+  - Reviewer obtains faithful selection, schema, digests and content statuses
+  - Archive manifest verifies selected bytes
+  - Deterministic safe exported selection
+  - Inert rendering and protected data
+  - Available admin actions observable
+  - 'Reject: Unbounded dump, CSV injection and unauthorized export fail'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: HTML/XSS/SQL injected in prompts has no execution effect'
+  - 'Reject: Enterprise audit-log functionality not claimed'
+  acceptance_evidence:
+  - governance-validate

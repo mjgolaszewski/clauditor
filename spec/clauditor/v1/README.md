@@ -15,6 +15,12 @@ completed Standard-v3 upgrade. The authoritative input set consists of:
 - `tools/check.py`: structural and relational validator; deterministic
   generated human report, pair/state matrices and diagram; causal mutations.
 
+The canonical YAML roadmap now maps all requirements to planned phase workitems.
+This adopts delivery intent, not product implementation or BCF semantic admission.
+The reviewed retry amendment requires a new `archive_ok` observation after retry;
+its provenance and remaining promotion blockers are in
+`audits/standard-v3-readiness.yml`.
+
 ## Validate without writing
 
 The canonical BCF environment already requires Python and jsonschema:

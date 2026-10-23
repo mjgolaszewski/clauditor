@@ -1,0 +1,92 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 08 Plan
+  id: clauditor-phase-08-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-08-plan.yml
+phase:
+  id: P08
+  build_block: appliance_acceptance
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - Demonstrate complete RIA compliance search, alert, export, hold, backup and retrieval workflow.
+  - Publish operator-ready one-shot installation, enrollment, permissions, alert and recovery instructions.
+  - "Measure 12\u201324-source retention horizon and 2\u20134-reviewer query load with source-content distributions."
+  parallelizable_workstreams:
+  - id: P08-WS1
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
+  hard_dependencies:
+  - P01
+  - P03
+  - P04
+  - P05
+  - P06
+  - P07
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: Substantial construction is not authorized in this run. P01 must qualify Standard 3.0 then pause; later packets
+    remain planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: 'CL-WO-041: read construction/context.json and construction/orders/CL-WO-041.json with exact model/source blob
+    bindings.'
+- order: 5
+  statement: 'CL-WO-041: predecessor outputs CL-WO-027, CL-WO-028, CL-WO-029, CL-WO-030, CL-WO-033, CL-WO-037, CL-WO-038,
+    CL-WO-039, CL-WO-040 require actual identity/currentness before consumption; output .artifacts/clauditor/CL-WO-041/report.json.
+    (non-authoritative planned output; capture exact digest before use)'
+- order: 6
+  statement: 'CL-WO-041: owner cl.owner.query.v1; permitted roots tests/e2e/compliance-workflow/, .artifacts/clauditor/CL-WO-041/;
+    locks isolated-full-vertical. (non-authoritative planned output; capture exact digest before use)'
+- order: 7
+  statement: 'CL-WO-041: steps Install fresh isolated appliance; run actual-shaped multi-source samples; reconstruct session
+    and export; recover after failure'
+- order: 8
+  statement: 'CL-WO-042: read construction/context.json and construction/orders/CL-WO-042.json with exact model/source blob
+    bindings.'
+- order: 9
+  statement: 'CL-WO-042: predecessor outputs CL-WO-020, CL-WO-021, CL-WO-022, CL-WO-023, CL-WO-027, CL-WO-033, CL-WO-035,
+    CL-WO-041 require actual identity/currentness before consumption; output docs/install/README.md.'
+- order: 10
+  statement: 'CL-WO-042: owner cl.owner.deployment.v1; permitted roots docs/install/, docs/runbooks/, tests/docs/; locks docs-writer.'
+- order: 11
+  statement: 'CL-WO-042: steps Write Linux Docker prerequisites, host DNS/TLS, content policy, smoke tests, backup and rollback;
+    dry-run docs in fresh environment'
+- order: 12
+  statement: 'CL-WO-043: read construction/context.json and construction/orders/CL-WO-043.json with exact model/source blob
+    bindings.'
+- order: 13
+  statement: 'CL-WO-043: predecessor outputs CL-WO-019, CL-WO-027, CL-WO-034, CL-WO-035, CL-WO-039, CL-WO-041 require actual
+    identity/currentness before consumption; output docs/capacity/12-24-user.json.'
+- order: 14
+  statement: 'CL-WO-043: owner cl.owner.deployment.v1; permitted roots tests/performance/, docs/capacity/; locks isolated-capacity.'
+- order: 15
+  statement: 'CL-WO-043: steps Run bounded measured ingest/query/restore load; calculate 365/90/31 days with real compressed
+    bytes and headroom'
+- order: 16
+  statement: Phase hard_dependencies identify upstream output providers, not whole-phase barriers; independently admitted
+    ready packets may run with disjoint locks. No successor phase activation in this run.
+verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
+- make governance-validate
+- make governance-exposure-scan
+- Each packet target_tests invocation, environment, timeouts and outputs must qualify before admission.

@@ -9,7 +9,7 @@
   "active_phase": "plans/phase-ledger.yml",
   "root_build": "plans/build-plan.yml",
   "canonical_gate_registry": "governance/gate-contracts.yml",
-  "source_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+  "source_blob": "3e516bcb3468ebbbb03a08ec4309e226e1c3a14b",
   "runtime": "BCF v2.3.6 Lite",
   "target": "Standard 3.0, no persistent controller",
   "global_forbidden": [

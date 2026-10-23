@@ -1,0 +1,82 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 09 Plan
+  id: clauditor-phase-09-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-09-plan.yml
+phase:
+  id: P09
+  build_block: final_assurance
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - Promote only qualified real application gates to controller-free canonical BCF Standard contract 3.0.
+  - Assemble reviewer handoff with exact candidate, scans/SBOM, release evidence and no implied release authority.
+  parallelizable_workstreams:
+  - id: P09-WS1
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
+  hard_dependencies:
+  - P01
+  - P02
+  - P07
+  - P08
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: Substantial construction is not authorized in this run. P01 must qualify Standard 3.0 then pause; later packets
+    remain planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: 'CL-WO-044: read construction/context.json and construction/orders/CL-WO-044.json with exact model/source blob
+    bindings.'
+- order: 5
+  statement: 'CL-WO-044: predecessor outputs CL-WO-013, CL-WO-037, CL-WO-038, CL-WO-039, CL-WO-040, CL-WO-041, CL-WO-042,
+    CL-WO-043 require actual identity/currentness before consumption; output spec/clauditor/v1/adoption/standard-v3-qualification.json.'
+- order: 6
+  statement: 'CL-WO-044: owner cl.owner.governance.v1; permitted roots governance/gate-contracts.yml, governance/ci-graph.yml,
+    governance/canonical-representations.yml, plans/build-plan.yml, plans/phase-ledger.yml, spec/clauditor/v1/adoption/; locks
+    bcf-root-writer.'
+- order: 7
+  statement: 'CL-WO-044: steps Resolve authoritative schema/CLI; register real lint/type/contract/security/smoke gates and
+    runner resources; run promote --check before owner-approved apply'
+- order: 8
+  statement: 'CL-WO-044: final-candidate requalification even if P01 promoted earlier; do not repeat a monotonic promotion
+    that already succeeded.'
+- order: 9
+  statement: 'CL-WO-045: read construction/context.json and construction/orders/CL-WO-045.json with exact model/source blob
+    bindings.'
+- order: 10
+  statement: 'CL-WO-045: predecessor outputs CL-WO-041, CL-WO-042, CL-WO-043, CL-WO-044 require actual identity/currentness
+    before consumption; output docs/release/handoff.json.'
+- order: 11
+  statement: 'CL-WO-045: owner cl.owner.governance.v1; permitted roots docs/release/, tests/release/, spec/clauditor/v1/adoption/;
+    locks release-review.'
+- order: 12
+  statement: 'CL-WO-045: steps Collect current authenticated BCF evidence, OSS BOM, source gaps and restore readiness; document
+    blocking findings and request separate release action'
+- order: 13
+  statement: Phase hard_dependencies identify upstream output providers, not whole-phase barriers; independently admitted
+    ready packets may run with disjoint locks. No successor phase activation in this run.
+verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
+- make governance-validate
+- make governance-exposure-scan
+- Each packet target_tests invocation, environment, timeouts and outputs must qualify before admission.

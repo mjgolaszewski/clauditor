@@ -1319,12 +1319,12 @@
           "id": "cl.transition.ingest.07.v1",
           "from": "partial",
           "event": "retry",
-          "to": "archived",
+          "to": "accepted",
           "operation": "cl.op.preserve.v1",
-          "guard": "valid source/current state, exact actor/context and relevant capability",
-          "effects": "only canonical owner effect",
+          "guard": "Authorized bounded retry; archive success must be observed separately before entering archived",
+          "effects": "Reschedule accepted observation using its original identity; never assert archive durability",
           "failure": "typed reject or explicit failure",
-          "recovery": "bounded retry or reconciliation",
+          "recovery": "Replay idempotently; archive_ok is required before archived, including after an index failure",
           "evidence": "positive and semantic mutation obligations"
         }
       ]
