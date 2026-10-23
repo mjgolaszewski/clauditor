@@ -43,9 +43,9 @@ BCF manages **development governance**; Clauditor's eventual **product observabi
 
 ## Current status
 
-**Foundation only.** This seed contains the hero, public README, licensing placeholder, Standard-v3 adoption target, and reproducible canonical BCF Lite bootstrap. It is not a functioning collector and is not already Standard-v3 governed. Canonical Lite files, including `AGENTS.yml`, plans, and runtime scripts, are installed by `bcf install` rather than being synthesized by this seed.
+**BCF Lite installed.** The public README, licensing notice, canonical BCF Lite pack, and controller-free Standard-v3 adoption target are present. This is not a functioning collector or an installed Standard-v3 profile. The supplied, SHA-256-verified hero PNG is approved, but its exact binary bytes are still awaiting upload to `docs/assets/clauditor-hero.png`; see [hero asset provenance](docs/assets/HERO.md).
 
-For the canonical Lite bootstrap in this already-public repository, follow [the bootstrap guide](docs/BOOTSTRAP.md). The next project task will define the product contract and the actual gates needed to promote to Standard v3.
+For installed Lite governance, provenance and the future Standard-v3 promotion prerequisites, follow [the bootstrap guide](docs/BOOTSTRAP.md). The next project task will define the product contract and the actual gates needed to promote to Standard v3.
 
 ## License and security
 
