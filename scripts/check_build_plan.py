@@ -106,7 +106,7 @@ def validate(data: dict) -> dict:
     gates = {g["id"]: g for g in data["build"]["global_gates"]}
     require(gates.get("G2", {}).get("applies_before") == "P02", "construction_boundary")
     rules = " ".join(data["build"]["global_delivery_rules"])
-    require("pause" in rules and "substantial construction" in rules,
+    require("pause" in rules and "push origin" in rules,
             "mandatory_pause_missing")
     require(any(w["id"] == "P01-P0-03" for w in phases["P01"]["workitems"]["workitems"]),
             "promotion_workitem_missing")
@@ -156,6 +156,8 @@ def main() -> None:
         report["negative_controls"] = self_test(data)
     print(json.dumps(report, indent=2, sort_keys=True))
 
+
+PUBLIC_OPERATIONS = {'validate-plan': main}
 
 if __name__ == "__main__":
     main()

@@ -31,8 +31,8 @@ delivery_contract:
   completeness_standard: full_completeness_for_declared_scope
 scope_lock:
 - order: 1
-  statement: Substantial construction is not authorized in this run. P01 must qualify Standard 3.0 then pause; later packets
-    remain planned.
+  statement: Latest user authorization permits minimum actual construction needed for genuine Standard-v3 eligibility, promotion,
+    verification and push; stop after success. Full MVP remains planned.
 - order: 2
   statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
     references. (non-authoritative planned output; capture exact digest before use)
@@ -40,8 +40,8 @@ scope_lock:
   statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
     governance-validate alone cannot accept product behavior.
 - order: 4
-  statement: Only planning records, specification validator repairs, bounded tests and promotion qualification. No application
-    services, deployment, release or hand-edited generated workflows.
+  statement: 'Qualification cut: archive domain/decoder/port/query/CLI, isolated native Collector/ClickHouse runtime, scoped
+    real tests/security gates and canonical BCF configs; no full product release or hand-edited workflows.'
 verification_plan:
 - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
 - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test

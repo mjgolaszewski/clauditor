@@ -87,7 +87,7 @@ closeout_requirements:
     - governance-validate
   finding_registry: governance/findings.yml
 known_constraints:
-- Standard-v3 qualification and the requested pause precede substantial construction.
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
 - Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
 next_work:
 - Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly

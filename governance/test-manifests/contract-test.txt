@@ -1,0 +1,5 @@
+backend.tests.test_contracts::test_canonical_plan_positive_and_negative_controls
+backend.tests.test_contracts::test_collector_accepts_the_actual_configuration
+backend.tests.test_contracts::test_otlp_receivers_require_authentication
+backend.tests.test_contracts::test_retry_does_not_assert_archive_success
+backend.tests.test_contracts::test_runtime_evidence_destinations

@@ -6,6 +6,8 @@ All notable changes to Clauditor will be documented here.
 
 ### Added
 
+- Bounded Standard-v3 eligibility slice: authenticated native OTLP to typed archive and ClickHouse, read-only archive inspection, real gate tooling and exact test populations. Full MVP, live-provider coverage and release remain pending.
+
 - Canonical P01–P09 roadmap and 45 bounded phase workitems, with Standard-v3 qualification and a mandatory pause before substantial construction.
 - Admission controls rejecting unconfirmed archive retries and runtime evidence stored under test sources.
 

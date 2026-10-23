@@ -4,18 +4,19 @@ document:
   id: clauditor-phase-01-log
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: blocked
+  status: active
   path: phases/phase-01-log.yml
 phase:
   id: P01
   build_block: foundation
 summary:
-  outcome: planning_adopted_promotion_blocked
+  outcome: qualification_construction_active
   highlights:
   - Canonical roadmap and all 45 bounded workitems adopted; 39 requirements preserved.
   - Retry and runtime-evidence location defects repaired with causal negative controls.
   - BCF 2.3.6 wheel authenticated; Standard 3.0 check failed with 17 missing gates.
   - No promotion apply, substantial construction, deployment, release or successor activation.
+  - New user authorization permits qualification construction and push after verified promotion.
 workitems:
 - id: P01-P0-01
   status: TODO
@@ -24,7 +25,7 @@ workitems:
   status: DONE
   summary: Adopt canonical P01-P09 roadmap and repair specification admission defects
 - id: P01-P0-03
-  status: BLOCKED
+  status: IN_PROGRESS
   summary: Qualify and promote Standard profile contract 3.0 before substantial construction, then pause
 execution_evidence:
   planned_commands:
@@ -90,7 +91,7 @@ closeout_requirements:
     - governance-validate
   finding_registry: governance/findings.yml
 known_constraints:
-- Standard-v3 qualification and the requested pause precede substantial construction.
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
 - Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
 - Canonical semantic scaffold reports 297 source files and 248 discovered types requiring classification; existing scan success
   covers only declared Lite scope.

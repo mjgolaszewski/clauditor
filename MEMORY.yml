@@ -61,10 +61,10 @@ environment_facts:
     active_workitem_ledger: plans/phase-01-workitems.yml
     active_phase_log: phases/phase-01-log.yml
 known_constraints:
-  - Standard 3.0 must qualify before substantial construction; pause immediately after successful promotion and verification.
+  - User authorizes construction through genuine Standard 3.0 eligibility; verify promotion, push origin, then stop.
   - All 45 construction packets remain not_admitted; canonical phase records own execution state.
-  - Pinned BCF 2.3.6 authenticated; P01 blocked on 17 missing executable gates and unresolved semantic classification.
-  - Runtime smoke needs the unbuilt appliance; no substantial construction or promotion apply was performed.
+  - Pinned BCF 2.3.6 authenticated; P01 is constructing a bounded qualification slice for the 17 required gates.
+  - Qualification scope is synthetic native OTLP to typed archive and SQL; full MVP/live source coverage remains unbuilt.
   - See audits/standard-v3-readiness.yml for exact prerequisites and phase-01-log.yml for observations.
   - replace fail-closed release command placeholders before first release gate
   - update architecture-boundaries.yml when source roots or layer names differ from the starter layout

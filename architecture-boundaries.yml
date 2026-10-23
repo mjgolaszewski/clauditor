@@ -46,7 +46,7 @@ architecture:
     excluded_file_suffixes: [_pb2.py, _pb2_grpc.py]
   bounded_contexts:
     required: true
-    context_root_tokens: [domain, domains, feature, features, context, contexts, bounded_context, bounded_contexts, infra, infrastructure, adapter, adapters]
+    context_root_tokens: [clauditor, domain, domains, feature, features, context, contexts, bounded_context, bounded_contexts, infra, infrastructure, adapter, adapters]
     shared_context_tokens: [shared, shared_kernel]
   layer_membership_policy:
     exactly_one_layer: true

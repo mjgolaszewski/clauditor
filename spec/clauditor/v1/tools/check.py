@@ -400,5 +400,7 @@ def main() -> None:
     print(json.dumps(output, indent=2, sort_keys=True))
 
 
+PUBLIC_OPERATIONS = {'validate-spec': main}
+
 if __name__ == "__main__":
     main()

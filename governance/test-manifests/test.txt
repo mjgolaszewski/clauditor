@@ -1,0 +1,10 @@
+backend.tests.test_archive::test_envelope_rejects_empty_bytes
+backend.tests.test_archive::test_malformed_archive_rejected[[]]
+backend.tests.test_archive::test_malformed_archive_rejected[not JSON]
+backend.tests.test_archive::test_malformed_archive_rejected[{"unknown":true}]
+backend.tests.test_archive::test_malformed_archive_rejected[{}]
+backend.tests.test_archive::test_nested_anyvalue_precision
+backend.tests.test_archive::test_size_limit
+backend.tests.test_archive::test_typed_roundtrip[logs]
+backend.tests.test_archive::test_typed_roundtrip[metrics]
+backend.tests.test_archive::test_typed_roundtrip[traces]

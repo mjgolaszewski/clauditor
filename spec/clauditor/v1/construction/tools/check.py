@@ -301,5 +301,7 @@ def main():
         report["derived"]=str(dest/name)
     print(json.dumps(report,indent=2,sort_keys=True))
 
+PUBLIC_OPERATIONS = {'validate-construction': main}
+
 if __name__=="__main__":
     main()

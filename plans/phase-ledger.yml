@@ -4,7 +4,7 @@ document:
   id: clauditor-phase-ledger
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: active_phase_blocked
+  status: active_phase_active
   path: plans/phase-ledger.yml
 build_plan_mandate:
   format: yaml
@@ -24,7 +24,7 @@ active_phase:
   memory: MEMORY.yml
   spec: plans/product-spec.yml
   build_plan: plans/build-plan.yml
-  lifecycle_status: blocked
+  lifecycle_status: active
   owner: codex
   validation_commands:
   - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
@@ -32,10 +32,6 @@ active_phase:
   - .venv/bin/python scripts/check_build_plan.py --self-test
   - make governance-validate
   - make governance-exposure-scan
-  blocked_reason: Canonical Standard 3.0 check rejects 17 absent mandatory executable gates; appliance runtime-smoke has no
-    built runtime, and full source semantic classification is unresolved.
-  unblock_condition: Explicitly reconcile the pre-construction boundary with real mandatory runtime and gate prerequisites;
-    qualify complete semantic/claim/interpreter contracts and exact provider evidence before promotion. See audits/standard-v3-readiness.yml.
 hotfix_lane:
   scaffold_script: scripts/scaffold_governance_artifacts.py
   default_mode: full
@@ -58,9 +54,12 @@ operator_requirements_choices_disambiguations:
 - type: authorization
   statement: Adopt canonical roadmap; attempt Standard profile contract 3.0 before substantial construction, then pause. If
     actual prerequisites require construction, stop and report blockers.
+- type: authorization
+  statement: User now authorizes construction through genuine Standard-v3 promotion eligibility, promotion and verification,
+    push to origin, then end turn. No product release.
 active_delivery_priorities:
   current_tranche:
-  - Standard-v3 qualification blocked before substantial construction; retain Lite and do not activate P02.
+  - Construct and test the smallest qualification slice; promote and verify Standard 3.0, push origin, then stop.
 release_trains:
   release_1:
     target_version: 0.2.0

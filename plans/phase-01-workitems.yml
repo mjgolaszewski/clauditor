@@ -4,7 +4,7 @@ document:
   id: clauditor-phase-01-workitems
   version: 1.0.0
   generated_at_utc: '2026-10-23T00:00:00Z'
-  status: blocked
+  status: active
   path: plans/phase-01-workitems.yml
   phase_id: P01
 workitems:
@@ -15,7 +15,7 @@ workitems:
   acceptance:
   - initial governed foundation_is_complete
   acceptance_evidence:
-  - governance-validate
+  - contract-test
 - id: P01-P0-02
   priority: P0
   status: DONE
@@ -25,17 +25,18 @@ workitems:
   - Retry cannot assert archive success; execution evidence is outside test sources.
   - Product intent, root roadmap, phase artifacts and memory reconcile without authored lifecycle truth.
   acceptance_evidence:
-  - governance-validate
+  - contract-test
 - id: P01-P0-03
   priority: P0
-  status: BLOCKED
+  status: IN_PROGRESS
   summary: Qualify and promote Standard profile contract 3.0 before substantial construction, then pause
   acceptance:
   - requires-workitem-closure:P01-P0-02
   - Pinned BCF 2.3.6, real required gates and causal negatives, actual semantic inventory, claim model and runner/provider
     authority qualify.
   - Canonical promote --check then matching --apply succeed; reconciliation and CI graph/provider checks pass.
-  - Stop blocked if real qualification needs substantial construction; no invented source symbols or empty-test gates.
   - Immediately pause after successful verified promotion; do not activate application construction.
+  - Latest user authorization permits the minimum actual construction needed for eligibility; verify promotion then push origin
+    and stop.
   acceptance_evidence:
-  - governance-validate
+  - contract-test
