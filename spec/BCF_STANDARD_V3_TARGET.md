@@ -65,9 +65,9 @@ The exact mandatory gate set, command parameters, and trust boundaries must foll
 
 The next agent/developer task should complete and record these in BCF's *installed* governance artifacts, not in a second shadow lifecycle file:
 
-- [ ] The seed is committed at a clean Git HEAD.
-- [ ] Canonical BCF v2.3.6 wheel digest is authenticated and Lite is installed with strict validation.
-- [ ] `bcf validate` and `bcf exposure-scan` pass; initial Lite artifacts are committed.
+- [x] The seed was committed at a clean Git HEAD.
+- [x] Canonical BCF v2.3.6 wheel digest was authenticated and Lite was installed with strict validation.
+- [x] `bcf validate` and `bcf exposure-scan` passed during canonical Lite installation; initial Lite artifacts and the generated workflow were committed.
 - [ ] The GitHub repository is confirmed **public** and contains the hero and this README.
 - [ ] Product invariants, operations, and source/sink scope are approved.
 - [ ] Standard-v3 gate and semantic configs are complete and independently reviewed.
