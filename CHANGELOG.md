@@ -6,6 +6,7 @@ All notable changes to Clauditor will be documented here.
 
 ### Added
 
+- Proposed dependency-first Clauditor construction plan: 45 source-traced A–J work orders and 20 resource-compatible dependency waves (review only; no implementation or BCF admission).
 - Source-grounded candidate Anthropic OTLP compliance-appliance specification, including Claude Code, independent edge/transition obligations and deterministic validation.
 - Approved current hero reference at `assets/clauditor-hero.png`.
 
