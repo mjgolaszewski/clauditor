@@ -1,0 +1,234 @@
+{
+  "document": {
+    "id": "cl.construction.order_index.v1",
+    "baseline": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
+    "status": "candidate_only"
+  },
+  "orders": [
+    {
+      "id": "CL-WO-001",
+      "path": "orders/CL-WO-001.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-002",
+      "path": "orders/CL-WO-002.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-003",
+      "path": "orders/CL-WO-003.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-004",
+      "path": "orders/CL-WO-004.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-005",
+      "path": "orders/CL-WO-005.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-006",
+      "path": "orders/CL-WO-006.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-007",
+      "path": "orders/CL-WO-007.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-008",
+      "path": "orders/CL-WO-008.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-009",
+      "path": "orders/CL-WO-009.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-010",
+      "path": "orders/CL-WO-010.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-011",
+      "path": "orders/CL-WO-011.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-012",
+      "path": "orders/CL-WO-012.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-013",
+      "path": "orders/CL-WO-013.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-014",
+      "path": "orders/CL-WO-014.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-015",
+      "path": "orders/CL-WO-015.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-016",
+      "path": "orders/CL-WO-016.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-017",
+      "path": "orders/CL-WO-017.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-018",
+      "path": "orders/CL-WO-018.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-019",
+      "path": "orders/CL-WO-019.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-020",
+      "path": "orders/CL-WO-020.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-021",
+      "path": "orders/CL-WO-021.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-022",
+      "path": "orders/CL-WO-022.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-023",
+      "path": "orders/CL-WO-023.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-024",
+      "path": "orders/CL-WO-024.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-025",
+      "path": "orders/CL-WO-025.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-026",
+      "path": "orders/CL-WO-026.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-027",
+      "path": "orders/CL-WO-027.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-028",
+      "path": "orders/CL-WO-028.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-029",
+      "path": "orders/CL-WO-029.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-030",
+      "path": "orders/CL-WO-030.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-031",
+      "path": "orders/CL-WO-031.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-032",
+      "path": "orders/CL-WO-032.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-033",
+      "path": "orders/CL-WO-033.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-034",
+      "path": "orders/CL-WO-034.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-035",
+      "path": "orders/CL-WO-035.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-036",
+      "path": "orders/CL-WO-036.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-037",
+      "path": "orders/CL-WO-037.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-038",
+      "path": "orders/CL-WO-038.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-039",
+      "path": "orders/CL-WO-039.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-040",
+      "path": "orders/CL-WO-040.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-041",
+      "path": "orders/CL-WO-041.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-042",
+      "path": "orders/CL-WO-042.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-043",
+      "path": "orders/CL-WO-043.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-044",
+      "path": "orders/CL-WO-044.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    },
+    {
+      "id": "CL-WO-045",
+      "path": "orders/CL-WO-045.json",
+      "sha256": "computed at render/manifest time, not BCF evidence"
+    }
+  ]
+}

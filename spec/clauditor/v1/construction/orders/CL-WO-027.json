@@ -1,0 +1,363 @@
+{
+  "id": "CL-WO-027",
+  "document_kind": "planning_work_order_candidate",
+  "status": "not_admitted",
+  "proposed_phase": "P05",
+  "complexity": "medium",
+  "scheduling": {
+    "depends_on": [
+      "CL-WO-019",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-024",
+      "CL-WO-025",
+      "CL-WO-026"
+    ],
+    "parallelizable": "conditional_if_nonoverlapping_writes_locks_and_all_predecessors_admitted",
+    "out_of_order": "conditional_if_all_dependencies_and_authority_are_satisfied",
+    "exclusive_write_roots": [
+      "tests/e2e/first-vertical/"
+    ],
+    "exclusive_resource_locks": [
+      "isolated-first-vertical"
+    ],
+    "isolation": "Use isolated Docker Compose project, credentials and data volumes for concurrent tests"
+  },
+  "A_identity_outcome": {
+    "id": "CL-WO-027",
+    "canonical_domain_owner": "cl.owner.query.v1",
+    "required_results": "Prove first MVP Cowork/Claude Code prompt→archive→SQL→authenticated session view using fixtures.",
+    "requirements": [
+      "cl.req.001.v1",
+      "cl.req.002.v1",
+      "cl.req.005.v1",
+      "cl.req.016.v1",
+      "cl.req.018.v1",
+      "cl.req.032.v1"
+    ],
+    "invariants": [
+      "cl.invariant.coverage.v1",
+      "cl.invariant.content_status.v1",
+      "cl.invariant.correlation.v1"
+    ],
+    "product_edges": [
+      "cl.flow.001.v1",
+      "cl.flow.002.v1",
+      "cl.flow.012.v1",
+      "cl.flow.014.v1"
+    ]
+  },
+  "B_authoritative_context": {
+    "exact_source": {
+      "repo": "mjgolaszewski/clauditor",
+      "baseline_git_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
+      "model_git_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+      "registry_git_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
+      "bcf": "v2.3.6 Lite; proposed Standard 3.0 controller-free"
+    },
+    "requirements": [
+      {
+        "id": "cl.req.001.v1",
+        "source_refs": [
+          "U01",
+          "ACW",
+          "ACWH"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/0",
+        "positive": "Supported Cowork event is queryable",
+        "negative": "Never fabricate unavailable conversation content"
+      },
+      {
+        "id": "cl.req.002.v1",
+        "source_refs": [
+          "U01",
+          "ACC"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/1",
+        "positive": "Code logs/metrics/spans round-trip",
+        "negative": "Disabled trace or content yields no invented span/body"
+      },
+      {
+        "id": "cl.req.005.v1",
+        "source_refs": [
+          "U01",
+          "ACW",
+          "ACC"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/4",
+        "positive": "Searchable supported captured content",
+        "negative": "No artifact bytes are fetched or inferred if not emitted"
+      },
+      {
+        "id": "cl.req.016.v1",
+        "source_refs": [
+          "U10",
+          "GF"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/15",
+        "positive": "Filtered user/session/prompt search",
+        "negative": "Missing response not synthesized"
+      },
+      {
+        "id": "cl.req.018.v1",
+        "source_refs": [
+          "ACW",
+          "ACC"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/17",
+        "positive": "Same-source exact-key timeline",
+        "negative": "Similar text/timestamps do not imply exact linkage"
+      },
+      {
+        "id": "cl.req.032.v1",
+        "source_refs": [
+          "U04",
+          "U10"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/31",
+        "positive": "Representative synthetic fixtures visible",
+        "negative": "No blank/unknown field presented as FULL"
+      }
+    ],
+    "canonical_refs": [
+      "spec/clauditor/v1/model.json",
+      "spec/clauditor/v1/source-registry.json",
+      "spec/clauditor/v1/bcf-binding.json",
+      "AGENTS.yml",
+      "plans/product-spec.yml",
+      "governance/gate-contracts.yml"
+    ],
+    "predecessor_outputs": [
+      {
+        "order_id": "CL-WO-019",
+        "required_artifact_id": "CL-WO-019:primary",
+        "artifact_path": "config/otel/pipelines/delivery.yaml",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-020",
+        "required_artifact_id": "CL-WO-020:primary",
+        "artifact_path": "docs/onboarding/cowork/README.md",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-021",
+        "required_artifact_id": "CL-WO-021:primary",
+        "artifact_path": "docs/onboarding/claude-code/README.md",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-024",
+        "required_artifact_id": "CL-WO-024:primary",
+        "artifact_path": "sql/views/content/normalized.sql",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-025",
+        "required_artifact_id": "CL-WO-025:primary",
+        "artifact_path": "sql/views/correlation/timeline.sql",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-026",
+        "required_artifact_id": "CL-WO-026:primary",
+        "artifact_path": "grafana/provisioning/datasources/clickhouse.yaml",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      }
+    ],
+    "shared_context": "spec/clauditor/v1/construction/context.json"
+  },
+  "C_preconditions_readiness": {
+    "dependency_ids": [
+      "CL-WO-019",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-024",
+      "CL-WO-025",
+      "CL-WO-026"
+    ],
+    "consumed_predecessor_outputs": [
+      {
+        "order_id": "CL-WO-019",
+        "required_artifact_id": "CL-WO-019:primary",
+        "artifact_path": "config/otel/pipelines/delivery.yaml",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-020",
+        "required_artifact_id": "CL-WO-020:primary",
+        "artifact_path": "docs/onboarding/cowork/README.md",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-021",
+        "required_artifact_id": "CL-WO-021:primary",
+        "artifact_path": "docs/onboarding/claude-code/README.md",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-024",
+        "required_artifact_id": "CL-WO-024:primary",
+        "artifact_path": "sql/views/content/normalized.sql",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-025",
+        "required_artifact_id": "CL-WO-025:primary",
+        "artifact_path": "sql/views/correlation/timeline.sql",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-026",
+        "required_artifact_id": "CL-WO-026:primary",
+        "artifact_path": "grafana/provisioning/datasources/clickhouse.yaml",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      }
+    ],
+    "blockers": [
+      "Product contracts remain a review candidate; authorized implementation requires exact BCF dependency and owner admission",
+      "Missing source/user decisions or an unqualified exporter prevent claims dependent on that source",
+      "Changed source blob, BCF version, predecessor receipt or runtime environment requires affected revalidation"
+    ],
+    "authority": "No construction on basis of this candidate packet; require current canonical BCF and owner admission",
+    "drift_policy": "Fail closed on changed source, contract, test population, provider or authority and requalify affected dependencies"
+  },
+  "D_proposed_permitted_cut": {
+    "write_roots": [
+      "tests/e2e/first-vertical/"
+    ],
+    "primary_output": "tests/e2e/first-vertical/report.json",
+    "allowed_edits": "Only owner-approved bounded files and directly necessary tests",
+    "forbidden_edits": [
+      "Other owners' contracts, unrelated product features and uncontrolled dependency upgrades",
+      "Generated .github/workflows, forged BCF evidence or authored verified/closed",
+      "Chrysalis/Entra/Compliance API and paid hosted services in MVP"
+    ]
+  },
+  "E_behavioral_contract": {
+    "inputs": [
+      "Applicable source/operation contracts and the exact read-set",
+      "CL-WO-019:primary",
+      "CL-WO-020:primary",
+      "CL-WO-021:primary",
+      "CL-WO-024:primary",
+      "CL-WO-025:primary",
+      "CL-WO-026:primary"
+    ],
+    "outputs": [
+      "CL-WO-027:primary"
+    ],
+    "preconditions": [
+      "Owner and source contract resolve",
+      "All producer-consumer edges and state transitions classified"
+    ],
+    "success": "Compliance viewer reconstructs observed source event with provenance",
+    "rejection": "Healthy containers alone or fabricated missing response fails",
+    "edge_refs": [
+      "cl.flow.001.v1",
+      "cl.flow.002.v1",
+      "cl.flow.012.v1",
+      "cl.flow.014.v1"
+    ],
+    "side_effect_scope": [
+      "tests/e2e/first-vertical/"
+    ],
+    "concurrency": "Exact input and exclusive writer; no silent sharing of state/queues",
+    "recovery": "Typed rejection, bounded replay or explicit operator reconciliation",
+    "migration": "Preserve historical source field, role, consent, archive and BCF behavior unless owner supersedes it"
+  },
+  "F_implementation_approach": {
+    "ordered_steps": [
+      "Exercise genuine-shaped prompt/tool/response and missing-content variants on isolated stack",
+      "restart and query"
+    ],
+    "reuse": [
+      "Canonical Anthropic/OTLP interfaces and BCF owners",
+      "Qualified free self-hosted Collector/ClickHouse/Grafana components before custom code"
+    ],
+    "scope_limit": "Do not define missing business semantics while coding; report upstream contract blockers"
+  },
+  "G_positive_negative_proof": {
+    "positive": [
+      "Compliance viewer reconstructs observed source event with provenance",
+      "Supported Cowork event is queryable",
+      "Code logs/metrics/spans round-trip",
+      "Searchable supported captured content",
+      "Filtered user/session/prompt search",
+      "Same-source exact-key timeline",
+      "Representative synthetic fixtures visible"
+    ],
+    "negative": [
+      "Healthy containers alone or fabricated missing response fails",
+      "Never fabricate unavailable conversation content",
+      "Disabled trace or content yields no invented span/body",
+      "No artifact bytes are fetched or inferred if not emitted",
+      "Missing response not synthesized",
+      "Similar text/timestamps do not imply exact linkage",
+      "No blank/unknown field presented as FULL"
+    ],
+    "preservation": [
+      "Previously accepted input/output schema and historical protections",
+      "BCF Lite root controls and source/hero files"
+    ],
+    "test_roots": [
+      "tests/e2e/first-vertical/"
+    ],
+    "result": "not_run"
+  },
+  "H_validation_evidence": {
+    "cheap_preflight": [
+      "python3 spec/clauditor/v1/tools/check.py --self-test",
+      "python3 spec/clauditor/v1/construction/tools/check.py --self-test"
+    ],
+    "root_existing": [
+      "python3 scripts/validate_governance_yaml.py --repo-root .",
+      "python3 scripts/check_governance_exposure.py --repo-root ."
+    ],
+    "target_tests": "Implement the exact scoped positive/negative tests under G; determine invocation from actual test runner during admission, not fabricated now",
+    "claims": [
+      "cl.invariant.coverage.v1",
+      "cl.invariant.content_status.v1",
+      "cl.invariant.correlation.v1"
+    ],
+    "evidence_binding": "Exact candidate Git blob/tree, dependency and source manifests, actor/runner authority, test case population and observation context",
+    "cost_order": "Schema/edge/preflight → cheap deterministic → scoped tests → required live/provider validation → BCF evidence qualification",
+    "reuse": "Qualified unchanged evidence only if dependency fingerprint, freshness, source and BCF authority still apply; no automatic generic rerun"
+  },
+  "I_discretion_stop": {
+    "allowed": [
+      "Ordinary coding/tool configuration details within accepted effect, schema, security, privacy and budget contracts",
+      "Use OSS built-in functionality before proposing a custom helper"
+    ],
+    "prohibited": [
+      "Choosing a different retention or missing-content meaning",
+      "Changing canonical domain laws, root BCF authority, source material or deployment scope without amendment"
+    ],
+    "stop": [
+      "Product contracts remain a review candidate; authorized implementation requires exact BCF dependency and owner admission",
+      "Missing source/user decisions or an unqualified exporter prevent claims dependent on that source",
+      "Changed source blob, BCF version, predecessor receipt or runtime environment requires affected revalidation"
+    ],
+    "execution_budget": "Must be derived from qualified host/source budgets before active work; no invented provider quota"
+  },
+  "J_completion_handoff": {
+    "primary_output": {
+      "id": "CL-WO-027:primary",
+      "path": "tests/e2e/first-vertical/report.json",
+      "status": "future_not_built"
+    },
+    "evidence": "Observed positive/negative proofs with authenticated exact-input receipts where required",
+    "downstream_dependents": [
+      "CL-WO-028",
+      "CL-WO-040",
+      "CL-WO-041",
+      "CL-WO-042",
+      "CL-WO-043"
+    ],
+    "terminal": "bounded_candidate_output_followed_by_explicit_BCF_and_human_admission",
+    "no_implicit_authority": [
+      "No implied commit/push/merge/deploy/release",
+      "Passing this isolated packet does not establish integrated product behavior"
+    ]
+  }
+}

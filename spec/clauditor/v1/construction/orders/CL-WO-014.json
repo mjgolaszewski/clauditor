@@ -1,0 +1,287 @@
+{
+  "id": "CL-WO-014",
+  "document_kind": "planning_work_order_candidate",
+  "status": "not_admitted",
+  "proposed_phase": "P03",
+  "complexity": "medium",
+  "scheduling": {
+    "depends_on": [
+      "CL-WO-003",
+      "CL-WO-004",
+      "CL-WO-012",
+      "CL-WO-013"
+    ],
+    "parallelizable": "conditional_if_nonoverlapping_writes_locks_and_all_predecessors_admitted",
+    "out_of_order": "conditional_if_all_dependencies_and_authority_are_satisfied",
+    "exclusive_write_roots": [
+      "deploy/",
+      "tests/deploy/"
+    ],
+    "exclusive_resource_locks": [
+      "compose-writer"
+    ],
+    "isolation": "Use isolated Docker Compose project, credentials and data volumes for concurrent tests"
+  },
+  "A_identity_outcome": {
+    "id": "CL-WO-014",
+    "canonical_domain_owner": "cl.owner.deployment.v1",
+    "required_results": "Construct reproducible single-host Linux Docker Compose OSS services with restricted interfaces.",
+    "requirements": [
+      "cl.req.022.v1",
+      "cl.req.027.v1",
+      "cl.req.035.v1"
+    ],
+    "invariants": [
+      "cl.invariant.resilience.v1",
+      "cl.invariant.no_fees.v1"
+    ],
+    "product_edges": [
+      "cl.flow.005.v1"
+    ]
+  },
+  "B_authoritative_context": {
+    "exact_source": {
+      "repo": "mjgolaszewski/clauditor",
+      "baseline_git_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
+      "model_git_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+      "registry_git_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
+      "bcf": "v2.3.6 Lite; proposed Standard 3.0 controller-free"
+    },
+    "requirements": [
+      {
+        "id": "cl.req.022.v1",
+        "source_refs": [
+          "U08"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/21",
+        "positive": "Fresh single-host install completes",
+        "negative": "Green containers without test telemetry not ready"
+      },
+      {
+        "id": "cl.req.027.v1",
+        "source_refs": [
+          "U10",
+          "U11"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/26",
+        "positive": "Every required runtime component has qualifying OSS license",
+        "negative": "Paid/hosted-only component is excluded"
+      },
+      {
+        "id": "cl.req.035.v1",
+        "source_refs": [
+          "U08",
+          "OTRES"
+        ],
+        "source_pointer": "spec/clauditor/v1/model.json#/requirements/34",
+        "positive": "New operator proves log+metric+span test",
+        "negative": "Unqualified source never claimed monitored"
+      }
+    ],
+    "canonical_refs": [
+      "spec/clauditor/v1/model.json",
+      "spec/clauditor/v1/source-registry.json",
+      "spec/clauditor/v1/bcf-binding.json",
+      "AGENTS.yml",
+      "plans/product-spec.yml",
+      "governance/gate-contracts.yml"
+    ],
+    "predecessor_outputs": [
+      {
+        "order_id": "CL-WO-003",
+        "required_artifact_id": "CL-WO-003:primary",
+        "artifact_path": "spec/clauditor/v1/research/components/pins-and-licenses.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-004",
+        "required_artifact_id": "CL-WO-004:primary",
+        "artifact_path": "spec/clauditor/v1/design/security/roles-and-sensitive-content.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-012",
+        "required_artifact_id": "CL-WO-012:primary",
+        "artifact_path": "spec/clauditor/v1/design/operations/host-and-recovery.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-013",
+        "required_artifact_id": "CL-WO-013:primary",
+        "artifact_path": "spec/clauditor/v1/adoption/root-contract-proposal.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      }
+    ],
+    "shared_context": "spec/clauditor/v1/construction/context.json"
+  },
+  "C_preconditions_readiness": {
+    "dependency_ids": [
+      "CL-WO-003",
+      "CL-WO-004",
+      "CL-WO-012",
+      "CL-WO-013"
+    ],
+    "consumed_predecessor_outputs": [
+      {
+        "order_id": "CL-WO-003",
+        "required_artifact_id": "CL-WO-003:primary",
+        "artifact_path": "spec/clauditor/v1/research/components/pins-and-licenses.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-004",
+        "required_artifact_id": "CL-WO-004:primary",
+        "artifact_path": "spec/clauditor/v1/design/security/roles-and-sensitive-content.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-012",
+        "required_artifact_id": "CL-WO-012:primary",
+        "artifact_path": "spec/clauditor/v1/design/operations/host-and-recovery.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      },
+      {
+        "order_id": "CL-WO-013",
+        "required_artifact_id": "CL-WO-013:primary",
+        "artifact_path": "spec/clauditor/v1/adoption/root-contract-proposal.json",
+        "qualification": "exact authenticated output identity required; not yet assigned"
+      }
+    ],
+    "blockers": [
+      "Product contracts remain a review candidate; authorized implementation requires exact BCF dependency and owner admission",
+      "Missing source/user decisions or an unqualified exporter prevent claims dependent on that source",
+      "Changed source blob, BCF version, predecessor receipt or runtime environment requires affected revalidation"
+    ],
+    "authority": "No construction on basis of this candidate packet; require current canonical BCF and owner admission",
+    "drift_policy": "Fail closed on changed source, contract, test population, provider or authority and requalify affected dependencies"
+  },
+  "D_proposed_permitted_cut": {
+    "write_roots": [
+      "deploy/",
+      "tests/deploy/"
+    ],
+    "primary_output": "deploy/compose.yml",
+    "allowed_edits": "Only owner-approved bounded files and directly necessary tests",
+    "forbidden_edits": [
+      "Other owners' contracts, unrelated product features and uncontrolled dependency upgrades",
+      "Generated .github/workflows, forged BCF evidence or authored verified/closed",
+      "Chrysalis/Entra/Compliance API and paid hosted services in MVP"
+    ]
+  },
+  "E_behavioral_contract": {
+    "inputs": [
+      "Applicable source/operation contracts and the exact read-set",
+      "CL-WO-003:primary",
+      "CL-WO-004:primary",
+      "CL-WO-012:primary",
+      "CL-WO-013:primary"
+    ],
+    "outputs": [
+      "CL-WO-014:primary"
+    ],
+    "preconditions": [
+      "Owner and source contract resolve",
+      "All producer-consumer edges and state transitions classified"
+    ],
+    "success": "Cold start persists data and runs no paid dependencies",
+    "rejection": "Floating image, public SQL, insecure volume or false health blocks acceptance",
+    "edge_refs": [
+      "cl.flow.005.v1"
+    ],
+    "side_effect_scope": [
+      "deploy/",
+      "tests/deploy/"
+    ],
+    "concurrency": "Exact input and exclusive writer; no silent sharing of state/queues",
+    "recovery": "Typed rejection, bounded replay or explicit operator reconciliation",
+    "migration": "Preserve historical source field, role, consent, archive and BCF behavior unless owner supersedes it"
+  },
+  "F_implementation_approach": {
+    "ordered_steps": [
+      "Pin qualified Collector, ClickHouse and Grafana images",
+      "configure volumes, health endpoints, secret mounts and no anonymous ports"
+    ],
+    "reuse": [
+      "Canonical Anthropic/OTLP interfaces and BCF owners",
+      "Qualified free self-hosted Collector/ClickHouse/Grafana components before custom code"
+    ],
+    "scope_limit": "Do not define missing business semantics while coding; report upstream contract blockers"
+  },
+  "G_positive_negative_proof": {
+    "positive": [
+      "Cold start persists data and runs no paid dependencies",
+      "Fresh single-host install completes",
+      "Every required runtime component has qualifying OSS license",
+      "New operator proves log+metric+span test"
+    ],
+    "negative": [
+      "Floating image, public SQL, insecure volume or false health blocks acceptance",
+      "Green containers without test telemetry not ready",
+      "Paid/hosted-only component is excluded",
+      "Unqualified source never claimed monitored"
+    ],
+    "preservation": [
+      "Previously accepted input/output schema and historical protections",
+      "BCF Lite root controls and source/hero files"
+    ],
+    "test_roots": [
+      "tests/deploy/"
+    ],
+    "result": "not_run"
+  },
+  "H_validation_evidence": {
+    "cheap_preflight": [
+      "python3 spec/clauditor/v1/tools/check.py --self-test",
+      "python3 spec/clauditor/v1/construction/tools/check.py --self-test"
+    ],
+    "root_existing": [
+      "python3 scripts/validate_governance_yaml.py --repo-root .",
+      "python3 scripts/check_governance_exposure.py --repo-root ."
+    ],
+    "target_tests": "Implement the exact scoped positive/negative tests under G; determine invocation from actual test runner during admission, not fabricated now",
+    "claims": [
+      "cl.invariant.resilience.v1",
+      "cl.invariant.no_fees.v1"
+    ],
+    "evidence_binding": "Exact candidate Git blob/tree, dependency and source manifests, actor/runner authority, test case population and observation context",
+    "cost_order": "Schema/edge/preflight → cheap deterministic → scoped tests → required live/provider validation → BCF evidence qualification",
+    "reuse": "Qualified unchanged evidence only if dependency fingerprint, freshness, source and BCF authority still apply; no automatic generic rerun"
+  },
+  "I_discretion_stop": {
+    "allowed": [
+      "Ordinary coding/tool configuration details within accepted effect, schema, security, privacy and budget contracts",
+      "Use OSS built-in functionality before proposing a custom helper"
+    ],
+    "prohibited": [
+      "Choosing a different retention or missing-content meaning",
+      "Changing canonical domain laws, root BCF authority, source material or deployment scope without amendment"
+    ],
+    "stop": [
+      "Product contracts remain a review candidate; authorized implementation requires exact BCF dependency and owner admission",
+      "Missing source/user decisions or an unqualified exporter prevent claims dependent on that source",
+      "Changed source blob, BCF version, predecessor receipt or runtime environment requires affected revalidation"
+    ],
+    "execution_budget": "Must be derived from qualified host/source budgets before active work; no invented provider quota"
+  },
+  "J_completion_handoff": {
+    "primary_output": {
+      "id": "CL-WO-014:primary",
+      "path": "deploy/compose.yml",
+      "status": "future_not_built"
+    },
+    "evidence": "Observed positive/negative proofs with authenticated exact-input receipts where required",
+    "downstream_dependents": [
+      "CL-WO-015",
+      "CL-WO-016",
+      "CL-WO-017",
+      "CL-WO-026",
+      "CL-WO-035",
+      "CL-WO-036"
+    ],
+    "terminal": "bounded_candidate_output_followed_by_explicit_BCF_and_human_admission",
+    "no_implicit_authority": [
+      "No implied commit/push/merge/deploy/release",
+      "Passing this isolated packet does not establish integrated product behavior"
+    ]
+  }
+}
