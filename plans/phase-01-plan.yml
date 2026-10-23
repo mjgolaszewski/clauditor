@@ -1,0 +1,34 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 01 Plan
+  id: clauditor-phase-01-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-01-plan.yml
+phase:
+  id: P01
+  build_block: foundation
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - initial governed foundation
+  parallelizable_workstreams:
+  - id: P01-WS1
+    name: bootstrap governance pack
+  hard_dependencies: []
+  docker_first_local_runtime: repo_native_validation_and_governance_commands
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: keep the phase narrowly scoped to declared deliverables and update canonical
+    governed artifacts in the same change
+verification_plan:
+- make governance-validate

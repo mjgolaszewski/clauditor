@@ -1,0 +1,762 @@
+"""Scaffold governed phase and hotfix artifacts for the template governance pack."""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import dataclass
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from typing import Any, Callable, Iterable
+
+import yaml  # type: ignore[import-untyped]
+from .check_governance_exposure import PATTERNS as GOVERNANCE_EXPOSURE_PATTERNS
+from .runtime_capacity import executing_runtime_version
+from .reconcile_stage_ledger import (
+    ReconcileError,
+    check_reconcile_steps,
+    record_reconcile_steps,
+)
+
+
+__version__ = executing_runtime_version()
+
+from .test_manifests import declared_test_gates
+from .governance_validation.structural_limits import validate_structural_limits
+from .semantic_authority_contracts import (
+    FAMILIES_PATH,
+    LOCK_PATH,
+    OPERATIONS_PATH,
+    capability_states,
+)
+from .ci_graph_post_merge import reconcile_post_merge_scope
+from .ci_graph_provider_permissions import reconcile_provider_permission_edges
+from .ci_graph_contracts import validate_ci_graph
+from .ci_graph_values import declared_graph_value_source_paths
+from .ci_authority_pins import projected_workflow_paths, reconcile_workflow_authority
+from .release_version_projection import reconcile_release_version_surfaces
+from .reconcile_authority_transition import (
+    ReconcileAuthorityTransitionError,
+    apply_workflow_authority_transition,
+    result_json as authority_transition_json,
+)
+from .profile_surface_generation import reconcile_makefile, reconcile_template_workflow
+from .interpreter_environment import reconcile_interpreter_environment
+from .local_execution_admission import ensure_local_project_python
+from .test_duration_observations import reconcile_test_duration_observations
+from .editorial_audit_projection import editorial_base
+from .evidence_storage_topology import compile_migration_plan
+from .hotfix_scaffolding import (
+    HOTFIX_MODES,
+    register_hotfix_log,
+    scaffold_hotfix_log,
+)
+from .nested_cli_runtime import exact_nested_cli_command
+
+def _portable_governed_commands(commands: list[str]) -> list[str]:
+    """Reject machine-local command records before any artifact is written."""
+
+    for command in commands:
+        matched = sorted(
+            name
+            for name, pattern in GOVERNANCE_EXPOSURE_PATTERNS.items()
+            if pattern.search(command)
+        )
+        if matched:
+            raise ValueError(
+                "governed validation command exposes nonportable infrastructure: "
+                + ", ".join(matched)
+            )
+    return commands
+
+
+def _phase_number(phase_id: str) -> int:
+    if not phase_id.startswith("P") or not phase_id[1:].isdigit():
+        raise ValueError(f"invalid phase id {phase_id!r}; expected values like 'P01'")
+    return int(phase_id[1:])
+
+
+def _phase_stem(phase_id: str) -> str:
+    return f"phase-{_phase_number(phase_id):02d}"
+
+
+def _write_yaml(path: Path, payload: dict[str, Any], *, force: bool) -> None:
+    if path.exists() and not force:
+        raise FileExistsError(f"{path} already exists; pass --force to overwrite")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+
+
+def _repo_relative_path(repo_root: Path, path: Path) -> str:
+    return path.relative_to(repo_root).as_posix()
+
+
+def scaffold_phase_artifacts(
+    *,
+    repo_root: Path,
+    project_id: str,
+    phase_id: str,
+    build_block: str,
+    objective: str,
+    planner: str,
+    date: str,
+    hard_dependencies: list[str],
+    deliverables: list[str],
+    workstreams: list[str],
+    verification_commands: list[str],
+    force: bool,
+) -> dict[str, Path]:
+    verification_commands = _portable_governed_commands(verification_commands)
+    stem = _phase_stem(phase_id)
+    phase_number = _phase_number(phase_id)
+    plan_path = repo_root / "plans" / f"{stem}-plan.yml"
+    workitems_path = repo_root / "plans" / f"{stem}-workitems.yml"
+    log_path = repo_root / "phases" / f"{stem}-log.yml"
+
+    plan_payload = {
+        "document": {
+            "kind": "execution_phase_plan",
+            "name": f"Phase {phase_number:02d} Plan",
+            "id": f"{project_id}-{stem}-plan",
+            "version": "1.0.0",
+            "generated_at_utc": f"{date}T00:00:00Z",
+            "status": "planned",
+            "path": _repo_relative_path(repo_root, plan_path),
+        },
+        "phase": {
+            "id": phase_id,
+            "build_block": build_block,
+            "planner": planner,
+            "date": date,
+            "scope_source": [
+                "AGENTS.yml",
+                "plans/product-spec.yml",
+                "plans/build-plan.yml",
+                "plans/phase-ledger.yml",
+                "MEMORY.yml",
+            ],
+        },
+        "delivery_contract": {
+            "tightly_scoped_deliverables": deliverables,
+            "parallelizable_workstreams": [
+                {"id": f"{phase_id}-WS{index + 1}", "name": workstream}
+                for index, workstream in enumerate(workstreams)
+            ],
+            "hard_dependencies": hard_dependencies,
+            "docker_first_local_runtime": "repo_native_validation_and_governance_commands",
+            "completeness_standard": "full_completeness_for_declared_scope",
+        },
+        "scope_lock": [
+            {
+                "order": 1,
+                "statement": (
+                    "keep the phase narrowly scoped to declared deliverables and update "
+                    "canonical governed artifacts in the same change"
+                ),
+            }
+        ],
+        "verification_plan": verification_commands,
+    }
+
+    workitem_entries = [
+        {
+            "id": f"{phase_id}-P0-{index + 1:02d}",
+            "priority": "P0",
+            "status": "TODO",
+            "summary": f"deliver {deliverable}",
+            "acceptance": [f"{deliverable}_is_complete"],
+            "acceptance_evidence": ["test", "contract-test"],
+        }
+        for index, deliverable in enumerate(deliverables)
+    ]
+
+    workitems_payload = {
+        "document": {
+            "kind": "execution_phase_workitem_ledger",
+            "name": f"Phase {phase_number:02d} Workitems",
+            "id": f"{project_id}-{stem}-workitems",
+            "version": "1.0.0",
+            "generated_at_utc": f"{date}T00:00:00Z",
+            "status": "planned",
+            "path": _repo_relative_path(repo_root, workitems_path),
+            "phase_id": phase_id,
+        },
+        "workitems": workitem_entries,
+    }
+
+    log_payload = {
+        "document": {
+            "kind": "execution_phase_log",
+            "name": f"Phase {phase_number:02d} Log",
+            "id": f"{project_id}-{stem}-log",
+            "version": "1.0.0",
+            "generated_at_utc": f"{date}T00:00:00Z",
+            "status": "planned",
+            "path": _repo_relative_path(repo_root, log_path),
+        },
+        "phase": {"id": phase_id, "build_block": build_block},
+        "summary": {
+            "outcome": "planned",
+            "highlights": [
+                f"{phase_id} is opened for {objective}",
+                "phase artifacts were scaffolded from the governance template",
+            ],
+        },
+        "workitems": [
+            {"id": workitem["id"], "status": workitem["status"], "summary": workitem["summary"]}
+            for workitem in workitem_entries
+        ],
+        "execution_evidence": {
+            "planned_commands": verification_commands,
+            "executed_commands": [],
+            "notes": ["phase scaffolding was generated by scaffold_governance_artifacts.py"],
+        },
+        "closeout_requirements": {
+            "claims": {
+                "workitems_closed": {"required_evidence": ["governance-validate"]},
+                "required_suites_green": {
+                    "required_evidence": ["lint", "typecheck", "test", "contract-test"]
+                },
+                "architecture_gates_green": {"required_evidence": ["architecture-test"]},
+                "health_checks_green": {"required_evidence": ["runtime-smoke"]},
+                "security_review_complete": {"required_evidence": ["governance-validate"]},
+                "findings_resolved": {
+                    "required_evidence": ["security-vulnerability-scan"]
+                },
+            },
+            "reconciliation": {
+                "required_evidence": ["governance-validate", "governance-exposure-scan"]
+            },
+            "finding_registry": "governance/findings.yml",
+        },
+        "known_constraints": [
+            "update canonical governed artifacts together when behavior or environment contracts change"
+        ],
+        "next_work": ["implement scoped workitems and record execution evidence in this log"],
+    }
+
+    _write_yaml(plan_path, plan_payload, force=force)
+    _write_yaml(workitems_path, workitems_payload, force=force)
+    _write_yaml(log_path, log_payload, force=force)
+    return {"plan": plan_path, "workitems": workitems_path, "log": log_path}
+
+
+Action = Callable[[], None]
+
+
+@dataclass(frozen=True)
+class ReconcileStep:
+    """One canonical projection owner with distinct check and apply actions."""
+
+    step_id: str
+    check: Action
+    apply: Action
+    apply_verifies: bool = False
+    watch_paths: tuple[str, ...] | None = None
+
+
+def _run_reconcile_command(command: list[str], *, repo_root: Path, step_id: str) -> None:
+    environment = dict(os.environ)
+    environment.pop("PYTHONPATH", None)
+    result = subprocess.run(
+        command,
+        cwd=repo_root,
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode:
+        detail = result.stderr.strip() or result.stdout.strip() or f"exit {result.returncode}"
+        raise ReconcileError(f"{step_id} failed: {detail}")
+
+
+def _reconcile_action(repo_root: Path, step_id: str, command: list[str]) -> Action:
+    return lambda: _run_reconcile_command(command, repo_root=repo_root, step_id=step_id)
+
+
+def _reconcile_workflow_authority(repo_root: Path, *, apply: bool) -> None:
+    workflows = validate_ci_graph(repo_root).workflows
+    authority_path = Path("governance/ci-authority.yml")
+    graph_paths = {str(value["id"]): str(value["path"]) for value in workflows}
+    reconcile_workflow_authority(
+        repo_root,
+        authority_path=authority_path,
+        workflow_paths=projected_workflow_paths(
+            repo_root,
+            authority_path=authority_path,
+            workflow_paths=graph_paths,
+        ),
+        apply=apply,
+    )
+
+
+def reconcile_steps(repo_root: Path, python: Path) -> tuple[ReconcileStep, ...]:
+    """Return the closed canonical projection order for this repository."""
+
+    project_python = python.absolute()
+    tool_python = Path(sys.executable).absolute()
+    graph_value_sources = (
+        declared_graph_value_source_paths(repo_root)
+        if (repo_root / "governance/ci-graph.yml").is_file()
+        else ()
+    )
+    from .governance_validation.authored_phase_state import (
+        active_phase_paths,
+        validate_authored_hotfix_state,
+        validate_authored_phase_state,
+    )
+    from .governance_validation.ci_state_matrix import validate_ci_state_matrix
+    phase_ledger_present = (repo_root / "plans/phase-ledger.yml").is_file()
+    active_paths = active_phase_paths(repo_root) if phase_ledger_present else ()
+    hotfix_paths = validate_authored_hotfix_state(repo_root) if phase_ledger_present else ()
+    steps: list[ReconcileStep] = []
+    if phase_ledger_present:
+        active_plan, active_workitems, active_log = active_paths
+        steps.append(ReconcileStep(
+            "authored-phase-state",
+            lambda: validate_authored_phase_state(repo_root),
+            lambda: validate_authored_phase_state(repo_root),
+            watch_paths=(
+                "plans/product-spec.yml",
+                "plans/build-plan.yml",
+                "plans/phase-ledger.yml",
+                "MEMORY.yml",
+                active_plan,
+                active_workitems,
+                active_log,
+                *hotfix_paths,
+            ),
+        ))
+        steps.append(ReconcileStep(
+            "ci-state-matrix",
+            lambda: validate_ci_state_matrix(repo_root),
+            lambda: validate_ci_state_matrix(repo_root),
+            watch_paths=(
+                "spec/RELEASE_TRAIN_STATE_DAG.md",
+                "governance/ci-graph.yml",
+                "bcf_governance/tooling",
+                ".github/workflows",
+            ),
+        ))
+    steps.extend([
+        ReconcileStep(
+            "ci-provider-permissions",
+            lambda: reconcile_provider_permission_edges(repo_root, apply=False),
+            lambda: reconcile_provider_permission_edges(repo_root, apply=True),
+            apply_verifies=True,
+            watch_paths=(
+                "governance/ci-graph.yml",
+                "bcf_governance/tooling/ci_graph_provider_permissions.py",
+                "bcf_governance/tooling/evidence_shards.py",
+            ),
+        ),
+        ReconcileStep(
+            "interpreter-environment",
+            lambda: reconcile_interpreter_environment(repo_root, apply=False),
+            lambda: reconcile_interpreter_environment(repo_root, apply=True),
+            apply_verifies=True,
+            watch_paths=(
+                "pyproject.toml",
+                "governance/gate-contracts.yml",
+                "requirements-governance.txt",
+                "bcf_governance/tooling/interpreter_environment.py",
+                "bcf_governance/tooling/python_runtime_selection.py",
+            ),
+        ),
+        ReconcileStep(
+            "structural-limits",
+            lambda: validate_structural_limits(repo_root),
+            lambda: validate_structural_limits(repo_root),
+        ),
+        ReconcileStep(
+            "release-version-surfaces",
+            lambda: reconcile_release_version_surfaces(
+                repo_root, version=__version__, apply=False
+            ),
+            lambda: reconcile_release_version_surfaces(
+                repo_root, version=__version__, apply=True
+            ),
+            apply_verifies=True,
+            watch_paths=(
+                "bcf_governance/__init__.py",
+                "bcf_governance/tooling/release_version_projection.py",
+                "manifest.yml",
+                "governance/public-contracts.yml",
+            ),
+        ),
+    ])
+    if (repo_root / "governance/gate-contracts.yml").is_file():
+        steps.append(
+            ReconcileStep(
+                "profile-makefile",
+                lambda: reconcile_makefile(repo_root, apply=False),
+                lambda: reconcile_makefile(repo_root, apply=True),
+                watch_paths=(
+                    "governance/gate-contracts.yml",
+                    "Makefile.fragment",
+                    "bcf_governance/tooling/profile_surface_generation.py",
+                    "bcf_governance/tooling/profile_v2_surfaces.py",
+                ),
+            )
+        )
+    if (repo_root / "template-repo/governance/gate-contracts.yml").is_file():
+        steps.append(
+            ReconcileStep(
+                "profile-template-workflow",
+                lambda: reconcile_template_workflow(repo_root, apply=False),
+                lambda: reconcile_template_workflow(repo_root, apply=True),
+                watch_paths=(
+                    "template-repo/governance/gate-contracts.yml",
+                    "template-repo/governance-profile.yml",
+                    "template-repo/.github/workflows/governance.yml",
+                    "bcf_governance/tooling/profile_surface_generation.py",
+                    "bcf_governance/tooling/profile_v2_surfaces.py",
+                    "bcf_governance/tooling/repository_comparison_context.py",
+                ),
+            )
+        )
+    post_merge_watch_paths = ["plans/phase-ledger.yml"]
+    if active_paths:
+        post_merge_watch_paths.extend(active_paths[1:])
+    post_merge_watch_paths.extend((
+        "governance/ci-graph.yml",
+        "bcf_governance/tooling/ci_graph_post_merge.py",
+        "bcf_governance/tooling/evidence_workitem_lifecycle.py",
+    ))
+    steps.append(
+        ReconcileStep(
+            "ci-graph-post-merge-scope",
+            lambda: reconcile_post_merge_scope(repo_root, apply=False),
+            lambda: reconcile_post_merge_scope(repo_root, apply=True),
+            watch_paths=tuple(post_merge_watch_paths),
+        )
+    )
+    pack = repo_root / ".github/scripts/build_pack_manifest.py"
+    if pack.is_file() and not pack.is_symlink():
+        steps.append(
+            ReconcileStep(
+                "pack-projection",
+                _reconcile_action(repo_root, "pack-projection", [str(tool_python), str(pack), "--check"]),
+                _reconcile_action(repo_root, "pack-projection", [str(tool_python), str(pack)]),
+                watch_paths=(
+                    ".github/scripts/build_pack_manifest.py",
+                    "bcf_governance",
+                    "template-repo",
+                    "bcf_governance/pack/template-repo",
+                ),
+            )
+        )
+    semantic_states = capability_states(repo_root)
+    semantic_enabled = any(
+        state in {"advisory", "blocking"} for state in semantic_states.values()
+    )
+    semantic_runtime_paths = (FAMILIES_PATH, OPERATIONS_PATH, LOCK_PATH)
+    if semantic_enabled:
+        steps.append(
+            ReconcileStep(
+                "semantic-lock",
+                _reconcile_action(repo_root, "semantic-lock", exact_nested_cli_command("semantic-ownership", "lock", "--repo-root", str(repo_root), "--check")),
+                _reconcile_action(repo_root, "semantic-lock", exact_nested_cli_command("semantic-ownership", "lock", "--repo-root", str(repo_root), "--apply")),
+                apply_verifies=True,
+                watch_paths=(
+                    "bcf_governance/tooling/semantic_*",
+                    "governance/canonical-representations.yml",
+                    "governance/semantic-*",
+                    "governance/semantic-lock.yml",
+                    "src",
+                    "tests",
+                ),
+            )
+        )
+    elif present := [path.as_posix() for path in semantic_runtime_paths if (repo_root / path).exists()]:
+        raise ReconcileError(
+            "semantic authority artifacts are present without an enabled semantic capability: "
+            + ", ".join(present)
+        )
+    if declared_test_gates(repo_root):
+        common = exact_nested_cli_command("test-manifest")
+        suffix = ["--all", "--repo-root", str(repo_root), "--python", str(project_python)]
+        steps.append(
+            ReconcileStep(
+                "test-manifests",
+                _reconcile_action(repo_root, "test-manifests", [*common, "check", *suffix]),
+                _reconcile_action(repo_root, "test-manifests", [*common, "update", *suffix]),
+                apply_verifies=True,
+                watch_paths=(
+                    "tests",
+                    "governance/gate-contracts.yml",
+                    "governance/test-manifests",
+                    "bcf_governance/tooling/test_manifests.py",
+                ),
+            )
+        )
+        steps.append(
+            ReconcileStep(
+                "test-duration-observations",
+                lambda: reconcile_test_duration_observations(repo_root, apply=False),
+                lambda: reconcile_test_duration_observations(repo_root, apply=True),
+                apply_verifies=True,
+                watch_paths=(
+                    "governance/test-manifests/test.txt",
+                    "governance/test-duration-observations.json",
+                    "governance/gate-contracts.yml",
+                    "bcf_governance/tooling/test_duration_observations.py",
+                ),
+            )
+        )
+    for operation in ("lock", "render"):
+        steps.append(
+            ReconcileStep(
+                f"ci-graph-{operation}",
+                _reconcile_action(repo_root, f"ci-graph-{operation}", exact_nested_cli_command("ci", "graph", operation, "--repo-root", str(repo_root), "--check")),
+                _reconcile_action(repo_root, f"ci-graph-{operation}", exact_nested_cli_command("ci", "graph", operation, "--repo-root", str(repo_root), "--apply")),
+                watch_paths=(
+                    "governance/ci-graph.yml",
+                    "governance/ci-graph.lock.yml",
+                    "governance/ci-extensions",
+                    ".github/workflows",
+                    "bcf_governance/tooling/ci_graph_",
+                    *graph_value_sources,
+                ),
+            )
+        )
+    steps.append(
+        ReconcileStep(
+            "evidence-storage-topology",
+            lambda: compile_migration_plan(repo_root),
+            lambda: compile_migration_plan(repo_root),
+            watch_paths=(
+                "governance/ci-graph.yml",
+                "governance/ci-extensions",
+                "governance/evidence-storage.yml",
+                "bcf_governance/tooling/evidence_storage_*",
+            ),
+        )
+    )
+    checker = repo_root / ".github/scripts/check_editorial_contract.py"
+    builder = repo_root / ".github/scripts/build_editorial_audit.py"
+    if checker.is_file() and builder.is_file() and not checker.is_symlink() and not builder.is_symlink():
+        audit = repo_root / f"audits/v{__version__}-editorial-review.yml"
+        base = editorial_base(repo_root, audit)
+        steps.append(
+            ReconcileStep(
+                "editorial-audit",
+                _reconcile_action(repo_root, "editorial-audit", [str(tool_python), str(checker)]),
+                _reconcile_action(repo_root, "editorial-audit", [str(tool_python), str(builder), "--repo-root", str(repo_root), "--audit", str(audit), "--base-sha", base, "--apply"]),
+                watch_paths=(
+                    "README.md",
+                    "CHANGELOG.md",
+                    "docs",
+                    "spec",
+                    "plans",
+                    "phases",
+                    "audits",
+                    ".github/scripts/check_editorial_contract.py",
+                    ".github/scripts/build_editorial_audit.py",
+                ),
+            )
+        )
+    if (repo_root / "governance/ci-authority.yml").is_file():
+        steps.append(
+            ReconcileStep(
+                "workflow-authority",
+                lambda: _reconcile_workflow_authority(repo_root, apply=False),
+                lambda: _reconcile_workflow_authority(repo_root, apply=True),
+                watch_paths=(
+                    ".github/workflows",
+                    "governance/ci-authority.yml",
+                    "bcf_governance/tooling/ci_authority_pins.py",
+                ),
+            )
+        )
+    return tuple(steps)
+
+
+def _reconcile_snapshot(repo_root: Path) -> str:
+    result = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        cwd=repo_root,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode:
+        raise ReconcileError("cannot inventory governed repository files")
+    digest = hashlib.sha256()
+    for raw in sorted(value for value in result.stdout.split(b"\0") if value):
+        relative = raw.decode("utf-8")
+        path = repo_root / relative
+        digest.update(raw + b"\0")
+        if path.is_symlink():
+            digest.update(b"symlink\0" + os.readlink(path).encode())
+        elif path.is_file():
+            digest.update(b"file\0" + path.read_bytes())
+        else:
+            digest.update(b"absent\0")
+    return digest.hexdigest()
+
+
+def converge(
+    steps: Iterable[ReconcileStep],
+    snapshot: Callable[[], str],
+    *,
+    max_rounds: int = 4,
+) -> int:
+    """Apply the ordered owners until one entire round is byte-stable."""
+
+    ordered = tuple(steps)
+    for round_number in range(1, max_rounds + 1):
+        before = snapshot()
+        for step in ordered:
+            step.apply()
+        if snapshot() == before:
+            for step in ordered:
+                if not step.apply_verifies:
+                    step.check()
+            return round_number
+    raise ReconcileError(f"governance projections did not converge after {max_rounds} rounds")
+
+
+def reconcile_main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Converge all mechanically derived governance surfaces.")
+    parser.add_argument("--repo-root", type=Path, default=Path.cwd())
+    parser.add_argument("--python", type=Path)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--check", action="store_true")
+    mode.add_argument("--apply", action="store_true")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="recompute every check-stage as the selective-equivalence oracle",
+    )
+    args = parser.parse_args(argv)
+    root = args.repo_root.resolve()
+    try:
+        project_python = (
+            ensure_local_project_python(
+                root,
+                Path(sys.executable),
+                requested=args.python,
+            )
+            if declared_test_gates(root)
+            else args.python or Path(sys.executable)
+        )
+        steps = reconcile_steps(root, project_python)
+        ledger = None
+        if args.force and not args.check:
+            raise ReconcileError("--force is valid only with --check")
+        if args.check:
+            ledger = check_reconcile_steps(root, steps, force=args.force)
+            rounds = 0
+        else:
+            transition = None
+            if any(step.step_id == "workflow-authority" for step in steps):
+                transition = apply_workflow_authority_transition(
+                    root,
+                    step_factory=lambda candidate: reconcile_steps(candidate, project_python),
+                    converge=converge,
+                    snapshot=_reconcile_snapshot,
+                )
+            if transition is not None:
+                record_reconcile_steps(root, reconcile_steps(root, project_python))
+                print(authority_transition_json(transition))
+                return
+            rounds = converge(steps, lambda: _reconcile_snapshot(root))
+            ledger = record_reconcile_steps(root, steps)
+    except (
+        OSError,
+        UnicodeError,
+        ReconcileError,
+        ReconcileAuthorityTransitionError,
+        ValueError,
+    ) as exc:
+        raise SystemExit(f"governance-reconcile-failed: {exc}") from exc
+    print(json.dumps({"status": "clean" if args.check else "converged", "rounds": rounds, "steps": [step.step_id for step in steps], "reconciliation": ledger}, sort_keys=True))
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Scaffold governed phase or hotfix artifacts.")
+    parser.add_argument("--repo-root", type=Path, default=Path.cwd())
+    parser.add_argument("--project-id", default="project")
+    parser.add_argument("--force", action="store_true")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    phase = subparsers.add_parser("phase")
+    phase.add_argument("--phase-id", required=True)
+    phase.add_argument("--build-block", required=True)
+    phase.add_argument("--objective", required=True)
+    phase.add_argument("--planner", default="codex")
+    phase.add_argument("--date", required=True)
+    phase.add_argument("--hard-dependency", action="append", default=[])
+    phase.add_argument("--deliverable", action="append", required=True)
+    phase.add_argument("--workstream", action="append", required=True)
+    phase.add_argument("--verification-command", action="append", required=True)
+
+    hotfix = subparsers.add_parser("hotfix")
+    hotfix.add_argument("--hotfix-id", required=True)
+    hotfix.add_argument("--mode", choices=sorted(HOTFIX_MODES), default="full")
+    hotfix.add_argument("--hotfix-number", type=int, required=True)
+    hotfix.add_argument("--summary", required=True)
+    hotfix.add_argument("--related-phase-id", required=True)
+    hotfix.add_argument("--date", required=True)
+    hotfix.add_argument("--validation-command", action="append", required=True)
+    hotfix.add_argument("--triggered-by-commit", action="append", required=True)
+    hotfix.add_argument("--failing-workflow", action="append", default=[])
+    hotfix.add_argument("--root-cause", required=True)
+    hotfix.add_argument("--canonical-artifact", action="append", default=[])
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = _parser().parse_args(argv)
+    repo_root = args.repo_root.resolve()
+    if args.command == "phase":
+        created = scaffold_phase_artifacts(
+            repo_root=repo_root,
+            project_id=args.project_id,
+            phase_id=args.phase_id,
+            build_block=args.build_block,
+            objective=args.objective,
+            planner=args.planner,
+            date=args.date,
+            hard_dependencies=args.hard_dependency,
+            deliverables=args.deliverable,
+            workstreams=args.workstream,
+            verification_commands=args.verification_command,
+            force=args.force,
+        )
+        for artifact_type, path in created.items():
+            print(f"{artifact_type}: {path.relative_to(repo_root)}")
+        return
+    if args.command == "hotfix":
+        created_path = scaffold_hotfix_log(
+            repo_root=repo_root,
+            project_id=args.project_id,
+            hotfix_id=args.hotfix_id,
+            mode=args.mode,
+            hotfix_number=args.hotfix_number,
+            summary=args.summary,
+            related_phase_id=args.related_phase_id,
+            date=args.date,
+            validation_commands=args.validation_command,
+            force=args.force,
+        )
+        register_hotfix_log(
+            repo_root=repo_root,
+            hotfix_log=created_path,
+            hotfix_id=args.hotfix_id,
+            mode=args.mode,
+            related_phase_id=args.related_phase_id,
+            triggered_by_commits=args.triggered_by_commit,
+            failing_workflows=args.failing_workflow,
+            root_cause=args.root_cause,
+            canonical_artifacts=args.canonical_artifact,
+        )
+        print(f"hotfix_log: {created_path.relative_to(repo_root)}")
+
+
+if __name__ == "__main__":
+    main()

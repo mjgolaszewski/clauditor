@@ -1,0 +1,10 @@
+document:
+  kind: finding_registry
+  name: "Clauditor Finding Registry"
+  id: "clauditor-findings"
+  version: 1.0.0
+  generated_at_utc: "2026-10-23T00:00:00Z"
+  status: active
+  path: governance/findings.yml
+reviews: []
+findings: []
