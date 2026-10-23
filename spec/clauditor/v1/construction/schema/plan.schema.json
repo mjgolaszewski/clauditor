@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema.json",
+  "title": "Clauditor candidate construction ledger",
+  "type": "object",
+  "required": [
+    "document",
+    "authority",
+    "work_orders",
+    "source_to_orders",
+    "waves",
+    "execution_policy",
+    "proposed_phases",
+    "verticals",
+    "unresolved",
+    "statistics"
+  ],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": [
+        "id",
+        "status",
+        "source_commit",
+        "source_model_blob",
+        "source_registry_blob",
+        "active_bcf_profile",
+        "bcf_release",
+        "target",
+        "scope",
+        "runtime_authority",
+        "release_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "draft_not_admitted"
+        },
+        "runtime_authority": {
+          "const": false
+        },
+        "release_authority": {
+          "const": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "authority": {
+      "type": "object"
+    },
+    "work_orders": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "complexity",
+          "phase",
+          "title",
+          "owner",
+          "requirements",
+          "depends_on",
+          "primary_output",
+          "write_roots",
+          "locks",
+          "admitted"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CL-WO-[0-9]{3}$"
+          },
+          "complexity": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "phase": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "primary_output": {
+            "type": "string",
+            "minLength": 1
+          },
+          "write_roots": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "locks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "admitted": {
+            "const": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "source_to_orders": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "waves": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "wave",
+          "work_orders",
+          "qualification"
+        ],
+        "properties": {
+          "wave": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "work_orders": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "qualification": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "execution_policy": {
+      "type": "object"
+    },
+    "proposed_phases": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verticals": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "statistics": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

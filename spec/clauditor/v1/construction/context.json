@@ -1,0 +1,20 @@
+{
+  "document": {
+    "id": "cl.construction.shared_context.v1"
+  },
+  "model": "spec/clauditor/v1/model.json",
+  "sources": "spec/clauditor/v1/source-registry.json",
+  "binding": "spec/clauditor/v1/bcf-binding.json",
+  "owner_policy": "AGENTS.yml",
+  "active_phase": "plans/phase-ledger.yml",
+  "root_build": "plans/build-plan.yml",
+  "canonical_gate_registry": "governance/gate-contracts.yml",
+  "source_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+  "runtime": "BCF v2.3.6 Lite",
+  "target": "Standard 3.0, no persistent controller",
+  "global_forbidden": [
+    "Do not alter source or input meanings to satisfy tests",
+    "No premium observability dependency",
+    "No fabricated provider coverage, content, BCF evidence or release certification"
+  ]
+}

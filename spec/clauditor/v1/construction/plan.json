@@ -1,0 +1,1872 @@
+{
+  "document": {
+    "id": "cl.construction.review_plan.v1",
+    "status": "draft_not_admitted",
+    "source_branch": "spec/clauditor-otel-compliance-v1-20261023",
+    "source_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
+    "source_model_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+    "source_registry_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
+    "active_bcf_profile": "lite",
+    "bcf_release": "v2.3.6",
+    "target": "standard v3 without a persistent controller",
+    "scope": "planning artifacts only; no implementation or phase activation",
+    "runtime_authority": false,
+    "release_authority": false
+  },
+  "authority": {
+    "root_lifecycle_owner": "plans/phase-ledger.yml (P01 foundation remains in place)",
+    "root_build_plan": "plans/build-plan.yml requires governed adoption after approved specification",
+    "canonical_bcf": "AGENTS.yml, governance/, plans/, schemas/; generated CI workflow is not editable",
+    "packets": "Candidate A-J packets, not BCF phase-workitems schema or admissible execution notices",
+    "approval_required": "Owner intent and authenticated BCF dependency/subject/evidence preflight"
+  },
+  "work_orders": [
+    {
+      "id": "CL-WO-001",
+      "complexity": "medium",
+      "phase": "P02",
+      "title": "Bind owner intent, baseline and change authority before constructing dependent contracts.",
+      "owner": "cl.owner.governance.v1",
+      "requirements": [
+        "cl.req.029.v1",
+        "cl.req.030.v1",
+        "cl.req.037.v1",
+        "cl.req.038.v1"
+      ],
+      "depends_on": [],
+      "primary_output": "spec/clauditor/v1/construction/authority/decisions.json",
+      "write_roots": [
+        "spec/clauditor/v1/construction/authority/"
+      ],
+      "locks": [
+        "owner-review"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-002",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Qualify Cowork, Claude Code, API and SDK signal/content capabilities and source enrollment prerequisites.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.002.v1",
+        "cl.req.003.v1",
+        "cl.req.004.v1",
+        "cl.req.005.v1",
+        "cl.req.006.v1",
+        "cl.req.007.v1",
+        "cl.req.008.v1"
+      ],
+      "depends_on": [],
+      "primary_output": "spec/clauditor/v1/research/sources/capability-matrix.json",
+      "write_roots": [
+        "spec/clauditor/v1/research/sources/"
+      ],
+      "locks": [
+        "source-research"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-003",
+      "complexity": "medium",
+      "phase": "P02",
+      "title": "Qualify free self-hosted image/plugin versions, dependencies, stability and ClickHouse exporter behavior.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.013.v1",
+        "cl.req.016.v1",
+        "cl.req.022.v1",
+        "cl.req.027.v1",
+        "cl.req.034.v1"
+      ],
+      "depends_on": [],
+      "primary_output": "spec/clauditor/v1/research/components/pins-and-licenses.json",
+      "write_roots": [
+        "spec/clauditor/v1/research/components/"
+      ],
+      "locks": [
+        "license-review"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-004",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Fix local admin/viewer, secret, SQL, content privacy and OSS audit expectations.",
+      "owner": "cl.owner.security.v1",
+      "requirements": [
+        "cl.req.017.v1",
+        "cl.req.019.v1",
+        "cl.req.020.v1",
+        "cl.req.026.v1",
+        "cl.req.033.v1",
+        "cl.req.036.v1"
+      ],
+      "depends_on": [
+        "CL-WO-001"
+      ],
+      "primary_output": "spec/clauditor/v1/design/security/roles-and-sensitive-content.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/security/"
+      ],
+      "locks": [
+        "privacy-review"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-005",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Reconcile canonical semantics, independent required paths and typed state/edge exclusions.",
+      "owner": "cl.owner.governance.v1",
+      "requirements": [
+        "cl.req.030.v1",
+        "cl.req.037.v1",
+        "cl.req.038.v1",
+        "cl.req.039.v1"
+      ],
+      "depends_on": [
+        "CL-WO-001",
+        "CL-WO-002",
+        "CL-WO-004"
+      ],
+      "primary_output": "spec/clauditor/v1/reviews/closure/proof.json",
+      "write_roots": [
+        "spec/clauditor/v1/model.json",
+        "spec/clauditor/v1/schema/",
+        "spec/clauditor/v1/reviews/closure/"
+      ],
+      "locks": [
+        "canonical-source-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-006",
+      "complexity": "medium",
+      "phase": "P02",
+      "title": "Build anonymized fixtures for OTLP signals, content limits and provider source types.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.002.v1",
+        "cl.req.003.v1",
+        "cl.req.004.v1",
+        "cl.req.005.v1",
+        "cl.req.008.v1",
+        "cl.req.009.v1"
+      ],
+      "depends_on": [
+        "CL-WO-002",
+        "CL-WO-005"
+      ],
+      "primary_output": "tests/fixtures/anthropic/manifest.json",
+      "write_roots": [
+        "tests/fixtures/anthropic/"
+      ],
+      "locks": [
+        "fixture-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-007",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Contract OTLP authorization, partial success, durable queues and multi-stage receipts.",
+      "owner": "cl.owner.ingress.v1",
+      "requirements": [
+        "cl.req.009.v1",
+        "cl.req.010.v1",
+        "cl.req.011.v1",
+        "cl.req.031.v1"
+      ],
+      "depends_on": [
+        "CL-WO-003",
+        "CL-WO-005",
+        "CL-WO-006"
+      ],
+      "primary_output": "spec/clauditor/v1/design/ingress/transport-receipts.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/ingress/"
+      ],
+      "locks": [
+        "ingress-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-008",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Contract semantically typed OTLP preservation, ClickHouse projections and deduplication.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.012.v1",
+        "cl.req.013.v1",
+        "cl.req.015.v1",
+        "cl.req.034.v1"
+      ],
+      "depends_on": [
+        "CL-WO-003",
+        "CL-WO-005",
+        "CL-WO-006"
+      ],
+      "primary_output": "spec/clauditor/v1/design/storage/typed-archive-sql.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/storage/"
+      ],
+      "locks": [
+        "storage-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-009",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Define 365/90/31-day retention, holds, export custody and capacity downgrade controls.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.014.v1",
+        "cl.req.015.v1",
+        "cl.req.019.v1",
+        "cl.req.023.v1"
+      ],
+      "depends_on": [
+        "CL-WO-003",
+        "CL-WO-004",
+        "CL-WO-005",
+        "CL-WO-008"
+      ],
+      "primary_output": "spec/clauditor/v1/design/retention/holds-capacity.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/retention/"
+      ],
+      "locks": [
+        "retention-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-010",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Contract reviewer SQL access, correlation confidence, native Grafana capability and bounded exports.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.016.v1",
+        "cl.req.017.v1",
+        "cl.req.018.v1",
+        "cl.req.019.v1",
+        "cl.req.020.v1",
+        "cl.req.032.v1",
+        "cl.req.033.v1"
+      ],
+      "depends_on": [
+        "CL-WO-004",
+        "CL-WO-005",
+        "CL-WO-008"
+      ],
+      "primary_output": "spec/clauditor/v1/design/query/roles-correlation-export.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/query/"
+      ],
+      "locks": [
+        "query-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-011",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Contract observed compliance and health alert predicates, notification and uncertainty.",
+      "owner": "cl.owner.alert.v1",
+      "requirements": [
+        "cl.req.024.v1",
+        "cl.req.025.v1",
+        "cl.req.028.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-004",
+        "CL-WO-005",
+        "CL-WO-008"
+      ],
+      "primary_output": "spec/clauditor/v1/design/alerts/rule-policy.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/alerts/"
+      ],
+      "locks": [
+        "alert-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-012",
+      "complexity": "medium",
+      "phase": "P02",
+      "title": "Specify one-host runtime budgets, persistent volumes, backup/restore and host TLS responsibilities.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.021.v1",
+        "cl.req.022.v1",
+        "cl.req.023.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-003",
+        "CL-WO-007",
+        "CL-WO-008",
+        "CL-WO-009"
+      ],
+      "primary_output": "spec/clauditor/v1/design/operations/host-and-recovery.json",
+      "write_roots": [
+        "spec/clauditor/v1/design/operations/"
+      ],
+      "locks": [
+        "operations-contract"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-013",
+      "complexity": "high",
+      "phase": "P02",
+      "title": "Review and reconcile approved candidate ownership with existing BCF root authorities without destructive replacement.",
+      "owner": "cl.owner.governance.v1",
+      "requirements": [
+        "cl.req.030.v1",
+        "cl.req.037.v1",
+        "cl.req.038.v1",
+        "cl.req.039.v1"
+      ],
+      "depends_on": [
+        "CL-WO-005",
+        "CL-WO-007",
+        "CL-WO-008",
+        "CL-WO-009",
+        "CL-WO-010",
+        "CL-WO-011",
+        "CL-WO-012"
+      ],
+      "primary_output": "spec/clauditor/v1/adoption/root-contract-proposal.json",
+      "write_roots": [
+        "plans/product-spec.yml",
+        "plans/build-plan.yml",
+        "governance/canonical-representations.yml",
+        "spec/clauditor/v1/adoption/"
+      ],
+      "locks": [
+        "bcf-root-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-014",
+      "complexity": "medium",
+      "phase": "P03",
+      "title": "Construct reproducible single-host Linux Docker Compose OSS services with restricted interfaces.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.022.v1",
+        "cl.req.027.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-003",
+        "CL-WO-004",
+        "CL-WO-012",
+        "CL-WO-013"
+      ],
+      "primary_output": "deploy/compose.yml",
+      "write_roots": [
+        "deploy/",
+        "tests/deploy/"
+      ],
+      "locks": [
+        "compose-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-015",
+      "complexity": "high",
+      "phase": "P03",
+      "title": "Implement ClickHouse DDL, idempotent migrations, read-only reporting and restricted ingestion users.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.013.v1",
+        "cl.req.014.v1",
+        "cl.req.017.v1",
+        "cl.req.018.v1",
+        "cl.req.034.v1"
+      ],
+      "depends_on": [
+        "CL-WO-008",
+        "CL-WO-010",
+        "CL-WO-014"
+      ],
+      "primary_output": "sql/bootstrap/001-otel-tables.sql",
+      "write_roots": [
+        "sql/bootstrap/",
+        "tests/sql/bootstrap/"
+      ],
+      "locks": [
+        "sql-ddl-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-016",
+      "complexity": "high",
+      "phase": "P03",
+      "title": "Configure OTLP/HTTP proto+JSON and optional gRPC with authenticated local/remote receiver boundary.",
+      "owner": "cl.owner.ingress.v1",
+      "requirements": [
+        "cl.req.009.v1",
+        "cl.req.010.v1",
+        "cl.req.026.v1"
+      ],
+      "depends_on": [
+        "CL-WO-006",
+        "CL-WO-007",
+        "CL-WO-014"
+      ],
+      "primary_output": "config/otel/receivers/otlp.yaml",
+      "write_roots": [
+        "config/otel/receivers/",
+        "config/otel/auth/",
+        "tests/ingress/"
+      ],
+      "locks": [
+        "receiver-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-017",
+      "complexity": "high",
+      "phase": "P03",
+      "title": "Persist source-faithful typed OTLP with bounded segments, manifest identities and verifiable replay.",
+      "owner": "cl.owner.archive.v1",
+      "requirements": [
+        "cl.req.012.v1",
+        "cl.req.015.v1",
+        "cl.req.031.v1"
+      ],
+      "depends_on": [
+        "CL-WO-007",
+        "CL-WO-008",
+        "CL-WO-014",
+        "CL-WO-016"
+      ],
+      "primary_output": "config/otel/archive/file-exporter.yaml",
+      "write_roots": [
+        "config/otel/archive/",
+        "tools/archive/",
+        "tests/archive/"
+      ],
+      "locks": [
+        "archive-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-018",
+      "complexity": "high",
+      "phase": "P03",
+      "title": "Configure tested Collector→ClickHouse pipelines for logs, traces and metrics.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.012.v1",
+        "cl.req.013.v1",
+        "cl.req.034.v1"
+      ],
+      "depends_on": [
+        "CL-WO-008",
+        "CL-WO-015",
+        "CL-WO-016"
+      ],
+      "primary_output": "config/otel/clickhouse/exporter.yaml",
+      "write_roots": [
+        "config/otel/clickhouse/",
+        "tests/sql/export/"
+      ],
+      "locks": [
+        "sql-exporter"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-019",
+      "complexity": "high",
+      "phase": "P03",
+      "title": "Qualify WAL/queue, backpressure, retries, deduplication and stage reconciliation across archive/SQL.",
+      "owner": "cl.owner.ingress.v1",
+      "requirements": [
+        "cl.req.011.v1",
+        "cl.req.013.v1",
+        "cl.req.031.v1"
+      ],
+      "depends_on": [
+        "CL-WO-007",
+        "CL-WO-017",
+        "CL-WO-018"
+      ],
+      "primary_output": "config/otel/pipelines/delivery.yaml",
+      "write_roots": [
+        "config/otel/pipelines/",
+        "tests/ingest/replay/",
+        "tools/replay/"
+      ],
+      "locks": [
+        "pipeline-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-020",
+      "complexity": "medium",
+      "phase": "P04",
+      "title": "Enable Cowork OTLP with precise desktop/cloud content-policy prerequisites.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.005.v1",
+        "cl.req.006.v1",
+        "cl.req.007.v1",
+        "cl.req.008.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-002",
+        "CL-WO-006",
+        "CL-WO-016",
+        "CL-WO-019"
+      ],
+      "primary_output": "docs/onboarding/cowork/README.md",
+      "write_roots": [
+        "docs/onboarding/cowork/",
+        "tests/conformance/cowork/"
+      ],
+      "locks": [
+        "cowork-onboarding"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-021",
+      "complexity": "medium",
+      "phase": "P04",
+      "title": "Enable Claude Code content-aware OTLP logs, metrics and optional traces.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.002.v1",
+        "cl.req.005.v1",
+        "cl.req.006.v1",
+        "cl.req.007.v1",
+        "cl.req.008.v1"
+      ],
+      "depends_on": [
+        "CL-WO-002",
+        "CL-WO-006",
+        "CL-WO-016",
+        "CL-WO-019"
+      ],
+      "primary_output": "docs/onboarding/claude-code/README.md",
+      "write_roots": [
+        "docs/onboarding/claude-code/",
+        "tests/conformance/claude-code/"
+      ],
+      "locks": [
+        "code-onboarding"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-022",
+      "complexity": "medium",
+      "phase": "P04",
+      "title": "Support hosted API server traces with required public HTTPS endpoint and source authentication.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.003.v1",
+        "cl.req.010.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-002",
+        "CL-WO-006",
+        "CL-WO-016",
+        "CL-WO-019"
+      ],
+      "primary_output": "docs/onboarding/anthropic-api/README.md",
+      "write_roots": [
+        "docs/onboarding/anthropic-api/",
+        "tests/conformance/anthropic-api/"
+      ],
+      "locks": [
+        "api-onboarding"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-023",
+      "complexity": "medium",
+      "phase": "P04",
+      "title": "Document SDK trace instrumentation and safe W3C correlation to API traces.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.004.v1",
+        "cl.req.018.v1"
+      ],
+      "depends_on": [
+        "CL-WO-002",
+        "CL-WO-006",
+        "CL-WO-016",
+        "CL-WO-019"
+      ],
+      "primary_output": "docs/onboarding/anthropic-sdk/README.md",
+      "write_roots": [
+        "docs/onboarding/anthropic-sdk/",
+        "tests/conformance/anthropic-sdk/"
+      ],
+      "locks": [
+        "sdk-onboarding"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-024",
+      "complexity": "high",
+      "phase": "P05",
+      "title": "Project exact source-available prompts, response, tool, connector, skill and artifact metadata with content-availability states.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.005.v1",
+        "cl.req.006.v1",
+        "cl.req.008.v1",
+        "cl.req.012.v1",
+        "cl.req.034.v1"
+      ],
+      "depends_on": [
+        "CL-WO-006",
+        "CL-WO-008",
+        "CL-WO-015",
+        "CL-WO-017",
+        "CL-WO-018"
+      ],
+      "primary_output": "sql/views/content/normalized.sql",
+      "write_roots": [
+        "sql/views/content/",
+        "tests/content/"
+      ],
+      "locks": [
+        "content-query-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-025",
+      "complexity": "high",
+      "phase": "P05",
+      "title": "Create source-bound timeline reconstruction with session, prompt and trace sequence uncertainty.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.005.v1",
+        "cl.req.018.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-006",
+        "CL-WO-010",
+        "CL-WO-019",
+        "CL-WO-024"
+      ],
+      "primary_output": "sql/views/correlation/timeline.sql",
+      "write_roots": [
+        "sql/views/correlation/",
+        "tests/correlation/"
+      ],
+      "locks": [
+        "correlation-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-026",
+      "complexity": "high",
+      "phase": "P05",
+      "title": "Provision Grafana OSS local administrator/reviewer roles and non-writable SQL datasource.",
+      "owner": "cl.owner.security.v1",
+      "requirements": [
+        "cl.req.017.v1",
+        "cl.req.026.v1",
+        "cl.req.033.v1"
+      ],
+      "depends_on": [
+        "CL-WO-004",
+        "CL-WO-010",
+        "CL-WO-014",
+        "CL-WO-015"
+      ],
+      "primary_output": "grafana/provisioning/datasources/clickhouse.yaml",
+      "write_roots": [
+        "grafana/provisioning/datasources/",
+        "config/grafana/security/",
+        "tests/security/roles/"
+      ],
+      "locks": [
+        "grafana-auth"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-027",
+      "complexity": "medium",
+      "phase": "P05",
+      "title": "Prove first MVP Cowork/Claude Code prompt→archive→SQL→authenticated session view using fixtures.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.002.v1",
+        "cl.req.005.v1",
+        "cl.req.016.v1",
+        "cl.req.018.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-019",
+        "CL-WO-020",
+        "CL-WO-021",
+        "CL-WO-024",
+        "CL-WO-025",
+        "CL-WO-026"
+      ],
+      "primary_output": "tests/e2e/first-vertical/report.json",
+      "write_roots": [
+        "tests/e2e/first-vertical/"
+      ],
+      "locks": [
+        "isolated-first-vertical"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-028",
+      "complexity": "medium",
+      "phase": "P05",
+      "title": "Provision Grafana views for conversation, tools, MCP, connectors, skills, content and coverage.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.005.v1",
+        "cl.req.008.v1",
+        "cl.req.016.v1",
+        "cl.req.018.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-024",
+        "CL-WO-025",
+        "CL-WO-026",
+        "CL-WO-027"
+      ],
+      "primary_output": "grafana/dashboards/conversations/conversation.json",
+      "write_roots": [
+        "grafana/dashboards/conversations/",
+        "tests/dashboard/conversations/"
+      ],
+      "locks": [
+        "conversation-dashboards"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-029",
+      "complexity": "medium",
+      "phase": "P05",
+      "title": "Provide per-user/source/model token, latency, cost estimate and storage dashboarding.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.016.v1",
+        "cl.req.023.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-015",
+        "CL-WO-024",
+        "CL-WO-025",
+        "CL-WO-026"
+      ],
+      "primary_output": "grafana/dashboards/usage/usage.json",
+      "write_roots": [
+        "grafana/dashboards/usage/",
+        "tests/dashboard/usage/"
+      ],
+      "locks": [
+        "usage-dashboards"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-030",
+      "complexity": "high",
+      "phase": "P05",
+      "title": "Deliver role-protected bounded CSV/JSON exports with exact query scope and signed or hashed source manifest.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.015.v1",
+        "cl.req.019.v1",
+        "cl.req.020.v1",
+        "cl.req.033.v1"
+      ],
+      "depends_on": [
+        "CL-WO-009",
+        "CL-WO-010",
+        "CL-WO-017",
+        "CL-WO-025",
+        "CL-WO-026"
+      ],
+      "primary_output": "tools/export/manifest-contract.json",
+      "write_roots": [
+        "tools/export/",
+        "tests/export/"
+      ],
+      "locks": [
+        "export-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-031",
+      "complexity": "medium",
+      "phase": "P06",
+      "title": "Alert on configured source loss, queue pressure, archive/SQL gap, exporter errors and disk exhaustion.",
+      "owner": "cl.owner.alert.v1",
+      "requirements": [
+        "cl.req.025.v1",
+        "cl.req.031.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-011",
+        "CL-WO-019",
+        "CL-WO-026"
+      ],
+      "primary_output": "grafana/alerts/health/pipeline.yaml",
+      "write_roots": [
+        "grafana/alerts/health/",
+        "tests/alerts/health/"
+      ],
+      "locks": [
+        "health-alerts"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-032",
+      "complexity": "high",
+      "phase": "P06",
+      "title": "Implement opt-in source-grounded compliance patterns and cost/permission/tool anomaly alerts.",
+      "owner": "cl.owner.alert.v1",
+      "requirements": [
+        "cl.req.024.v1",
+        "cl.req.028.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-011",
+        "CL-WO-024",
+        "CL-WO-025",
+        "CL-WO-026"
+      ],
+      "primary_output": "grafana/alerts/compliance/rules.yaml",
+      "write_roots": [
+        "grafana/alerts/compliance/",
+        "tests/alerts/compliance/"
+      ],
+      "locks": [
+        "compliance-alerts"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-033",
+      "complexity": "medium",
+      "phase": "P06",
+      "title": "Provide configured email/webhook routing and observable failed delivery.",
+      "owner": "cl.owner.alert.v1",
+      "requirements": [
+        "cl.req.028.v1",
+        "cl.req.025.v1"
+      ],
+      "depends_on": [
+        "CL-WO-031",
+        "CL-WO-032"
+      ],
+      "primary_output": "grafana/provisioning/alerting/contact-points.yaml",
+      "write_roots": [
+        "grafana/provisioning/alerting/",
+        "tests/alerts/notification/"
+      ],
+      "locks": [
+        "notifications"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-034",
+      "complexity": "high",
+      "phase": "P06",
+      "title": "Apply approved 365/90/31-day SQL/archive TTL and hold-aware deletion with pressure alerts.",
+      "owner": "cl.owner.storage.v1",
+      "requirements": [
+        "cl.req.014.v1",
+        "cl.req.015.v1",
+        "cl.req.023.v1"
+      ],
+      "depends_on": [
+        "CL-WO-009",
+        "CL-WO-015",
+        "CL-WO-017",
+        "CL-WO-018",
+        "CL-WO-019"
+      ],
+      "primary_output": "sql/retention/retention.sql",
+      "write_roots": [
+        "sql/retention/",
+        "tools/retention/",
+        "tests/retention/"
+      ],
+      "locks": [
+        "retention-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-035",
+      "complexity": "high",
+      "phase": "P07",
+      "title": "Deliver complete verifiable backup/cold restore across SQL, archive, Grafana and settings.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.021.v1",
+        "cl.req.014.v1",
+        "cl.req.015.v1"
+      ],
+      "depends_on": [
+        "CL-WO-012",
+        "CL-WO-014",
+        "CL-WO-015",
+        "CL-WO-017",
+        "CL-WO-026",
+        "CL-WO-034"
+      ],
+      "primary_output": "tools/backup/backup-contract.json",
+      "write_roots": [
+        "tools/backup/",
+        "tests/backup/"
+      ],
+      "locks": [
+        "backup-writer",
+        "isolated-restore"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-036",
+      "complexity": "medium",
+      "phase": "P07",
+      "title": "Provide pinned upgrade, preservation-first migration and rollback.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.021.v1",
+        "cl.req.022.v1",
+        "cl.req.023.v1",
+        "cl.req.027.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-012",
+        "CL-WO-014",
+        "CL-WO-035"
+      ],
+      "primary_output": "docs/upgrade/rollback.md",
+      "write_roots": [
+        "tools/upgrade/",
+        "docs/upgrade/",
+        "tests/deployment/upgrade/"
+      ],
+      "locks": [
+        "upgrade-writer",
+        "isolated-upgrade"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-037",
+      "complexity": "high",
+      "phase": "P07",
+      "title": "Qualify each applicable Anthropic source against content, metadata-only, omitted and truncated events.",
+      "owner": "cl.owner.source.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.002.v1",
+        "cl.req.003.v1",
+        "cl.req.004.v1",
+        "cl.req.005.v1",
+        "cl.req.006.v1",
+        "cl.req.008.v1",
+        "cl.req.009.v1",
+        "cl.req.012.v1"
+      ],
+      "depends_on": [
+        "CL-WO-020",
+        "CL-WO-021",
+        "CL-WO-022",
+        "CL-WO-023",
+        "CL-WO-024",
+        "CL-WO-025"
+      ],
+      "primary_output": "tests/conformance/source/evidence.json",
+      "write_roots": [
+        "tests/conformance/source/"
+      ],
+      "locks": [
+        "isolated-source-probes"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-038",
+      "complexity": "high",
+      "phase": "P07",
+      "title": "Test OTLP auth, read-only SQL, XSS, CSV formula, credential privacy and export boundaries.",
+      "owner": "cl.owner.security.v1",
+      "requirements": [
+        "cl.req.010.v1",
+        "cl.req.017.v1",
+        "cl.req.019.v1",
+        "cl.req.020.v1",
+        "cl.req.026.v1",
+        "cl.req.033.v1"
+      ],
+      "depends_on": [
+        "CL-WO-016",
+        "CL-WO-026",
+        "CL-WO-030"
+      ],
+      "primary_output": "tests/security/hostile-input/evidence.json",
+      "write_roots": [
+        "tests/security/hostile-input/"
+      ],
+      "locks": [
+        "isolated-security-probes"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-039",
+      "complexity": "high",
+      "phase": "P07",
+      "title": "Qualify replay, partial archive/SQL, disk pressure, backend outage and restore failures.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.011.v1",
+        "cl.req.014.v1",
+        "cl.req.015.v1",
+        "cl.req.021.v1",
+        "cl.req.023.v1",
+        "cl.req.025.v1",
+        "cl.req.031.v1"
+      ],
+      "depends_on": [
+        "CL-WO-019",
+        "CL-WO-031",
+        "CL-WO-034",
+        "CL-WO-035",
+        "CL-WO-036"
+      ],
+      "primary_output": "tests/reliability/chaos/evidence.json",
+      "write_roots": [
+        "tests/reliability/chaos/"
+      ],
+      "locks": [
+        "isolated-reliability"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-040",
+      "complexity": "medium",
+      "phase": "P07",
+      "title": "Qualify rule thresholds, alert lifecycle, notification and uncertainty semantics.",
+      "owner": "cl.owner.alert.v1",
+      "requirements": [
+        "cl.req.024.v1",
+        "cl.req.025.v1",
+        "cl.req.028.v1",
+        "cl.req.032.v1"
+      ],
+      "depends_on": [
+        "CL-WO-027",
+        "CL-WO-031",
+        "CL-WO-032",
+        "CL-WO-033"
+      ],
+      "primary_output": "tests/alerts/integration/evidence.json",
+      "write_roots": [
+        "tests/alerts/integration/"
+      ],
+      "locks": [
+        "isolated-alerts"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-041",
+      "complexity": "high",
+      "phase": "P08",
+      "title": "Demonstrate complete RIA compliance search, alert, export, hold, backup and retrieval workflow.",
+      "owner": "cl.owner.query.v1",
+      "requirements": [
+        "cl.req.001.v1",
+        "cl.req.005.v1",
+        "cl.req.016.v1",
+        "cl.req.018.v1",
+        "cl.req.019.v1",
+        "cl.req.022.v1",
+        "cl.req.032.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-027",
+        "CL-WO-028",
+        "CL-WO-029",
+        "CL-WO-030",
+        "CL-WO-033",
+        "CL-WO-037",
+        "CL-WO-038",
+        "CL-WO-039",
+        "CL-WO-040"
+      ],
+      "primary_output": "tests/e2e/compliance-workflow/report.json",
+      "write_roots": [
+        "tests/e2e/compliance-workflow/"
+      ],
+      "locks": [
+        "isolated-full-vertical"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-042",
+      "complexity": "medium",
+      "phase": "P08",
+      "title": "Publish operator-ready one-shot installation, enrollment, permissions, alert and recovery instructions.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.006.v1",
+        "cl.req.007.v1",
+        "cl.req.022.v1",
+        "cl.req.027.v1",
+        "cl.req.035.v1"
+      ],
+      "depends_on": [
+        "CL-WO-020",
+        "CL-WO-021",
+        "CL-WO-022",
+        "CL-WO-023",
+        "CL-WO-027",
+        "CL-WO-033",
+        "CL-WO-035",
+        "CL-WO-041"
+      ],
+      "primary_output": "docs/install/README.md",
+      "write_roots": [
+        "docs/install/",
+        "docs/runbooks/",
+        "tests/docs/"
+      ],
+      "locks": [
+        "docs-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-043",
+      "complexity": "high",
+      "phase": "P08",
+      "title": "Measure 12–24-source retention horizon and 2–4-reviewer query load with source-content distributions.",
+      "owner": "cl.owner.deployment.v1",
+      "requirements": [
+        "cl.req.014.v1",
+        "cl.req.023.v1",
+        "cl.req.031.v1"
+      ],
+      "depends_on": [
+        "CL-WO-019",
+        "CL-WO-027",
+        "CL-WO-034",
+        "CL-WO-035",
+        "CL-WO-039",
+        "CL-WO-041"
+      ],
+      "primary_output": "docs/capacity/12-24-user.json",
+      "write_roots": [
+        "tests/performance/",
+        "docs/capacity/"
+      ],
+      "locks": [
+        "isolated-capacity"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-044",
+      "complexity": "high",
+      "phase": "P09",
+      "title": "Promote only qualified real application gates to controller-free canonical BCF Standard contract 3.0.",
+      "owner": "cl.owner.governance.v1",
+      "requirements": [
+        "cl.req.030.v1",
+        "cl.req.037.v1",
+        "cl.req.038.v1",
+        "cl.req.039.v1"
+      ],
+      "depends_on": [
+        "CL-WO-013",
+        "CL-WO-037",
+        "CL-WO-038",
+        "CL-WO-039",
+        "CL-WO-040",
+        "CL-WO-041",
+        "CL-WO-042",
+        "CL-WO-043"
+      ],
+      "primary_output": "spec/clauditor/v1/adoption/standard-v3-qualification.json",
+      "write_roots": [
+        "governance/gate-contracts.yml",
+        "governance/ci-graph.yml",
+        "governance/canonical-representations.yml",
+        "plans/build-plan.yml",
+        "plans/phase-ledger.yml",
+        "spec/clauditor/v1/adoption/"
+      ],
+      "locks": [
+        "bcf-root-writer"
+      ],
+      "admitted": false
+    },
+    {
+      "id": "CL-WO-045",
+      "complexity": "high",
+      "phase": "P09",
+      "title": "Assemble reviewer handoff with exact candidate, scans/SBOM, release evidence and no implied release authority.",
+      "owner": "cl.owner.governance.v1",
+      "requirements": [
+        "cl.req.027.v1",
+        "cl.req.030.v1",
+        "cl.req.035.v1",
+        "cl.req.039.v1"
+      ],
+      "depends_on": [
+        "CL-WO-041",
+        "CL-WO-042",
+        "CL-WO-043",
+        "CL-WO-044"
+      ],
+      "primary_output": "docs/release/handoff.json",
+      "write_roots": [
+        "docs/release/",
+        "tests/release/",
+        "spec/clauditor/v1/adoption/"
+      ],
+      "locks": [
+        "release-review"
+      ],
+      "admitted": false
+    }
+  ],
+  "source_to_orders": {
+    "cl.req.001.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-020",
+      "CL-WO-027",
+      "CL-WO-037",
+      "CL-WO-041"
+    ],
+    "cl.req.002.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-021",
+      "CL-WO-027",
+      "CL-WO-037"
+    ],
+    "cl.req.003.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-022",
+      "CL-WO-037"
+    ],
+    "cl.req.004.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-023",
+      "CL-WO-037"
+    ],
+    "cl.req.005.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-024",
+      "CL-WO-025",
+      "CL-WO-027",
+      "CL-WO-028",
+      "CL-WO-037",
+      "CL-WO-041"
+    ],
+    "cl.req.006.v1": [
+      "CL-WO-002",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-024",
+      "CL-WO-037",
+      "CL-WO-042"
+    ],
+    "cl.req.007.v1": [
+      "CL-WO-002",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-042"
+    ],
+    "cl.req.008.v1": [
+      "CL-WO-002",
+      "CL-WO-006",
+      "CL-WO-020",
+      "CL-WO-021",
+      "CL-WO-024",
+      "CL-WO-028",
+      "CL-WO-037"
+    ],
+    "cl.req.009.v1": [
+      "CL-WO-006",
+      "CL-WO-007",
+      "CL-WO-016",
+      "CL-WO-037"
+    ],
+    "cl.req.010.v1": [
+      "CL-WO-007",
+      "CL-WO-016",
+      "CL-WO-022",
+      "CL-WO-038"
+    ],
+    "cl.req.011.v1": [
+      "CL-WO-007",
+      "CL-WO-019",
+      "CL-WO-039"
+    ],
+    "cl.req.012.v1": [
+      "CL-WO-008",
+      "CL-WO-017",
+      "CL-WO-018",
+      "CL-WO-024",
+      "CL-WO-037"
+    ],
+    "cl.req.013.v1": [
+      "CL-WO-003",
+      "CL-WO-008",
+      "CL-WO-015",
+      "CL-WO-018",
+      "CL-WO-019"
+    ],
+    "cl.req.014.v1": [
+      "CL-WO-009",
+      "CL-WO-015",
+      "CL-WO-034",
+      "CL-WO-035",
+      "CL-WO-039",
+      "CL-WO-043"
+    ],
+    "cl.req.015.v1": [
+      "CL-WO-008",
+      "CL-WO-009",
+      "CL-WO-017",
+      "CL-WO-030",
+      "CL-WO-034",
+      "CL-WO-035",
+      "CL-WO-039"
+    ],
+    "cl.req.016.v1": [
+      "CL-WO-003",
+      "CL-WO-010",
+      "CL-WO-027",
+      "CL-WO-028",
+      "CL-WO-029",
+      "CL-WO-041"
+    ],
+    "cl.req.017.v1": [
+      "CL-WO-004",
+      "CL-WO-010",
+      "CL-WO-015",
+      "CL-WO-026",
+      "CL-WO-038"
+    ],
+    "cl.req.018.v1": [
+      "CL-WO-010",
+      "CL-WO-015",
+      "CL-WO-023",
+      "CL-WO-025",
+      "CL-WO-027",
+      "CL-WO-028",
+      "CL-WO-041"
+    ],
+    "cl.req.019.v1": [
+      "CL-WO-004",
+      "CL-WO-009",
+      "CL-WO-010",
+      "CL-WO-030",
+      "CL-WO-038",
+      "CL-WO-041"
+    ],
+    "cl.req.020.v1": [
+      "CL-WO-004",
+      "CL-WO-010",
+      "CL-WO-030",
+      "CL-WO-038"
+    ],
+    "cl.req.021.v1": [
+      "CL-WO-012",
+      "CL-WO-035",
+      "CL-WO-036",
+      "CL-WO-039"
+    ],
+    "cl.req.022.v1": [
+      "CL-WO-003",
+      "CL-WO-012",
+      "CL-WO-014",
+      "CL-WO-036",
+      "CL-WO-041",
+      "CL-WO-042"
+    ],
+    "cl.req.023.v1": [
+      "CL-WO-009",
+      "CL-WO-012",
+      "CL-WO-029",
+      "CL-WO-034",
+      "CL-WO-036",
+      "CL-WO-039",
+      "CL-WO-043"
+    ],
+    "cl.req.024.v1": [
+      "CL-WO-011",
+      "CL-WO-032",
+      "CL-WO-040"
+    ],
+    "cl.req.025.v1": [
+      "CL-WO-011",
+      "CL-WO-031",
+      "CL-WO-033",
+      "CL-WO-039",
+      "CL-WO-040"
+    ],
+    "cl.req.026.v1": [
+      "CL-WO-004",
+      "CL-WO-016",
+      "CL-WO-026",
+      "CL-WO-038"
+    ],
+    "cl.req.027.v1": [
+      "CL-WO-003",
+      "CL-WO-014",
+      "CL-WO-036",
+      "CL-WO-042",
+      "CL-WO-045"
+    ],
+    "cl.req.028.v1": [
+      "CL-WO-011",
+      "CL-WO-032",
+      "CL-WO-033",
+      "CL-WO-040"
+    ],
+    "cl.req.029.v1": [
+      "CL-WO-001"
+    ],
+    "cl.req.030.v1": [
+      "CL-WO-001",
+      "CL-WO-005",
+      "CL-WO-013",
+      "CL-WO-044",
+      "CL-WO-045"
+    ],
+    "cl.req.031.v1": [
+      "CL-WO-007",
+      "CL-WO-017",
+      "CL-WO-019",
+      "CL-WO-031",
+      "CL-WO-039",
+      "CL-WO-043"
+    ],
+    "cl.req.032.v1": [
+      "CL-WO-010",
+      "CL-WO-011",
+      "CL-WO-025",
+      "CL-WO-027",
+      "CL-WO-028",
+      "CL-WO-029",
+      "CL-WO-032",
+      "CL-WO-040",
+      "CL-WO-041"
+    ],
+    "cl.req.033.v1": [
+      "CL-WO-004",
+      "CL-WO-010",
+      "CL-WO-026",
+      "CL-WO-030",
+      "CL-WO-038"
+    ],
+    "cl.req.034.v1": [
+      "CL-WO-003",
+      "CL-WO-008",
+      "CL-WO-015",
+      "CL-WO-018",
+      "CL-WO-024"
+    ],
+    "cl.req.035.v1": [
+      "CL-WO-012",
+      "CL-WO-014",
+      "CL-WO-020",
+      "CL-WO-022",
+      "CL-WO-031",
+      "CL-WO-036",
+      "CL-WO-041",
+      "CL-WO-042",
+      "CL-WO-045"
+    ],
+    "cl.req.036.v1": [
+      "CL-WO-004"
+    ],
+    "cl.req.037.v1": [
+      "CL-WO-001",
+      "CL-WO-005",
+      "CL-WO-013",
+      "CL-WO-044"
+    ],
+    "cl.req.038.v1": [
+      "CL-WO-001",
+      "CL-WO-005",
+      "CL-WO-013",
+      "CL-WO-044"
+    ],
+    "cl.req.039.v1": [
+      "CL-WO-005",
+      "CL-WO-013",
+      "CL-WO-044",
+      "CL-WO-045"
+    ]
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "work_orders": [
+        "CL-WO-001",
+        "CL-WO-002",
+        "CL-WO-003"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 2,
+      "work_orders": [
+        "CL-WO-004"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 3,
+      "work_orders": [
+        "CL-WO-005"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 4,
+      "work_orders": [
+        "CL-WO-006"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 5,
+      "work_orders": [
+        "CL-WO-007",
+        "CL-WO-008"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 6,
+      "work_orders": [
+        "CL-WO-009",
+        "CL-WO-010",
+        "CL-WO-011"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 7,
+      "work_orders": [
+        "CL-WO-012"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 8,
+      "work_orders": [
+        "CL-WO-013"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 9,
+      "work_orders": [
+        "CL-WO-014"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 10,
+      "work_orders": [
+        "CL-WO-015",
+        "CL-WO-016"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 11,
+      "work_orders": [
+        "CL-WO-017",
+        "CL-WO-018",
+        "CL-WO-026"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 12,
+      "work_orders": [
+        "CL-WO-019",
+        "CL-WO-024"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 13,
+      "work_orders": [
+        "CL-WO-020",
+        "CL-WO-021",
+        "CL-WO-022",
+        "CL-WO-023",
+        "CL-WO-025",
+        "CL-WO-031",
+        "CL-WO-034"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 14,
+      "work_orders": [
+        "CL-WO-027",
+        "CL-WO-029",
+        "CL-WO-030",
+        "CL-WO-032",
+        "CL-WO-035",
+        "CL-WO-037"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 15,
+      "work_orders": [
+        "CL-WO-028",
+        "CL-WO-033",
+        "CL-WO-036",
+        "CL-WO-038"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 16,
+      "work_orders": [
+        "CL-WO-039",
+        "CL-WO-040"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 17,
+      "work_orders": [
+        "CL-WO-041"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 18,
+      "work_orders": [
+        "CL-WO-042",
+        "CL-WO-043"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 19,
+      "work_orders": [
+        "CL-WO-044"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    },
+    {
+      "wave": 20,
+      "work_orders": [
+        "CL-WO-045"
+      ],
+      "qualification": "Static parallel proposal only; live resource and authority checks required before execution"
+    }
+  ],
+  "execution_policy": {
+    "dependency_first": true,
+    "exact_previous_output": "Each predecessor names a proposed path; authenticate future actual identity before consumption",
+    "parallel": "Paths must not overlap by prefix and exclusive locks must be disjoint; independent Compose projects required",
+    "out_of_order": "Only if predecessors admitted and test/storage resources independent",
+    "preserve_first": true,
+    "evidence_reuse": "Use only BCF-qualified unchanged dependent closure; invalidate affected claims",
+    "no_controller": true,
+    "cost": "Cheap deterministic checks before costly provider work"
+  },
+  "proposed_phases": [
+    {
+      "phase": "P02",
+      "name": "Source and semantic foundation",
+      "state": "proposed"
+    },
+    {
+      "phase": "P03",
+      "name": "Collector, archive and ClickHouse",
+      "state": "proposed"
+    },
+    {
+      "phase": "P04",
+      "name": "Anthropic emitter onboarding",
+      "state": "proposed"
+    },
+    {
+      "phase": "P05",
+      "name": "SQL query, sessions, compliance reporting",
+      "state": "proposed"
+    },
+    {
+      "phase": "P06",
+      "name": "Alerts, retention and holds",
+      "state": "proposed"
+    },
+    {
+      "phase": "P07",
+      "name": "Resilience, conformance and security proofs",
+      "state": "proposed"
+    },
+    {
+      "phase": "P08",
+      "name": "Vertical MVP, docs and measured capacity",
+      "state": "proposed"
+    },
+    {
+      "phase": "P09",
+      "name": "BCF Standard-v3 reconciliation and release review",
+      "state": "proposed"
+    }
+  ],
+  "verticals": [
+    {
+      "id": "CL-V1",
+      "terminal": "CL-WO-027",
+      "goal": "Compliant first complete Cowork/Claude Code prompt/tool/response flow to SQL/Grafana, with captured-content gaps"
+    },
+    {
+      "id": "CL-V2",
+      "terminal": "CL-WO-041",
+      "goal": "Cross-source compliance dashboard/alerts/exports/restore with reviewer role and missing telemetry evidence"
+    },
+    {
+      "id": "CL-V3",
+      "terminal": "CL-WO-045",
+      "goal": "One-shot operator package and independent assurance for exact candidate, no automatic release"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "cl.discovery.source",
+      "owner": "cl.owner.source.v1",
+      "issue": "Confirm firm Anthropic plan, rollout, desktop and Code versions, source enrollment and actual content flags",
+      "blocks": "Claims of full content coverage"
+    },
+    {
+      "id": "cl.discovery.capacity",
+      "owner": "cl.owner.deployment.v1",
+      "issue": "Measure actual content bytes/day in 12–24-user cohort and disk space",
+      "blocks": "365/90/31-day retention capacity qualification"
+    },
+    {
+      "id": "cl.discovery.metrics",
+      "owner": "cl.owner.storage.v1",
+      "issue": "Qualify alpha ClickHouse exporter metrics against histograms, deltas and typed data",
+      "blocks": "Metric-specific execution admission"
+    },
+    {
+      "id": "cl.discovery.oss_audit",
+      "owner": "cl.owner.security.v1",
+      "issue": "Review Grafana OSS audit limitations and approved operational audit floor",
+      "blocks": "Specific audit claims"
+    },
+    {
+      "id": "cl.discovery.remote",
+      "owner": "cl.owner.ingress.v1",
+      "issue": "Operator must supply and verify DNS, host certificate and external port 443",
+      "blocks": "Public API destination live test"
+    },
+    {
+      "id": "CL-Q-OSS-AUDIT",
+      "issue": "Choose the Grafana OSS local audit floor vs bounded custom protected-export evidence helper after gap proof",
+      "blocks": "Specific detailed audit claims C010/C030/C038"
+    },
+    {
+      "id": "CL-Q-CAPACITY",
+      "issue": "Host disk/RAM/architecture and actual content payload volume unknown; must measure before 365-day guarantee",
+      "blocks": "C012/C043"
+    },
+    {
+      "id": "CL-Q-REMOTE",
+      "issue": "Operator has not supplied host DNS/TLS/public routing for server API telemetry",
+      "blocks": "C022 live remote test"
+    }
+  ],
+  "statistics": {
+    "requirements": 39,
+    "orders": 45,
+    "waves": 20,
+    "parallel_waves": 11,
+    "complexity": {
+      "low": 0,
+      "medium": 17,
+      "high": 28
+    },
+    "all_requirements_mapped": true
+  }
+}
