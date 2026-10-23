@@ -18,6 +18,11 @@ def test_typed_roundtrip(signal):
         import base64
         span['traceId'] = base64.b64encode(bytes.fromhex(span['traceId'])).decode()
         span['spanId'] = base64.b64encode(bytes.fromhex(span['spanId'])).decode()
+    if signal == 'metrics':
+        exemplar = source['resourceMetrics'][0]['scopeMetrics'][0]['metrics'][0]['gauge']['dataPoints'][0]['exemplars'][0]
+        import base64
+        exemplar['traceId'] = base64.b64encode(bytes.fromhex(exemplar['traceId'])).decode()
+        exemplar['spanId'] = base64.b64encode(bytes.fromhex(exemplar['spanId'])).decode()
     expected = ParseDict(source, SIGNALS[signal]())
     assert MessageToDict(message) == MessageToDict(expected)
     assert decoded.signal == signal

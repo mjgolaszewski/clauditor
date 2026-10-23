@@ -50,3 +50,33 @@ def test_runtime_evidence_destinations():
     for order in plan['work_orders']:
         output = order['primary_output']
         assert not output.startswith('tests/') or output.startswith('tests/fixtures/')
+
+
+def test_ruff_rejects_an_unused_import_in_owned_source(tmp_path):
+    import sys
+    source = ROOT / 'backend/src/clauditor/archive/domain/envelope.py'
+    bad = tmp_path / 'envelope.py'
+    bad.write_text(source.read_text() + '\nimport sys\n')
+    result = subprocess.run([sys.executable, '-m', 'ruff', 'check', '--config',
+                             str(ROOT / 'pyproject.toml'), str(bad)],
+                            capture_output=True, text=True, check=False)
+    assert result.returncode == 1 and 'F401' in result.stdout
+
+
+def test_canonical_semantic_owner_control_rejects_wrong_constructor(tmp_path):
+    import sys
+    checkout = tmp_path / 'semantic-owner-control'
+    subprocess.run(['git', 'worktree', 'add', '--quiet', '--detach', str(checkout), 'HEAD'],
+                   cwd=ROOT, check=True, capture_output=True)
+    try:
+        path = checkout / 'governance/canonical-representations.yml'
+        registry = yaml.safe_load(path.read_text())
+        registry['representations'][0]['authorized_constructors_and_factories'] = ['scripts/_bcf_runtime/missing.py::owner']
+        path.write_text(yaml.safe_dump(registry, sort_keys=False))
+        result = subprocess.run([sys.executable, 'scripts/semantic_ownership.py', '--repo-root', '.'],
+                                cwd=checkout, capture_output=True, text=True, check=False)
+        assert result.returncode == 1
+        assert 'owner must be an authorized constructor' in result.stdout
+    finally:
+        subprocess.run(['git', 'worktree', 'remove', '--force', str(checkout)],
+                       cwd=ROOT, check=True, capture_output=True)

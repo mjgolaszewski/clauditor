@@ -32,10 +32,40 @@ artifacts:
     scope: run-attempt
     retention_days: 30
 conditions: {}
-commands: {}
+commands:
+  project-lint:
+    argv:
+    - '{python}'
+    - tools/qualification/quality.py
+    - lint
+    cwd: .
+    environment: {}
 step_components: {}
 workflows: []
 jobs:
+- workflow: governance
+  id: project-lint
+  display_name: Project Ruff Lint
+  semantic_role: project-lint
+  resource_class: candidate-python
+  trust: candidate
+  needs:
+  - preflight
+  condition: success
+  timeout_minutes: 10
+  permissions:
+    contents: read
+  checkout: true
+  components:
+  - checkout
+  - python
+  - governance-dependencies
+  executor:
+    kind: command
+    command: project-lint
+  produces: []
+  consumes: []
+  required: true
 - workflow: governance
   id: evidence
   display_name: Evidence / ${{ matrix.display_name }}
@@ -44,6 +74,7 @@ jobs:
   trust: candidate
   needs:
   - preflight
+  - project-lint
   condition: success
   timeout_minutes: 45
   permissions:

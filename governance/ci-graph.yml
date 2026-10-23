@@ -25,7 +25,7 @@ extension_points:
 extensions:
 - id: clauditor-qualification
   path: governance/ci-extensions/clauditor-qualification.yml
-  sha256: 2aee27ed7d593ed1afdef5dea2aacf12da2f92839f27d3e9778a67cc5dfb3cd9
+  sha256: 71736793bbd127f1b41767601ab1f8821389ea88a34940f467f0a098a8c99e55
 resource_classes:
   candidate-python:
     runner: ubuntu-latest

@@ -20,7 +20,10 @@ def signal_fixture(signal: str) -> dict[str, Any]:
                   'endTimeUnixNano': str(int(now) + 1000000)}
         scope = {'scopeSpans': [{'scope': {'name': 'clauditor.synthetic'}, 'spans': [record]}]}
     elif signal == 'metrics':
-        point = {'timeUnixNano': now, 'asInt': '9007199254740993'}
+        point = {'timeUnixNano': now, 'asInt': '9007199254740993',
+                 'exemplars': [{'timeUnixNano': now, 'asInt': '7',
+                                'traceId': '0102030405060708090a0b0c0d0e0f10',
+                                'spanId': '0102030405060708'}]}
         hist = {'timeUnixNano': now, 'count': '3', 'sum': 4.5, 'bucketCounts': ['1', '2'],
                 'explicitBounds': [1.0]}
         scope = {'scopeMetrics': [{'scope': {'name': 'clauditor.synthetic'}, 'metrics': [

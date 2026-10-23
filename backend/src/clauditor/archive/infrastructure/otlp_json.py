@@ -47,14 +47,26 @@ def normalize_ids(signal: Signal, value: dict[str, Any]) -> None:
         else ('resourceLogs', 'scopeLogs', 'logRecords')
     )
     if signal == 'metrics':
+        for resource in value.get('resourceMetrics', []):
+            for scope in resource.get('scopeMetrics', []):
+                for metric in scope.get('metrics', []):
+                    for kind in ('gauge', 'sum', 'histogram', 'exponentialHistogram', 'summary'):
+                        for point in metric.get(kind, {}).get('dataPoints', []):
+                            for exemplar in point.get('exemplars', []):
+                                normalize_id_fields(exemplar)
         return
     for resource in value.get(resource_key, []):
         for scope in resource.get(scope_key, []):
             for record in scope.get(record_key, []):
                 for item in [record, *record.get('links', [])]:
-                    for key, size in [('traceId', 16), ('spanId', 8), ('parentSpanId', 8)]:
-                        if item.get(key):
-                            raw = bytes.fromhex(item[key])
-                            if len(raw) != size:
-                                raise ValueError('invalid OTLP identifier length')
-                            item[key] = base64.b64encode(raw).decode()
+                    normalize_id_fields(item)
+
+
+def normalize_id_fields(item: dict[str, Any]) -> None:
+    """Own the OTLP hex-byte conversion for records, links and metric exemplars."""
+    for key, size in [('traceId', 16), ('spanId', 8), ('parentSpanId', 8)]:
+        if item.get(key):
+            raw = bytes.fromhex(item[key])
+            if len(raw) != size:
+                raise ValueError('invalid OTLP identifier length')
+            item[key] = base64.b64encode(raw).decode()
