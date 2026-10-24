@@ -65,7 +65,8 @@ known_constraints:
   - All 45 construction packets remain not_admitted; canonical phase records own execution state.
   - Pinned BCF 2.3.6 Standard contract 3.0 applied; 20 gates and all three semantic capabilities are blocking.
   - Synthetic OTLP archive/SQL and restart smoke passes; full MVP and live source coverage remain planned.
-  - Verified candidate 942b33bca0778f05327e8ead0eed6bb4b9eaea86; provider run 40040332045. See audits/standard-v3-readiness.yml.
+  - Verified pushed qualification head 7bd1239; provider run 40041068072 passed for its exact tree. See phase-01-log.yml.
+  - AgentBus home:clauditor:disco-inferno enrolled, policy acknowledged, introduction delivered at cursor 18898; prior 403 is historical.
   - replace fail-closed release command placeholders before first release gate
   - update architecture-boundaries.yml when source roots or layer names differ from the starter layout
   - specialize repo_identity_provider and repo_observability_backend in the observability contracts before production use

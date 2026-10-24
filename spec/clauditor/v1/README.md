@@ -1,8 +1,11 @@
 # Clauditor — machine-readable product specification (v1 candidate)
 
 This is an invariant-first, BCF-mapped **candidate product contract**, not
-implemented code, BCF admission, authenticated runtime evidence, or a
-completed Standard-v3 upgrade. The authoritative input set consists of:
+a claim that the full product is implemented or admitted. Standard profile
+contract 3.0 is installed and provider-verified for a separate bounded
+qualification slice; this candidate does not confer that authority.
+
+The authoritative input set consists of:
 
 - `model.json`: doctrine, unique domain owners, invariants/laws/primitives,
   explicit operations and machines, independent producer-consumer obligations,
@@ -10,30 +13,31 @@ completed Standard-v3 upgrade. The authoritative input set consists of:
 - `source-registry.json`: owner decisions, official published references,
   independently retained mandatory source and state-transition obligations.
 - `schema/*.schema.json`: Draft 2020-12 structural validation.
-- `bcf-binding.json`: map product semantics to **existing** BCF Lite 2.3.6
-  and future Standard contract v3 surfaces without inventing BCF authority.
+- `bcf-binding.json`: candidate mapping authored against the historical Lite
+  baseline and Standard-v3 target. Its candidate status and Lite field do not
+  override the installed Standard profile in root `governance-profile.yml`.
 - `tools/check.py`: structural and relational validator; deterministic
   generated human report, pair/state matrices and diagram; causal mutations.
 
 The canonical YAML roadmap now maps all requirements to planned phase workitems.
 This adopts delivery intent, not product implementation or BCF semantic admission.
 The reviewed retry amendment requires a new `archive_ok` observation after retry;
-its provenance and remaining promotion blockers are in
+its provenance and promotion history are in
 `audits/standard-v3-readiness.yml`.
 
 ## Validate without writing
 
-The canonical BCF environment already requires Python and jsonschema:
+Use the Python 3.12 project environment from [setup](../../../docs/BOOTSTRAP.md):
 
 ```bash
-python3 spec/clauditor/v1/tools/check.py --self-test
+.venv/bin/python spec/clauditor/v1/tools/check.py --self-test
 ```
 
 To generate a human-readable specification and matrices **outside this source
 directory**, use:
 
 ```bash
-python3 spec/clauditor/v1/tools/check.py --self-test \
+.venv/bin/python spec/clauditor/v1/tools/check.py --self-test \
   --emit-dir /tmp/clauditor-spec-derived
 ```
 
@@ -55,9 +59,9 @@ BCF EvidenceReceipt.
 6. Reconcile approved product semantics with `plans/product-spec.yml` and
    canonical BCF semantic/operation owners non-destructively. Do not replace
    entire root registries, forge receipts or change rendered workflow YAML.
-7. Generate bounded construction packets under an explicitly authorized
-   planning phase, then consider Standard-v3 promotion without a persistent
-   controller after required gates and provider authority qualify.
+7. Read the generated bounded construction packets and canonical phase records.
+   The roadmap and Standard-v3 promotion are adopted; full MVP construction
+   remains paused. Resume only within a subsequent owner-authorized task.
 
 ### Important source limitations
 

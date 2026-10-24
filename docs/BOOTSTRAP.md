@@ -1,69 +1,60 @@
-# Clauditor bootstrap — canonical BCF Lite first
+# Development environment and BCF adoption
 
-Clauditor is a public, ordinary BCF adopter; no persistent controller is
-required. The current seed targets BCF Lite, then Standard profile contract 3.0
-only after complete real product gates and semantic authority are available.
+Clauditor uses BCF 2.3.6 with Standard profile contract 3.0. Lite bootstrap and
+Standard promotion are complete on `plan/standard-v3-readiness`; see
+[draft PR #3](https://github.com/mjgolaszewski/clauditor/pull/3).
+Product construction remains paused in the canonical phase ledger.
 
-## Canonical runtime pin
+## Set up an existing checkout
 
-- Source: https://github.com/mjgolaszewski/bcf-governance
-- Immutable release: v2.3.6
-- Asset: bcf_governance-2.3.6-py3-none-any.whl
-- SHA-256: `1ee73f7f8ba69803917ee72c0625907621d6c9b582d11d88346fd9cd5dcd5ab7`
-- Reference upstream main at review: `e39d72a0b0e2e849317e284a674848bbb7fcf000`
+Use Python 3.12, Git and network access. The runtime smoke additionally needs a
+reachable Docker daemon with Compose. Keep the BCF verifier environment separate
+from the project environment; do not install the BCF distribution into `.venv`.
 
-## Initial installation
-
-The repository's initial bootstrap workflow invokes
-`scripts/bootstrap-lite.sh` on a clean, committed `main`. That script
-downloads the immutable BCF wheel, independently checks its exact digest,
-installs the canonical BCF pack in a local ignored virtual environment,
-runs strict Lite validation and exposure scan, and commits only the
-canonical generated outputs. The initial bootstrap passed canonical strict Lite validation, but the GitHub Actions token could not itself introduce the generated governance workflow. The generated workflow bytes were therefore staged and admitted through the authenticated repository connection, which then removed the one-time bootstrap workflow. No persistent bootstrap writer remains.
-
-The workflow is not itself proof that the install succeeded. Check the
-latest `main` contents for `governance-profile.yml` with
-`profile.selected: lite`, `AGENTS.yml`, installed scripts, plans,
-and the GitHub Actions outcome.
-
-For a clean local checkout with a supported Python 3.11–3.14,
-`git`, `curl` and network access, run:
+Run from the repository root:
 
 ```bash
-bash scripts/bootstrap-lite.sh
-.venv/bin/bcf validate --repo-root .
-.venv/bin/bcf exposure-scan --repo-root .
-.venv/bin/bcf doctor --repo-root .
+set -euo pipefail
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-governance.txt
+BCF_TOOL=.artifacts/bcf-tool # non-authoritative local tool environment
+BCF_WHEEL=$(mktemp)
+curl -fL --output "$BCF_WHEEL" https://github.com/mjgolaszewski/bcf-governance/releases/download/v2.3.6/bcf_governance-2.3.6-py3-none-any.whl
+printf '%s  %s\n' 1ee73f7f8ba69803917ee72c0625907621d6c9b582d11d88346fd9cd5dcd5ab7 "$BCF_WHEEL" | sha256sum -c -
+mkdir -p "$(dirname "$BCF_TOOL")"
+python3.12 -m venv "$BCF_TOOL"
+BCF_WHEEL_DIR=$(mktemp -d)
+cp "$BCF_WHEEL" "$BCF_WHEEL_DIR/bcf_governance-2.3.6-py3-none-any.whl"
+"$BCF_TOOL/bin/python" -m pip install "$BCF_WHEEL_DIR/bcf_governance-2.3.6-py3-none-any.whl"
+rm "$BCF_WHEEL"
+rm -r "$BCF_WHEEL_DIR"
+"$BCF_TOOL/bin/bcf" doctor --repo-root .
 ```
 
-The script refuses a dirty tree or an existing governance profile. Never
-use a local handmade BCF surrogate. Review and commit changes before
-pushing a locally executed bootstrap.
+`requirements-governance.txt` pins the project tools, including pip 26.2.2.
+`requirements-runtime.txt` declares the narrower product dependency inventory.
+The immutable wheel digest above is the authenticated runtime pin used for adoption.
+A doctor warning about unconfigured optional CI authority certification is recorded;
+it does not mean product release certification exists.
 
-## Standard v3 (applied to the bounded qualification slice)
+## Validate the checkout
 
-Complete gate argv/inputs/negative controls, semantic families, application
-operations and canonical representations against real product code. Then:
+Follow [Operations](OPERATIONS.md). Validation reads the installed profile;
+re-running Lite bootstrap on this repository is unnecessary and is rejected by
+the bootstrap script when a governance profile already exists.
 
-```bash
-bcf semantic-ownership scaffold --repo-root . --output /tmp/clauditor-semantics.yml
-bcf profile promote --repo-root . --to standard --contract-version 3.0 \
-  --config /path/to/complete-standard-gates.yml \
-  --semantic-config /path/to/approved-semantics.yml --check
-# Review and authorize the exact promotion first.
-bcf profile promote --repo-root . --to standard --contract-version 3.0 \
-  --config /path/to/complete-standard-gates.yml \
-  --semantic-config /path/to/approved-semantics.yml --apply
-bcf reconcile --repo-root . --check
-bcf ci graph validate --repo-root .
-bcf ci graph audit --repo-root . --format json
-```
+## Adoption history
 
-No fake/no-op gates, invented classifications, controller Apps, self-governance
-overlays, or authored verified/closed claims.
+`scripts/bootstrap-lite.sh` installed the canonical Lite pack from the same
+verified wheel. The initial Actions token could not introduce the generated
+workflow, so the authenticated repository connection admitted those bytes and
+removed the one-time bootstrap workflow. Standard promotion later used
+`governance/standard-v3-profile.yml` and `governance/standard-v3-semantics.yml`:
+canonical `profile promote --check`, review of the concrete changes, matching
+`--apply`, and canonical reconciliation. No persistent controller was installed.
 
-The local BCF verifier and project interpreter have separate environment custody.
-The project dependencies are pinned in `requirements-governance.txt`; the canonical
-installer requires pip 26.2.2. Use the authenticated BCF 2.3.6 wheel for the verifier.
-Current promotion and qualification observations are recorded in
-`audits/standard-v3-readiness.yml` and `phases/phase-01-log.yml`.
+The [promotion record](../audits/standard-v3-readiness.yml) and
+[phase log](../phases/phase-01-log.yml) retain the observations. Promotion is a
+completed adoption transaction, not a setup step for every developer. Future
+profile or workflow changes must use canonical BCF commands and the declared
+YAML owners; generated workflow files are deterministic projections.

@@ -72,7 +72,9 @@ execution_evidence:
     scope: Candidate head 942b33bca0778f05327e8ead0eed6bb4b9eaea86; provider PR merge 12248438fa8071fe72ed51cad012d9c75fc38678, identical tree 536b45ff62d9e92ff553bf2c68eb79c618e713b5. No release approval.
   notes:
   - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority. (non-authoritative planned output; capture exact digest before use)
-  - All observations are local and non-authoritative; successful checks do not confer BCF admission. See audits/standard-v3-readiness.yml.
+  - Early local observations are non-authoritative; provider qualification is linked above. Subsequent pushed head 7bd1239 passed run 40041068072 for the exact tree. No release approval.
+  - Editorial refresh authorized by owner; setup, operations, security, changelog and specification introductions now describe the implemented qualification slice. Product construction remains paused. Canonical validation, exposure scan, reconciliation, graph audit and planning traceability pass; all 14 Markdown files have valid relative links and all 7 shell examples parse. Push this documentation change.
+  - AgentBus recovery succeeded with the same identity; policy acknowledged and introduction delivered at cursor 18898, Slack timestamp 1792800956.466529. Earlier HTTP 403 observations remain historical.
 closeout_requirements:
   claims:
     workitems_closed:

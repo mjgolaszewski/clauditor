@@ -2,7 +2,7 @@
 
 **Status:** Standard profile contract 3.0 promoted and provider-verified for the bounded qualification slice; construction is paused. This is not full product acceptance or release certification.
 
-**Canonical source:** [BCF Governance](https://github.com/mjgolaszewski/bcf-governance), verified at upstream `main` commit `e39d72a0b0e2e849317e284a674848bbb7fcf000` on 2026-10-23. **Pin for bootstrap:** immutable `v2.3.6` release and its wheel digest recorded in `docs/BOOTSTRAP.md`. No repo-local reinterpretation of BCF schemas, lifecycle states, or provider authority is authorized.
+**Canonical source:** [BCF Governance](https://github.com/mjgolaszewski/bcf-governance), verified at upstream `main` commit `e39d72a0b0e2e849317e284a674848bbb7fcf000` on 2026-10-23. **Installed runtime pin:** immutable `v2.3.6` release and its wheel digest recorded in `docs/BOOTSTRAP.md`. No repo-local reinterpretation of BCF schemas, lifecycle states, or provider authority is authorized.
 
 ## 1. Adoption decisions
 
@@ -16,7 +16,7 @@
 | Human authority | Intent, risk acceptance, protected-branch/release decisions, material exceptions |
 | Release claims | Fail closed until relevant exact-subject evidence and provider authority are authenticated |
 | Runtime source | Immutable release-bound BCF wheel; no invented local governance engine |
-| Product design | Deferred to next scope; do not invent executable gates or claim product semantics before they exist |
+| Product design | v1 candidate and P01–P09 roadmap adopted for planning; bounded qualification slice implemented, full MVP paused |
 
 The canonical graph may describe its executable control mechanism using a `trusted_controller` field. Its schema is BCF-owned: **do not delete or rewrite that field merely because the project does not deploy a persistent controller**. The prohibition applies to controller management infrastructure and self-governance machinery, not to all trusted CI execution.
 
@@ -30,11 +30,13 @@ The canonical graph may describe its executable control mechanism using a `trust
 6. **Evidence.** Provide executable positive tests, typed negative controls, manifest-bound test populations, exact source dependencies, and appropriate review/authority for consequential claims.
 7. **Delivery.** Translate accepted contracts into bounded build units and CI lanes; update the canonical BCF ledgers without authoring computed lifecycle truth.
 
-This chain constrains the *later* product specification; it is not itself evidence that Clauditor satisfies the chain.
+This chain guides the v1 candidate, canonical roadmap and implemented qualification slice. Product acceptance still requires the evidence declared for each bounded workitem.
 
 ## 3. Standard-v3 promotion prerequisites
 
-All of the following must be satisfied before promotion—not approximated with `echo`, no-ops, version-only probes, or all-skipped tests:
+The completed promotion qualified these prerequisites against actual source and
+commands. Keep them satisfied as the product grows; no-op or all-skipped gates
+cannot establish eligibility:
 
 - Real **architecture**, **lint**, **typecheck**, **unit/integration test**, and **contract** gates with explicit `argv`, environment, outputs, timeout policy, and typed causal negative controls.
 - Real **security** gates as applicable: secret detection, dependency vulnerability assessment, SBOM, source/container scanning, and runtime-smoke evidence. Profile-mandatory gates must be executable, not merely declared.
@@ -45,7 +47,10 @@ All of the following must be satisfied before promotion—not approximated with 
 - Pull-request preflight before costly work, required gate ownership, immutable session / exact run-attempt fan-in, and terminal `bcf truth` with scoped evidence reuse only when dependency fingerprints and authority allow it.
 - An explicit decision and review before changing GitHub branch protection or adoption policy. Repository creation and code push do not confer release approval.
 
-The exact mandatory gate set, command parameters, and trust boundaries must follow the live canonical v3 release, not this summary when they differ. Required yet unavailable gates block promotion.
+The installed BCF 2.3.6 contracts own the exact mandatory gate set, command
+parameters and trust boundaries. Twenty gate contracts are registered, with
+four preflight claims and sixteen receipt-producing gates. An upstream version
+change requires a separately qualified upgrade.
 
 ## 4. Controller exclusion (in scope, out of scope)
 
@@ -63,17 +68,26 @@ The exact mandatory gate set, command parameters, and trust boundaries must foll
 
 ## 6. Acceptance checkpoints
 
-The next agent/developer task should complete and record these in BCF's *installed* governance artifacts, not in a second shadow lifecycle file:
+These checkpoints summarize adoption history. Canonical YAML and accepted BCF
+evidence own execution state; these checkboxes are an editorial index:
 
 - [x] The seed was committed at a clean Git HEAD.
 - [x] Canonical BCF v2.3.6 wheel digest was authenticated and Lite was installed with strict validation.
 - [x] `bcf validate` and `bcf exposure-scan` passed during canonical Lite installation; initial Lite artifacts and the generated workflow were committed.
 - [x] The GitHub repository is confirmed **public** and contains the hero and this README.
-- [ ] Product invariants, operations, and source/sink scope are approved.
+- [x] The canonical roadmap traces 39 requirements and 45 bounded construction packets.
+- [ ] Full MVP source eligibility, acceptance and release obligations are satisfied.
 - [x] Standard-v3 gate and actual-source semantic configs are complete and accepted by the canonical promotion checker (not an independent release review).
 - [x] `bcf profile promote ... --check` passed and the matching `--apply` succeeded.
 - [x] `bcf reconcile --repo-root . --check` and `bcf ci graph validate/audit` pass after any canonical apply/reconciliation.
 - [x] No persistent controller or self-governance overlay was introduced.
-- [ ] Provider-backed CI adoption and protection, if chosen, are explicitly reviewed; no fabricated `verified`, `closed`, or release claims.
+- [x] Provider preflight, Ruff, all evidence shards and terminal truth passed for the qualification candidate.
+- [ ] Optional CI authority certification, branch protection changes and release approval are separately authorized and qualified.
+
+The [passing provider run](https://github.com/mjgolaszewski/clauditor/actions/runs/40041068072)
+binds the tree of qualification head `7bd1239a2dfe94637d9a923c4b5197a558dfebe0`.
+GitHub evaluated PR merge commit `501a025a2d8968c3fe2017d13e0f55b1f5c97d17`;
+its tree `ae7b2acffcb0dd79b5e13689cf61ca22cd4d04d4` matches that head exactly.
+See [draft PR #3](https://github.com/mjgolaszewski/clauditor/pull/3).
 
 **Current stop point:** Standard 3.0 was promoted and provider-verified; construction is paused by owner request. The qualification branch is pushed. Full MVP construction and release require subsequent work.
