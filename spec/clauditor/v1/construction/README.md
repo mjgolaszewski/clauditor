@@ -1,7 +1,12 @@
 # Clauditor — candidate dependency-first construction plan
 
-**Planning only; no implementation, authenticated BCF evidence, release approval or Standard-v3 promotion.**
-The source is the exact Anthropic OTLP requirements candidate at `44ca22d86ea15b6c9e76d84217cbabf37bd5cda9`.
+**Candidate construction packets; execution state belongs to the canonical YAML ledgers.**
+Standard-v3 promotion and a bounded synthetic qualification slice are complete.
+These packets do not themselves confer implementation acceptance, BCF admission
+or release approval.
+The source baseline is the Anthropic OTLP requirements candidate at `44ca22d86ea15b6c9e76d84217cbabf37bd5cda9`.
+The reviewed retry-contract amendment and refreshed exact model blob are recorded
+in `audits/standard-v3-readiness.yml`; `plan.json` and packets bind the amended blob.
 
 ## Authoritative candidate records
 
@@ -16,8 +21,8 @@ The source is the exact Anthropic OTLP requirements candidate at `44ca22d86ea15b
 From a qualified repository Python environment with `jsonschema`:
 
 ```bash
-python3 spec/clauditor/v1/construction/tools/check.py --self-test
-python3 spec/clauditor/v1/construction/tools/check.py --render-order CL-WO-027 --emit-dir /tmp/clauditor-plan
+.venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+.venv/bin/python spec/clauditor/v1/construction/tools/check.py --render-order CL-WO-027 --emit-dir /tmp/clauditor-plan
 ```
 
 The generated Markdown and digest manifest belong outside the repository; do not commit massive generated artifacts.
@@ -30,9 +35,20 @@ The generated Markdown and digest manifest belong outside the repository; do not
 
 ## Preservation and acceptance
 
-Existing `main`, the correctly uploaded `assets/clauditor-hero.png`, all BCF Lite files and the current P01 phase are untouched.
-P02–P09 are **proposed stage labels only**; root `plans/build-plan.yml` and `plans/phase-ledger.yml` remain operative and cannot be overwritten or advanced by this document.
+The owner-uploaded `assets/clauditor-hero.png` is preserved. BCF 2.3.6 now runs
+Standard profile contract 3.0; the historical Lite baseline remains provenance.
+The root YAML roadmap and planned P02–P09 phase artifacts now adopt this delivery
+sequence. Root `plans/build-plan.yml` and `plans/phase-ledger.yml` own execution;
+these candidate packets cannot activate phases or confer admission.
+The owner authorized the minimum construction needed for promotion eligibility.
+P01 qualified the actual OTLP/archive/SQL slice, promoted Standard 3.0, verified
+provider CI and pushed the branch. P01 is now paused; full MVP work is pending.
 All 45 packets are `not_admitted`. A BCF evaluator and authorized owner must qualify exact dependencies, current schemas, evidence and actual execution scope.
+Runtime reports use ignored `.artifacts/clauditor/` destinations with exact digest
+references retained in phase logs; test sources never serve as runtime receipts.
 
-Known blockers: source plan/version/content eligibility; API inbound host TLS/DNS on port 443; ClickHouse alpha metrics export qualification; Grafana OSS detailed audit limits; actual disk sizing for 365/90/31 days; owner approval.
+Remaining qualification work includes source plan/version/content eligibility,
+API inbound host TLS/DNS on port 443, live metric shapes beyond the synthetic
+gauge/histogram probe, Grafana OSS detailed audit limits, measured disk sizing
+for 365/90/31 days and approval of subsequent construction scope.
 Absent provider data, tool outputs or file bytes cannot be fabricated, and a valid hash does not establish semantic or SEC-recordkeeping completeness.

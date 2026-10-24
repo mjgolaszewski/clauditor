@@ -1,59 +1,322 @@
-document: {kind: ci_graph, name: clauditor CI Graph, id: clauditor-ci-graph, version: 1.0.0, status: active, path: governance/ci-graph.yml}
+document:
+  kind: ci_graph
+  name: clauditor CI Graph
+  id: clauditor-ci-graph
+  version: 1.0.0
+  status: active
+  path: governance/ci-graph.yml
 schema_version: '1.0'
 provider: github
-profile_contract_version: '1.0'
+profile_contract_version: '3.0'
 default_branch: main
-trusted_controller: {kind: executable, executable: bcf}
+trusted_controller:
+  kind: executable
+  executable: bcf
 value_sources: {}
-extension_points: [preflight, evidence-lane, before-truth, after-truth, exact-main-producer, trusted-control, scheduled-lane, release-role]
-extensions: []
+extension_points:
+- preflight
+- evidence-lane
+- before-truth
+- after-truth
+- exact-main-producer
+- trusted-control
+- scheduled-lane
+- release-role
+extensions:
+- id: clauditor-qualification
+  path: governance/ci-extensions/clauditor-qualification.yml
+  sha256: 71736793bbd127f1b41767601ab1f8821389ea88a34940f467f0a098a8c99e55
 resource_classes:
   candidate-python:
     runner: ubuntu-latest
     trust: candidate
     hosted: true
     python_version: '3.12'
-    capabilities: [python, git]
+    capabilities:
+    - python
+    - git
   trusted-control:
     runner: ubuntu-latest
     trust: trusted
     hosted: true
     python_version: '3.12'
-    capabilities: [provider-api]
+    capabilities:
+    - provider-api
+  candidate-docker:
+    runner: ubuntu-latest
+    trust: candidate
+    hosted: true
+    python_version: '3.12'
+    capabilities:
+    - python
+    - git
+    - docker
 artifacts:
-  evidence-session: {path: .artifacts/bcf/sessions, kind: session, scope: run-attempt, retention_days: 30}
-  truth-report: {path: .artifacts/bcf/truth-report.json, kind: terminal, scope: run-attempt, retention_days: 30}
-  exact-main-certification: {path: .artifacts/bcf/exact-main-certification, kind: control, scope: run-attempt, retention_days: 30}
-  structural-receipts: {path: .artifacts/bcf/sessions, kind: lane-input, scope: run-attempt, retention_days: 30}
-conditions: {}
+  evidence-session:
+    path: .artifacts/bcf/sessions
+    kind: session
+    scope: run-attempt
+    retention_days: 30
+  truth-report:
+    path: .artifacts/bcf/truth-report.json
+    kind: terminal
+    scope: run-attempt
+    retention_days: 30
+conditions:
+  evidence-prerequisites-green: needs.preflight.result == 'success' && needs.evidence.result == 'success'
+  always-step: always()
 commands:
+  v3-preflight:
+    argv:
+    - '{python}'
+    - scripts/preflight_governance.py
+    - --repo-root
+    - .
+    - --evaluation-mode
+    - '{env:BCF_EVALUATION_MODE}'
+    - --evaluation-target
+    - '{env:BCF_EVALUATION_TARGET}'
+    - --python
+    - '{python}'
+    - --artifact-root
+    - .artifacts/bcf
+    - --expected-producer
+    - evidence
+    - --format
+    - text
+    cwd: .
+    environment: &id001
+      BCF_EVALUATION_MODE: ${{ inputs.evaluation_mode || (github.event_name == 'push' && 'pr' || 'pr') }}
+      BCF_EVALUATION_TARGET: ${{ inputs.evaluation_target || '' }}
+  v3-capture-shard:
+    argv:
+    - '{python}'
+    - scripts/capture_governance_shard.py
+    - --repo-root
+    - .
+    - --shard-index
+    - ${{ matrix.shard }}
+    - --shard-count
+    - '4'
+    - --session-root
+    - .artifacts/bcf/sessions
+    cwd: .
+    environment: {}
+  v3-restore-session-modes:
+    argv:
+    - '{python}'
+    - scripts/restore_evidence_modes.py
+    - --root
+    - .artifacts/bcf/sessions
+    cwd: .
+    environment: {}
+  v3-restore-receipt-modes:
+    argv:
+    - '{python}'
+    - scripts/restore_evidence_modes.py
+    - --root
+    - .artifacts/bcf/fan-in
+    cwd: .
+    environment: {}
+  v3-truth:
+    argv:
+    - '{python}'
+    - scripts/governance_truth.py
+    - --repo-root
+    - .
+    - --evidence-dir
+    - .artifacts/bcf/fan-in
+    - --evaluation-mode
+    - '{env:BCF_EVALUATION_MODE}'
+    - --evaluation-target
+    - '{env:BCF_EVALUATION_TARGET}'
+    - --format
+    - json
+    - --durable-ref
+    - github-actions://${{ github.repository }}/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/bcf-governance-truth
+    - --output
+    - .artifacts/bcf/truth-report.json
+    cwd: .
+    environment: *id001
+  install-governance-dependencies:
+    argv:
+    - '{python}'
+    - -m
+    - pip
+    - install
+    - -r
+    - requirements-governance.txt
+    cwd: .
+    environment: {}
+step_components:
+  checkout-candidate:
+    kind: action
+    name: Check out the exact candidate commit
+    action: checkout
+    with:
+      fetch-depth: 0
+      persist-credentials: false
+    environment: {}
+    produces: []
+    consumes: []
+  setup-python:
+    kind: action
+    name: Provision the declared Python runtime
+    action: setup-python
+    with:
+      python-version: '3.12'
+    environment: {}
+    produces: []
+    consumes: []
+  install-governance:
+    kind: command
+    name: Install the declared governance environment
+    command: install-governance-dependencies
+    environment: {}
+    produces: []
+    consumes: []
   preflight:
-    argv: ['{python}', scripts/preflight_governance.py, --repo-root, ., --evaluation-mode, '${{ inputs.evaluation_mode || (github.event_name == ''push'' && ''pr'' || ''pr'') }}', --python, '{python}', --artifact-root, .artifacts/bcf, --expected-producer, structural-evidence, --format, text, --evaluation-target, '{env:BCF_EVALUATION_TARGET}']
-    cwd: .
-    environment: {BCF_ENFORCE_PR_CHANGELOG: '${{ github.event_name == ''pull_request'' }}', BCF_PR_BASE_SHA: '${{ github.event.pull_request.base.sha }}', BCF_EVALUATION_TARGET: '${{ inputs.evaluation_target || '''' }}'}
+    kind: command
+    name: Run canonical cheap preflight and allocate one evidence session
+    command: v3-preflight
+    environment: {}
+    produces: []
+    consumes: []
+  upload-session:
+    kind: action
+    name: Upload the exact evidence session
+    action: upload-artifact
+    with:
+      name: bcf-session-${{ github.run_id }}-${{ github.run_attempt }}
+      path: .artifacts/bcf/sessions
+      if-no-files-found: error
+      retention-days: 30
+    environment: {}
+    produces:
+    - evidence-session
+    consumes: []
+  download-session:
+    kind: action
+    name: Download this attempt's evidence session
+    action: download-artifact
+    with:
+      name: bcf-session-${{ github.run_id }}-${{ github.run_attempt }}
+      path: .artifacts/bcf/sessions
+    environment: {}
+    produces: []
+    consumes:
+    - evidence-session
+  restore-session-modes:
+    kind: command
+    name: Restore downloaded evidence-session modes
+    command: v3-restore-session-modes
+    restores_private_artifacts:
+    - evidence-session
+    environment: {}
+    produces: []
+    consumes: []
+  capture-shard:
+    kind: command
+    name: Capture the mechanically derived evidence shard
+    command: v3-capture-shard
+    required_permissions:
+      actions: read
+    environment:
+      GITHUB_TOKEN: ${{ github.token }}
+    produces: []
+    consumes: []
+  upload-receipts:
+    kind: action
+    name: Upload this attempt's exact evidence shard
+    action: upload-artifact
+    condition: always-step
+    with:
+      name: bcf-evidence-${{ github.run_id }}-${{ github.run_attempt }}-shard-${{ matrix.shard }}
+      path: .artifacts/bcf/sessions
+      if-no-files-found: error
+      retention-days: 30
+    environment: {}
+    produces:
+    - governance-receipts
+    consumes: []
+  download-receipts:
+    kind: action
+    name: Download only this attempt's evidence shards
+    action: download-artifact
+    condition: evidence-prerequisites-green
+    with:
+      pattern: bcf-evidence-${{ github.run_id }}-${{ github.run_attempt }}-*
+      path: .artifacts/bcf/fan-in
+    environment: {}
+    produces: []
+    consumes:
+    - governance-receipts
+  restore-receipt-modes:
+    kind: command
+    name: Restore private evidence-session modes
+    condition: evidence-prerequisites-green
+    command: v3-restore-receipt-modes
+    restores_private_artifacts:
+    - governance-receipts
+    environment: {}
+    produces: []
+    consumes: []
   truth:
-    argv: ['{python}', scripts/governance_truth.py, --repo-root, ., --evidence-dir, .artifacts/bcf, --evaluation-mode, '${{ inputs.evaluation_mode || (github.event_name == ''push'' && ''pr'' || ''pr'') }}', --format, json, --durable-ref, 'github-actions://${{ github.repository }}/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}/bcf-governance-truth', --output, .artifacts/bcf/truth-report.json, --evaluation-target, '{env:BCF_EVALUATION_TARGET}']
-    cwd: .
-    environment: {BCF_EVALUATION_TARGET: '${{ inputs.evaluation_target || '''' }}'}
-step_components: {}
+    kind: command
+    name: Verify exact-tree governance evidence
+    condition: evidence-prerequisites-green
+    command: v3-truth
+    environment: {}
+    produces:
+    - truth-report
+    consumes: []
+  upload-truth:
+    kind: action
+    name: Upload this attempt's terminal truth report
+    action: upload-artifact
+    condition: always-step
+    with:
+      name: bcf-governance-truth-${{ github.run_id }}-${{ github.run_attempt }}
+      path: .artifacts/bcf/truth-report.json
+      if-no-files-found: error
+      retention-days: 30
+    environment: {}
+    produces:
+    - truth-report
+    consumes: []
 workflows:
 - id: governance
   path: .github/workflows/governance.yml
   display_name: Governance pull-request evidence
   role: exact-main
   events:
-  - {type: pull_request}
+  - type: pull_request
   - type: workflow_call
     inputs:
-      comparison_base_sha: {description: Exact repository comparison base for explicit calls, required: true, type: string}
-      evaluation_mode: {description: Exact truth evaluation mode, required: false, default: pr, type: string}
-      evaluation_target: {description: Exact bounded target, required: false, default: '', type: string}
+      comparison_base_sha:
+        description: Exact repository comparison base for explicit calls
+        required: true
+        type: string
+      evaluation_mode:
+        description: Exact truth evaluation mode
+        required: false
+        default: pr
+        type: string
+      evaluation_target:
+        description: Exact bounded target
+        required: false
+        default: ''
+        type: string
   - type: push
-    branches: [main]
-  permissions: {contents: read}
-  concurrency: {group: 'clauditor-pr-${{ github.event.pull_request.number || github.ref }}', cancel_in_progress: true}
+    branches:
+    - main
+  permissions:
+    contents: read
+  concurrency:
+    group: clauditor-pr-${{ github.event.pull_request.number || github.ref }}
+    cancel_in_progress: true
   jobs:
-  - id: cheap-preflight
+  - id: preflight
     display_name: Cheap Preflight
     semantic_role: cheap-preflight
     resource_class: candidate-python
@@ -61,44 +324,51 @@ workflows:
     needs: []
     condition: success
     timeout_minutes: 45
-    permissions: {contents: read}
-    checkout: true
-    components: [checkout, python, governance-dependencies]
-    executor: {kind: command, command: preflight}
-    produces: [evidence-session]
-    consumes: []
-    required: true
-  - id: structural-evidence
-    display_name: Structural Evidence
-    semantic_role: structural-evidence
-    resource_class: candidate-python
-    trust: candidate
-    needs: [cheap-preflight]
-    condition: success
-    timeout_minutes: 45
-    permissions: {contents: read}
-    checkout: true
-    components: [checkout, python, governance-dependencies, download-evidence, restore-private-modes]
+    permissions:
+      contents: read
+    checkout: false
+    components: []
     executor:
-      kind: gate_group
-      gates: [governance-exposure-scan, governance-validate]
-    produces: [structural-receipts]
-    consumes: [evidence-session]
+      kind: component_sequence
+      components:
+      - checkout-candidate
+      - setup-python
+      - install-governance
+      - preflight
+      - upload-session
+    produces:
+    - evidence-session
+    consumes: []
     required: true
   - id: governance-truthfulness
     display_name: Terminal Governance Truth
     semantic_role: terminal-governance-truth
     resource_class: candidate-python
     trust: candidate
-    needs: [structural-evidence]
+    needs:
+    - preflight
+    - evidence
     condition: always
     timeout_minutes: 45
-    permissions: {contents: read}
-    checkout: true
-    components: [checkout, python, governance-dependencies, download-evidence, restore-private-modes]
-    executor: {kind: truth, command: truth}
-    produces: [truth-report]
-    consumes: [structural-receipts]
+    permissions:
+      contents: read
+    checkout: false
+    components: []
+    executor:
+      kind: terminal_truth
+      command: v3-truth
+      components:
+      - checkout-candidate
+      - setup-python
+      - install-governance
+      - download-receipts
+      - restore-receipt-modes
+      - truth
+      - upload-truth
+    produces:
+    - truth-report
+    consumes:
+    - governance-receipts
     required: true
 policy:
   exact_gate_once: true
@@ -107,6 +377,16 @@ policy:
   generated_workflows_only: true
   forbid_hosted_waiters: true
   hosted_orchestration: run_and_done
-  forbidden_hosted_tokens: [sleep, poll, watch, wait, while, until, wait-for-runner, lease-runner]
+  forbidden_hosted_tokens:
+  - sleep
+  - poll
+  - watch
+  - wait
+  - while
+  - until
+  - wait-for-runner
+  - lease-runner
   minimum_gate_timeout_headroom_seconds: 300
-evidence_storage: {path: governance/evidence-storage.yml, sha256: 2a7dfc0d978124c2e3b1e2b801874bbf88415c762d8518b2a9e51c34a3a684dc}
+evidence_storage:
+  path: governance/evidence-storage.yml
+  sha256: 2a7dfc0d978124c2e3b1e2b801874bbf88415c762d8518b2a9e51c34a3a684dc

@@ -1,0 +1,199 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 07 Workitems
+  id: clauditor-phase-07-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-07-workitems.yml
+  phase_id: P07
+workitems:
+- id: CL-WO-035
+  priority: P0
+  status: TODO
+  summary: Deliver complete verifiable backup/cold restore across SQL, archive, Grafana and settings.
+  acceptance:
+  - packet:CL-WO-035
+  - requirement:cl.req.021.v1
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.015.v1
+  - predecessor-output:CL-WO-012
+  - predecessor-output:CL-WO-014
+  - predecessor-output:CL-WO-015
+  - predecessor-output:CL-WO-017
+  - predecessor-output:CL-WO-026
+  - predecessor-output:CL-WO-034
+  - Restored appliance reproduces qualified queries and custody
+  - Clean restore reproduces known queries
+  - Cleanup respects selected horizon and holds
+  - Archive manifest verifies selected bytes
+  - 'Reject: Missing or corrupt segment prevents activation of partial restore'
+  - 'Reject: Corrupt/partial restore is blocked'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-036
+  priority: P0
+  status: TODO
+  summary: Provide pinned upgrade, preservation-first migration and rollback.
+  acceptance:
+  - packet:CL-WO-036
+  - requirement:cl.req.021.v1
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.023.v1
+  - requirement:cl.req.027.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-012
+  - predecessor-output:CL-WO-014
+  - requires-workitem-closure:CL-WO-035
+  - Upgrade/rollback retains users, archive, SQL and held evidence
+  - Clean restore reproduces known queries
+  - Fresh single-host install completes
+  - Retention horizon estimate uses actual sampled bytes
+  - Every required runtime component has qualifying OSS license
+  - New operator proves log+metric+span test
+  - 'Reject: Failed migration never activates serving stack'
+  - 'Reject: Corrupt/partial restore is blocked'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  - 'Reject: Paid/hosted-only component is excluded'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-037
+  priority: P0
+  status: TODO
+  summary: Qualify each applicable Anthropic source against content, metadata-only, omitted and truncated events.
+  acceptance:
+  - packet:CL-WO-037
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.002.v1
+  - requirement:cl.req.003.v1
+  - requirement:cl.req.004.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.008.v1
+  - requirement:cl.req.009.v1
+  - requirement:cl.req.012.v1
+  - predecessor-output:CL-WO-020
+  - predecessor-output:CL-WO-021
+  - predecessor-output:CL-WO-022
+  - predecessor-output:CL-WO-023
+  - predecessor-output:CL-WO-024
+  - predecessor-output:CL-WO-025
+  - Every source profile classified supported, unavailable or blocked
+  - Supported Cowork event is queryable
+  - Code logs/metrics/spans round-trip
+  - API test span is visible
+  - SDK plus API connected trace
+  - Searchable supported captured content
+  - Source capture settings documented and verifiable
+  - Capture readiness matrix per source
+  - Three signal kinds decoded and validated
+  - Typed AnyValue reconstituted across archive
+  - 'Reject: Synthetic fixture is not certified live export'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: Disabled trace or content yields no invented span/body'
+  - 'Reject: Best-effort dropped spans are not counted as complete'
+  - 'Reject: Unrelated spans remain unjoined'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  - 'Reject: Reject wrong content type, malformed payload and limits'
+  - 'Reject: Flattened string-only projection does not replace archive'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-038
+  priority: P0
+  status: TODO
+  summary: Test OTLP auth, read-only SQL, XSS, CSV formula, credential privacy and export boundaries.
+  acceptance:
+  - packet:CL-WO-038
+  - requirement:cl.req.010.v1
+  - requirement:cl.req.017.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.020.v1
+  - requirement:cl.req.026.v1
+  - requirement:cl.req.033.v1
+  - predecessor-output:CL-WO-016
+  - predecessor-output:CL-WO-026
+  - predecessor-output:CL-WO-030
+  - Privileged and unprivileged actors behave by contract
+  - Verified API destination test succeeds
+  - Reviewer views permitted dashboards
+  - Deterministic safe exported selection
+  - Inert rendering and protected data
+  - Revoked secret stops old sender
+  - Available admin actions observable
+  - 'Reject: Viewer write, anonymous export or executable prompt fails'
+  - 'Reject: Unauthorized public post fails with no trusted receipt'
+  - 'Reject: Reviewer cannot alter DB or secrets'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: HTML/XSS/SQL injected in prompts has no execution effect'
+  - 'Reject: Token never appears in app logs or evidence export'
+  - 'Reject: Enterprise audit-log functionality not claimed'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-039
+  priority: P0
+  status: TODO
+  summary: Qualify replay, partial archive/SQL, disk pressure, backend outage and restore failures.
+  acceptance:
+  - packet:CL-WO-039
+  - requirement:cl.req.011.v1
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.021.v1
+  - requirement:cl.req.023.v1
+  - requirement:cl.req.025.v1
+  - requirement:cl.req.031.v1
+  - predecessor-output:CL-WO-019
+  - predecessor-output:CL-WO-031
+  - predecessor-output:CL-WO-034
+  - requires-workitem-closure:CL-WO-035
+  - requires-workitem-closure:CL-WO-036
+  - No silent loss or success masking across crash and replay
+  - Each stage has recorded identity
+  - Cleanup respects selected horizon and holds
+  - Archive manifest verifies selected bytes
+  - Clean restore reproduces known queries
+  - Retention horizon estimate uses actual sampled bytes
+  - Injected queue failure triggers alert
+  - Restart resumes committed queue entries
+  - 'Reject: Lost record or invalid restore reported healthy fails'
+  - 'Reject: Receiver HTTP success is not durable receipt'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: Corrupt/partial restore is blocked'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  - 'Reject: Silence is not falsely interpreted as inactivity'
+  - 'Reject: Loss not concealed under success'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-040
+  priority: P0
+  status: TODO
+  summary: Qualify rule thresholds, alert lifecycle, notification and uncertainty semantics.
+  acceptance:
+  - packet:CL-WO-040
+  - requirement:cl.req.024.v1
+  - requirement:cl.req.025.v1
+  - requirement:cl.req.028.v1
+  - requirement:cl.req.032.v1
+  - predecessor-output:CL-WO-027
+  - predecessor-output:CL-WO-031
+  - predecessor-output:CL-WO-032
+  - predecessor-output:CL-WO-033
+  - Correct source-backed firing/recovery and delivery state
+  - Synthetic trigger fires and resolves
+  - Injected queue failure triggers alert
+  - Test alert reaches configured channel
+  - Representative synthetic fixtures visible
+  - 'Reject: Unknown source or failed delivery cannot pass'
+  - 'Reject: An inferred offense is not reported as an observed fact'
+  - 'Reject: Silence is not falsely interpreted as inactivity'
+  - 'Reject: Notification failure cannot be marked delivered'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate

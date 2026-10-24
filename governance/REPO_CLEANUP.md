@@ -4,8 +4,10 @@ Use this when a BCF-governed repo has drifted: old phase sprawl, audit files in
 the wrong roots, nested governance, stale docs, or abandoned YAML.
 
 Machine contract: `governance/repo-cleanup-contract.yml`.
-Routine commands remain in `docs/OPERATIONS.md`; this document covers only the
-cleanup branch.
+Routine commands remain in [Operations](../docs/OPERATIONS.md); this document
+covers only an explicitly requested cleanup. P01 is paused after Standard-v3
+qualification. An editorial refresh does not authorize phase retention changes,
+removing evidence or reinstalling the governance pack.
 
 Interactive apply requests confirmation. Non-TTY apply must include `--yes` or
 it fails before mutation. Proposed changes are validated in a temporary shadow

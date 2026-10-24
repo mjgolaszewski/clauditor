@@ -1,0 +1,368 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 02 Workitems
+  id: clauditor-phase-02-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-02-workitems.yml
+  phase_id: P02
+workitems:
+- id: CL-WO-001
+  priority: P0
+  status: TODO
+  summary: Bind owner intent, baseline and change authority before constructing dependent contracts.
+  acceptance:
+  - packet:CL-WO-001
+  - requirement:cl.req.029.v1
+  - requirement:cl.req.030.v1
+  - requirement:cl.req.037.v1
+  - requirement:cl.req.038.v1
+  - Every requirement has accountable intent/disposition or explicit blocker
+  - Future adapter has independent source boundary
+  - Each future construction task has verified prerequisites
+  - Every pair mechanically closed
+  - Every state/event cell classified
+  - 'Reject: Agent guesses cannot resolve missing stakeholder policy'
+  - 'Reject: No Compliance API calls in MVP'
+  - 'Reject: Spec cannot mark BCF verified or release ready'
+  - 'Reject: Deleting required route+contract cannot manufacture exclusion'
+  - 'Reject: Missing transition cannot silently become a valid effect'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-002
+  priority: P0
+  status: TODO
+  summary: Qualify Cowork, Claude Code, API and SDK signal/content capabilities and source enrollment prerequisites.
+  acceptance:
+  - packet:CL-WO-002
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.002.v1
+  - requirement:cl.req.003.v1
+  - requirement:cl.req.004.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.007.v1
+  - requirement:cl.req.008.v1
+  - Versioned source matrix identifies all emitted and unavailable classes
+  - Supported Cowork event is queryable
+  - Code logs/metrics/spans round-trip
+  - API test span is visible
+  - SDK plus API connected trace
+  - Searchable supported captured content
+  - Source capture settings documented and verifiable
+  - State accurately shown on events and exports
+  - Capture readiness matrix per source
+  - 'Reject: Unemitted files or responses cannot become purported captured bytes'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: Disabled trace or content yields no invented span/body'
+  - 'Reject: Best-effort dropped spans are not counted as complete'
+  - 'Reject: Unrelated spans remain unjoined'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: [image] marker cannot count as original image bytes'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-003
+  priority: P0
+  status: TODO
+  summary: Qualify free self-hosted image/plugin versions, dependencies, stability and ClickHouse exporter behavior.
+  acceptance:
+  - packet:CL-WO-003
+  - requirement:cl.req.013.v1
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.027.v1
+  - requirement:cl.req.034.v1
+  - Pinned no-fee OSS components have tested compatibility envelope
+  - Retry does not double count
+  - Filtered user/session/prompt search
+  - Fresh single-host install completes
+  - Every required runtime component has qualifying OSS license
+  - Histogram/counter/gauge test round trips
+  - 'Reject: Hosted/premium-only or unqualified alpha behavior blocks baseline'
+  - 'Reject: No silent float conversion or detail drop'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: Paid/hosted-only component is excluded'
+  - 'Reject: No hidden type loss or invalid temporality'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-004
+  priority: P0
+  status: TODO
+  summary: Fix local admin/viewer, secret, SQL, content privacy and OSS audit expectations.
+  acceptance:
+  - packet:CL-WO-004
+  - requirement:cl.req.017.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.020.v1
+  - requirement:cl.req.026.v1
+  - requirement:cl.req.033.v1
+  - requirement:cl.req.036.v1
+  - requires-workitem-closure:CL-WO-001
+  - Every actor/operation has explicit permission and content custody
+  - Reviewer views permitted dashboards
+  - Deterministic safe exported selection
+  - Inert rendering and protected data
+  - Revoked secret stops old sender
+  - Available admin actions observable
+  - Admin can select content mode
+  - 'Reject: Anonymous viewing, viewer SQL writes, secrets leaking, HTML execution fail'
+  - 'Reject: Reviewer cannot alter DB or secrets'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: HTML/XSS/SQL injected in prompts has no execution effect'
+  - 'Reject: Token never appears in app logs or evidence export'
+  - 'Reject: Enterprise audit-log functionality not claimed'
+  - 'Reject: No role can bypass source-side privacy controls'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-005
+  priority: P0
+  status: TODO
+  summary: Reconcile canonical semantics, independent required paths and typed state/edge exclusions.
+  acceptance:
+  - packet:CL-WO-005
+  - requirement:cl.req.030.v1
+  - requirement:cl.req.037.v1
+  - requirement:cl.req.038.v1
+  - requirement:cl.req.039.v1
+  - requires-workitem-closure:CL-WO-001
+  - requires-workitem-closure:CL-WO-002
+  - requires-workitem-closure:CL-WO-004
+  - All canonical relations and 39 requirements reconcile against independent source obligations
+  - Each future construction task has verified prerequisites
+  - Every pair mechanically closed
+  - Every state/event cell classified
+  - Unchanged claim evidence reused only when permitted
+  - 'Reject: Deleting source flow and matching contract must still fail'
+  - 'Reject: Spec cannot mark BCF verified or release ready'
+  - 'Reject: Deleting required route+contract cannot manufacture exclusion'
+  - 'Reject: Missing transition cannot silently become a valid effect'
+  - 'Reject: Change invalidates affected currentness before admission'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-006
+  priority: P0
+  status: TODO
+  summary: Build anonymized fixtures for OTLP signals, content limits and provider source types.
+  acceptance:
+  - packet:CL-WO-006
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.002.v1
+  - requirement:cl.req.003.v1
+  - requirement:cl.req.004.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.008.v1
+  - requirement:cl.req.009.v1
+  - requires-workitem-closure:CL-WO-002
+  - requires-workitem-closure:CL-WO-005
+  - Fixture provenance and expectations bind exact signal/schema
+  - Supported Cowork event is queryable
+  - Code logs/metrics/spans round-trip
+  - API test span is visible
+  - SDK plus API connected trace
+  - Searchable supported captured content
+  - Capture readiness matrix per source
+  - Three signal kinds decoded and validated
+  - 'Reject: Synthetic content must never be labeled a real Anthropic observation'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: Disabled trace or content yields no invented span/body'
+  - 'Reject: Best-effort dropped spans are not counted as complete'
+  - 'Reject: Unrelated spans remain unjoined'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  - 'Reject: Reject wrong content type, malformed payload and limits'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-007
+  priority: P0
+  status: TODO
+  summary: Contract OTLP authorization, partial success, durable queues and multi-stage receipts.
+  acceptance:
+  - packet:CL-WO-007
+  - requirement:cl.req.009.v1
+  - requirement:cl.req.010.v1
+  - requirement:cl.req.011.v1
+  - requirement:cl.req.031.v1
+  - requires-workitem-closure:CL-WO-003
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-006
+  - All receipt stage and failure transitions have testable semantics
+  - Three signal kinds decoded and validated
+  - Verified API destination test succeeds
+  - Each stage has recorded identity
+  - Restart resumes committed queue entries
+  - 'Reject: OTLP 2xx may not imply archived/indexed/provider-complete data'
+  - 'Reject: Reject wrong content type, malformed payload and limits'
+  - 'Reject: Unauthorized public post fails with no trusted receipt'
+  - 'Reject: Receiver HTTP success is not durable receipt'
+  - 'Reject: Loss not concealed under success'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-008
+  priority: P0
+  status: TODO
+  summary: Contract semantically typed OTLP preservation, ClickHouse projections and deduplication.
+  acceptance:
+  - packet:CL-WO-008
+  - requirement:cl.req.012.v1
+  - requirement:cl.req.013.v1
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.034.v1
+  - requires-workitem-closure:CL-WO-003
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-006
+  - Every archived signal and SQL projection has explicit loss/conversion behavior
+  - Typed AnyValue reconstituted across archive
+  - Retry does not double count
+  - Archive manifest verifies selected bytes
+  - Histogram/counter/gauge test round trips
+  - 'Reject: String flattening, histogram loss or unknown payload cannot silently qualify'
+  - 'Reject: Flattened string-only projection does not replace archive'
+  - 'Reject: No silent float conversion or detail drop'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: No hidden type loss or invalid temporality'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-009
+  priority: P0
+  status: TODO
+  summary: Define 365/90/31-day retention, holds, export custody and capacity downgrade controls.
+  acceptance:
+  - packet:CL-WO-009
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.023.v1
+  - requires-workitem-closure:CL-WO-003
+  - requires-workitem-closure:CL-WO-004
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-008
+  - Retention and hold rules have bounded positive/negative proof
+  - Cleanup respects selected horizon and holds
+  - Archive manifest verifies selected bytes
+  - Deterministic safe exported selection
+  - Retention horizon estimate uses actual sampled bytes
+  - 'Reject: Capacity cannot silently reduce days or purge a hold'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-010
+  priority: P0
+  status: TODO
+  summary: Contract reviewer SQL access, correlation confidence, native Grafana capability and bounded exports.
+  acceptance:
+  - packet:CL-WO-010
+  - requirement:cl.req.016.v1
+  - requirement:cl.req.017.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.019.v1
+  - requirement:cl.req.020.v1
+  - requirement:cl.req.032.v1
+  - requirement:cl.req.033.v1
+  - requires-workitem-closure:CL-WO-004
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-008
+  - Every query links only attributable observed facts within role and scope
+  - Filtered user/session/prompt search
+  - Reviewer views permitted dashboards
+  - Same-source exact-key timeline
+  - Deterministic safe exported selection
+  - Inert rendering and protected data
+  - Representative synthetic fixtures visible
+  - Available admin actions observable
+  - 'Reject: Name/time-only joins and arbitrary SQL writes/exports prohibited'
+  - 'Reject: Missing response not synthesized'
+  - 'Reject: Reviewer cannot alter DB or secrets'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: Formula injection, unauthorized or unbounded export rejected'
+  - 'Reject: HTML/XSS/SQL injected in prompts has no execution effect'
+  - 'Reject: No blank/unknown field presented as FULL'
+  - 'Reject: Enterprise audit-log functionality not claimed'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-011
+  priority: P0
+  status: TODO
+  summary: Contract observed compliance and health alert predicates, notification and uncertainty.
+  acceptance:
+  - packet:CL-WO-011
+  - requirement:cl.req.024.v1
+  - requirement:cl.req.025.v1
+  - requirement:cl.req.028.v1
+  - requirement:cl.req.032.v1
+  - requires-workitem-closure:CL-WO-004
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-008
+  - Alert fixtures cover fire, clear, acknowledge, unknown and delivery failure
+  - Synthetic trigger fires and resolves
+  - Injected queue failure triggers alert
+  - Test alert reaches configured channel
+  - Representative synthetic fixtures visible
+  - 'Reject: Missing telemetry never proves misconduct or successful notice'
+  - 'Reject: An inferred offense is not reported as an observed fact'
+  - 'Reject: Silence is not falsely interpreted as inactivity'
+  - 'Reject: Notification failure cannot be marked delivered'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-012
+  priority: P0
+  status: TODO
+  summary: Specify one-host runtime budgets, persistent volumes, backup/restore and host TLS responsibilities.
+  acceptance:
+  - packet:CL-WO-012
+  - requirement:cl.req.021.v1
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.023.v1
+  - requirement:cl.req.035.v1
+  - requires-workitem-closure:CL-WO-003
+  - requires-workitem-closure:CL-WO-007
+  - requires-workitem-closure:CL-WO-008
+  - requires-workitem-closure:CL-WO-009
+  - Fresh host and restore scenarios have clear acceptance and failure points
+  - Clean restore reproduces known queries
+  - Fresh single-host install completes
+  - Retention horizon estimate uses actual sampled bytes
+  - New operator proves log+metric+span test
+  - 'Reject: Healthy containers without representative feed do not prove ready'
+  - 'Reject: Corrupt/partial restore is blocked'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-013
+  priority: P0
+  status: TODO
+  summary: Review and reconcile approved candidate ownership with existing BCF root authorities without destructive replacement.
+  acceptance:
+  - packet:CL-WO-013
+  - requirement:cl.req.030.v1
+  - requirement:cl.req.037.v1
+  - requirement:cl.req.038.v1
+  - requirement:cl.req.039.v1
+  - requires-workitem-closure:CL-WO-005
+  - requires-workitem-closure:CL-WO-007
+  - requires-workitem-closure:CL-WO-008
+  - requires-workitem-closure:CL-WO-009
+  - requires-workitem-closure:CL-WO-010
+  - requires-workitem-closure:CL-WO-011
+  - requires-workitem-closure:CL-WO-012
+  - Exact preservation-compatible root adoption is reviewable
+  - Each future construction task has verified prerequisites
+  - Every pair mechanically closed
+  - Every state/event cell classified
+  - Unchanged claim evidence reused only when permitted
+  - 'Reject: No invented source symbols, BCF release truth or persistent controller'
+  - 'Reject: Spec cannot mark BCF verified or release ready'
+  - 'Reject: Deleting required route+contract cannot manufacture exclusion'
+  - 'Reject: Missing transition cannot silently become a valid effect'
+  - 'Reject: Change invalidates affected currentness before admission'
+  acceptance_evidence:
+  - governance-validate

@@ -1,0 +1,1 @@
+backend.tests.architecture.test_boundaries_ast::test_routers_remain_thin_transport_adapters

@@ -1,0 +1,133 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 07 Plan
+  id: clauditor-phase-07-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-07-plan.yml
+phase:
+  id: P07
+  build_block: failure_qualification
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - Deliver complete verifiable backup/cold restore across SQL, archive, Grafana and settings.
+  - Provide pinned upgrade, preservation-first migration and rollback.
+  - Qualify each applicable Anthropic source against content, metadata-only, omitted and truncated events.
+  - Test OTLP auth, read-only SQL, XSS, CSV formula, credential privacy and export boundaries.
+  - Qualify replay, partial archive/SQL, disk pressure, backend outage and restore failures.
+  - Qualify rule thresholds, alert lifecycle, notification and uncertainty semantics.
+  parallelizable_workstreams:
+  - id: P07-WS1
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
+  hard_dependencies:
+  - P01
+  - P02
+  - P03
+  - P04
+  - P05
+  - P06
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: Latest user authorization permits minimum actual construction needed for genuine Standard-v3 eligibility, promotion,
+    verification and push; stop after success. Full MVP remains planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: 'CL-WO-035: read construction/context.json and construction/orders/CL-WO-035.json with exact model/source blob
+    bindings.'
+- order: 5
+  statement: 'CL-WO-035: predecessor outputs CL-WO-012, CL-WO-014, CL-WO-015, CL-WO-017, CL-WO-026, CL-WO-034 require actual
+    identity/currentness before consumption; output tools/backup/backup-contract.json.'
+- order: 6
+  statement: 'CL-WO-035: owner cl.owner.deployment.v1; permitted roots tools/backup/, tests/backup/; locks backup-writer,
+    isolated-restore.'
+- order: 7
+  statement: 'CL-WO-035: steps Use native backup tools and whole-bundle manifest; verify isolated full restore, migration
+    identity and held records'
+- order: 8
+  statement: 'CL-WO-036: read construction/context.json and construction/orders/CL-WO-036.json with exact model/source blob
+    bindings.'
+- order: 9
+  statement: 'CL-WO-036: predecessor outputs CL-WO-012, CL-WO-014, CL-WO-035 require actual identity/currentness before consumption;
+    output docs/upgrade/rollback.md.'
+- order: 10
+  statement: 'CL-WO-036: owner cl.owner.deployment.v1; permitted roots tools/upgrade/, docs/upgrade/, tests/deployment/upgrade/;
+    locks upgrade-writer, isolated-upgrade.'
+- order: 11
+  statement: 'CL-WO-036: steps Test backup-before-upgrade and old/new SQL schema/collector exporters in isolated Compose projects'
+- order: 12
+  statement: 'CL-WO-037: read construction/context.json and construction/orders/CL-WO-037.json with exact model/source blob
+    bindings.'
+- order: 13
+  statement: 'CL-WO-037: predecessor outputs CL-WO-020, CL-WO-021, CL-WO-022, CL-WO-023, CL-WO-024, CL-WO-025 require actual
+    identity/currentness before consumption; output .artifacts/clauditor/CL-WO-037/evidence.json. (non-authoritative planned
+    output; capture exact digest before use)'
+- order: 14
+  statement: 'CL-WO-037: owner cl.owner.source.v1; permitted roots tests/conformance/source/, .artifacts/clauditor/CL-WO-037/;
+    locks isolated-source-probes. (non-authoritative planned output; capture exact digest before use)'
+- order: 15
+  statement: 'CL-WO-037: steps Run per-version fixture matrix and authorized live source samples where available; bind provenance
+    to exact source settings'
+- order: 16
+  statement: 'CL-WO-038: read construction/context.json and construction/orders/CL-WO-038.json with exact model/source blob
+    bindings.'
+- order: 17
+  statement: 'CL-WO-038: predecessor outputs CL-WO-016, CL-WO-026, CL-WO-030 require actual identity/currentness before consumption;
+    output .artifacts/clauditor/CL-WO-038/evidence.json. (non-authoritative planned output; capture exact digest before use)'
+- order: 18
+  statement: 'CL-WO-038: owner cl.owner.security.v1; permitted roots tests/security/hostile-input/, .artifacts/clauditor/CL-WO-038/;
+    locks isolated-security-probes. (non-authoritative planned output; capture exact digest before use)'
+- order: 19
+  statement: 'CL-WO-038: steps Inject hostile payloads to ingress/UI/CSV/SQL; verify no effects and no leaked secret'
+- order: 20
+  statement: 'CL-WO-039: read construction/context.json and construction/orders/CL-WO-039.json with exact model/source blob
+    bindings.'
+- order: 21
+  statement: 'CL-WO-039: predecessor outputs CL-WO-019, CL-WO-031, CL-WO-034, CL-WO-035, CL-WO-036 require actual identity/currentness
+    before consumption; output .artifacts/clauditor/CL-WO-039/evidence.json. (non-authoritative planned output; capture exact
+    digest before use)'
+- order: 22
+  statement: 'CL-WO-039: owner cl.owner.deployment.v1; permitted roots tests/reliability/chaos/, .artifacts/clauditor/CL-WO-039/;
+    locks isolated-reliability. (non-authoritative planned output; capture exact digest before use)'
+- order: 23
+  statement: 'CL-WO-039: steps Kill individual containers, corrupt archive segments and restore to isolated volume; compare
+    exact stage receipts and alerts'
+- order: 24
+  statement: 'CL-WO-040: read construction/context.json and construction/orders/CL-WO-040.json with exact model/source blob
+    bindings.'
+- order: 25
+  statement: 'CL-WO-040: predecessor outputs CL-WO-027, CL-WO-031, CL-WO-032, CL-WO-033 require actual identity/currentness
+    before consumption; output .artifacts/clauditor/CL-WO-040/evidence.json. (non-authoritative planned output; capture exact
+    digest before use)'
+- order: 26
+  statement: 'CL-WO-040: owner cl.owner.alert.v1; permitted roots tests/alerts/integration/, .artifacts/clauditor/CL-WO-040/;
+    locks isolated-alerts. (non-authoritative planned output; capture exact digest before use)'
+- order: 27
+  statement: 'CL-WO-040: steps Test source silence, tool denied, unknown cost and webhook retry through real Grafana alert
+    pipeline'
+- order: 28
+  statement: Phase hard_dependencies identify upstream output providers, not whole-phase barriers; independently admitted
+    ready packets may run with disjoint locks. No successor phase activation in this run.
+verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
+- make governance-validate
+- make governance-exposure-scan
+- Each packet target_tests invocation, environment, timeouts and outputs must qualify before admission.

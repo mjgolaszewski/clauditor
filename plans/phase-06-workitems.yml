@@ -1,0 +1,97 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 06 Workitems
+  id: clauditor-phase-06-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-06-workitems.yml
+  phase_id: P06
+workitems:
+- id: CL-WO-031
+  priority: P0
+  status: TODO
+  summary: Alert on configured source loss, queue pressure, archive/SQL gap, exporter errors and disk exhaustion.
+  acceptance:
+  - packet:CL-WO-031
+  - requirement:cl.req.025.v1
+  - requirement:cl.req.031.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-011
+  - predecessor-output:CL-WO-019
+  - predecessor-output:CL-WO-026
+  - Known operational outage yields actionable alert and gap status
+  - Injected queue failure triggers alert
+  - Restart resumes committed queue entries
+  - New operator proves log+metric+span test
+  - 'Reject: Missing unconfigured sources cannot imply employee inactivity'
+  - 'Reject: Silence is not falsely interpreted as inactivity'
+  - 'Reject: Loss not concealed under success'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-032
+  priority: P0
+  status: TODO
+  summary: Implement opt-in source-grounded compliance patterns and cost/permission/tool anomaly alerts.
+  acceptance:
+  - packet:CL-WO-032
+  - requirement:cl.req.024.v1
+  - requirement:cl.req.028.v1
+  - requirement:cl.req.032.v1
+  - predecessor-output:CL-WO-011
+  - predecessor-output:CL-WO-024
+  - predecessor-output:CL-WO-025
+  - predecessor-output:CL-WO-026
+  - Known violation fixture creates accurate alert with link
+  - Synthetic trigger fires and resolves
+  - Test alert reaches configured channel
+  - Representative synthetic fixtures visible
+  - 'Reject: Insufficient/missing signal or cost estimate never yields certain misconduct'
+  - 'Reject: An inferred offense is not reported as an observed fact'
+  - 'Reject: Notification failure cannot be marked delivered'
+  - 'Reject: No blank/unknown field presented as FULL'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-033
+  priority: P0
+  status: TODO
+  summary: Provide configured email/webhook routing and observable failed delivery.
+  acceptance:
+  - packet:CL-WO-033
+  - requirement:cl.req.028.v1
+  - requirement:cl.req.025.v1
+  - requires-workitem-closure:CL-WO-031
+  - requires-workitem-closure:CL-WO-032
+  - Approved destination receives tested alert and recovery
+  - Test alert reaches configured channel
+  - Injected queue failure triggers alert
+  - 'Reject: Failed webhook cannot be recorded as delivered'
+  - 'Reject: Notification failure cannot be marked delivered'
+  - 'Reject: Silence is not falsely interpreted as inactivity'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-034
+  priority: P0
+  status: TODO
+  summary: Apply approved 365/90/31-day SQL/archive TTL and hold-aware deletion with pressure alerts.
+  acceptance:
+  - packet:CL-WO-034
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.023.v1
+  - predecessor-output:CL-WO-009
+  - predecessor-output:CL-WO-015
+  - predecessor-output:CL-WO-017
+  - predecessor-output:CL-WO-018
+  - predecessor-output:CL-WO-019
+  - Selected retention and protected holds survive cleanup
+  - Cleanup respects selected horizon and holds
+  - Archive manifest verifies selected bytes
+  - Retention horizon estimate uses actual sampled bytes
+  - 'Reject: Low disk cannot silently shorten selected horizon'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: Disk shortfall triggers alert and blocks unsupported commitment'
+  acceptance_evidence:
+  - governance-validate

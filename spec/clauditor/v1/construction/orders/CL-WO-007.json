@@ -40,7 +40,7 @@
     "exact_source": {
       "repo": "mjgolaszewski/clauditor",
       "baseline_git_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
-      "model_git_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+      "model_git_blob": "3e516bcb3468ebbbb03a08ec4309e226e1c3a14b",
       "registry_git_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
       "bcf": "v2.3.6 Lite; proposed Standard 3.0 controller-free"
     },

@@ -1,0 +1,65 @@
+extensions:
+  bearertokenauth:
+    token: ${env:CLAUDITOR_INGEST_TOKEN}
+  file_storage:
+    directory: /var/lib/otelcol/queue
+    create_directory: true
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+        max_request_body_size: 4194304
+        auth:
+          authenticator: bearertokenauth
+processors:
+  batch:
+    timeout: 1s
+    send_batch_size: 1000
+exporters:
+  file/logs:
+    path: /var/lib/otelcol/archive/logs.jsonl
+    format: json
+    append: true
+    create_directory: true
+  file/traces:
+    path: /var/lib/otelcol/archive/traces.jsonl
+    format: json
+    append: true
+    create_directory: true
+  file/metrics:
+    path: /var/lib/otelcol/archive/metrics.jsonl
+    format: json
+    append: true
+    create_directory: true
+  clickhouse:
+    endpoint: tcp://clickhouse:9000
+    database: clauditor
+    username: ingest
+    password: ${env:CLAUDITOR_SQL_PASSWORD}
+    create_schema: true
+    timeout: 10s
+    sending_queue:
+      enabled: true
+      storage: file_storage
+      queue_size: 1000
+    retry_on_failure:
+      enabled: true
+      initial_interval: 1s
+      max_interval: 5s
+      max_elapsed_time: 30s
+service:
+  extensions: [bearertokenauth, file_storage]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/logs, clickhouse]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/traces, clickhouse]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/metrics, clickhouse]

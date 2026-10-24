@@ -1,0 +1,77 @@
+document:
+  kind: execution_phase_log
+  name: Phase 05 Log
+  id: clauditor-phase-05-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-05-log.yml
+phase:
+  id: P05
+  build_block: reviewer_vertical
+summary:
+  outcome: planned
+  highlights:
+  - Authenticated review, correlation, dashboards and bounded exports
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-024
+  status: TODO
+  summary: Project exact source-available prompts, response, tool, connector, skill and artifact metadata with content-availability
+    states.
+- id: CL-WO-025
+  status: TODO
+  summary: Create source-bound timeline reconstruction with session, prompt and trace sequence uncertainty.
+- id: CL-WO-026
+  status: TODO
+  summary: Provision Grafana OSS local administrator/reviewer roles and non-writable SQL datasource.
+- id: CL-WO-027
+  status: TODO
+  summary: "Prove first MVP Cowork/Claude Code prompt\u2192archive\u2192SQL\u2192authenticated session view using fixtures."
+- id: CL-WO-028
+  status: TODO
+  summary: Provision Grafana views for conversation, tools, MCP, connectors, skills, content and coverage.
+- id: CL-WO-029
+  status: TODO
+  summary: Provide per-user/source/model token, latency, cost estimate and storage dashboarding.
+- id: CL-WO-030
+  status: TODO
+  summary: Deliver role-protected bounded CSV/JSON exports with exact query scope and signed or hashed source manifest.
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.

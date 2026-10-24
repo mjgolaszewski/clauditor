@@ -1,307 +1,126 @@
-# Operations Runbook
+# Clauditor operations
 
-## Purpose
+## Scope and current state
 
-This runbook describes how to validate and run `Clauditor`.
+The implemented runtime is an isolated qualification slice: authenticated OTLP
+logs, traces and metrics reach a typed archive and ClickHouse, and a read-only
+CLI decodes an archive record. The full appliance, live Anthropic onboarding,
+Grafana dashboards, alerting, exports, production retention and restore acceptance
+remain planned. Construction is paused; these instructions do not activate it.
 
-BCF uses deterministic programs—not an implementing agent's judgment—to
-compute verification, closure, and release readiness. The project retains its
-own architecture and CI topology; profile and gate contracts declare which BCF
-capabilities apply.
+BCF 2.3.6 Standard contract 3.0 governs this checkout. See
+[environment setup](BOOTSTRAP.md), the [active ledger](../plans/phase-ledger.yml)
+and [qualification review](../audits/standard-v3-readiness.yml).
 
-## Release Validation
+## Local validation
 
-Run the configured release gate from the repo root:
-
-```bash
-python3 -m pip install -r requirements-governance.txt
-make -f Makefile.fragment release-check
-```
-
-Lite runs only governance validation and exposure scanning. Standard and
-regulated contracts must cover:
-
-- governance YAML validation
-- granular architecture gates for module size, layer membership, bounded-context membership, import boundaries, CQRS side rules, router thinness, and bounded-context duplication
-- lint
-- typecheck
-- unit tests
-- integration or contract tests
-- frontend tests when applicable
-- secret scanning, dependency audit, SBOM generation, and vulnerability scans
-- Docker or runtime smoke checks
-
-`Makefile.fragment`, gate applicability, evidence behavior, and closeout
-requirements are generated from `governance/gate-contracts.yml`. CI
-orchestration is generated from `governance/ci-graph.yml` and its explicitly
-registered `governance/ci-extensions/*.yml` files. Do not hand-author
-applicability or generated workflow YAML. Use `bcf profile promote` with either `--check` or
-`--apply` and a complete profile contract to change profiles. Make targets remain developer aliases;
-their command text is not verification.
-Fresh repositories receive a `Makefile` alias that includes the generated
-fragment, so `make release-check` is equivalent. Existing repositories keep
-their consumer-owned `Makefile` byte-for-byte and execute the generated owner
-directly; no manual merge or forward-port is required.
-
-An absent `profile_contract_version` means v1. Fresh Standard and Regulated
-installs default to v3; Lite defaults to v1. Promote explicitly with
-`bcf profile promote --repo-root . --to standard --contract-version 3.0`
-and either `--check` or `--apply`. Promotion and normal upgrades preserve
-workflow bytes. Promotion validation also preserves local Git custody so
-retained phase-history hashes remain mechanically verifiable. Fresh Standard-v3
-installs require explicit candidate and trusted runner mappings and render the
-reference graph. Thereafter edit the graph contract and use
-`bcf reconcile --repo-root . --apply|--check` and `bcf ci graph validate`. Use
-`bcf ci graph audit --format json` for the complete effective workflow, gate,
-artifact, receipt, test, dependency, timeout, and authority inventory.
-`bcf ci adopt github --check|--apply`
-uses that graph while preserving unrelated workflows. Legacy label and producer
-arguments apply only to profile-v1 adoption.
-
-Gate subprocess deadlines come from `governance/gate-contracts.yml`; graph
-validation requires every outer evidence job to contain its longest inner
-deadline plus declared headroom. Change timeout policy only with measured
-evidence for the relevant runner and gate class.
-
-Required CI jobs invoke the evidence wrapper for their gate IDs, upload the
-content-addressed bundles, and feed them to the final truthfulness job. The
-wrapper rejects dirty or untracked influence, then runs the positive gate and
-each configured negative behavioral control in separate pristine detached
-worktrees. A control must satisfy its typed failure oracle; command-not-found,
-timeout, signal, or an arbitrary crash is never proof. Dynamic or unresolved
-mandatory workflow paths fail closed.
-
-Test-node controls use one mechanical selector owner. The selected interpreter
-collects raw pytest selectors once per applicable gate; the runtime maps them to
-their JUnit-normalized identities, rejects collisions, verifies the exact-node
-manifest, and reuses the admitted raw selectors for isolated controls. It never
-reconstructs a filesystem path from a JUnit classname. Missing or ambiguous
-mappings fail closed.
-
-In profile v3, preflight allocates one private immutable evidence session for
-the exact commit, tree, profile, producer, run, attempt, and gate inventory.
-Every positive gate executes once and writes inside that session. Truth rejects
-mixed sessions or attempts. CI artifact names include the exact provider run
-and attempt, and the reference workflow never polls or occupies a runner while
-waiting for another job. Nested local automation running inside a provider
-process must pass `--local-producer-id`; this prevents ambient provider
-variables from changing the immutable session and receipt identity.
-
-Fresh repositories also receive an inactive
-`governance/evidence-storage.yml`. Repositories with repeated large preparation
-inputs may explicitly configure its GitHub App, protected environment,
-freshness classes, reachability roots, and budgets, then declare graph-owned
-`durable-source` and `durable-reference` artifacts plus one trusted no-checkout
-`durable_publish` job. Run `bcf evidence-store validate` and
-`bcf reconcile --repo-root . --apply`; never hand-edit the generated
-transport steps or provider identities. The workflow token authenticates
-ordinary reads; the short-lived App token receives only `contents:write` for
-draft discovery, publication reads by release ID, complete Release inventory,
-and Release mutation. A separately declared short-lived Administration-read
-credential proves immutable Releases are enabled before mutation.
-Consumers are allocated only after trusted publication succeeds, then cold-resolve
-and rehash every member before gate execution. Caches are acceleration only, GitHub immutable
-Release assets preserve the bytes, and no NAS fallback is authoritative.
-
-Use `bcf evidence-store retention-plan` to authenticate a candidate retention
-inventory and preview reachability, leases, budgets, and exact transient
-handoff IDs. Both retention commands require `GITHUB_TOKEN` plus
-`BCF_EVIDENCE_WRITE_TOKEN` so budgets include unpublished drafts. After review,
-`bcf evidence-store retention-apply-actions` repeats
-the provider checks and cold resolution, deletes only those exact Actions
-artifact IDs, and verifies their absence. It accepts no names or globs, is
-idempotent, and never deletes a durable Release.
-
-`README.md`, `LICENSE`, and `CHANGELOG.md` are standard required root
-artifacts. Preserve their application-specific content. Every pull request must
-update `CHANGELOG.md`; governance CI verifies the exact base-to-HEAD diff and
-requires a full Git checkout.
-
-Automation PRs remain subject to the same rule. A repository may explicitly
-adopt a trusted producer with `bcf ci automation adopt github --producer
-dependabot --check|--apply` after provisioning the bounded contents-write App
-and protected environment. Adoption derives exact allowed paths from the
-Dependabot configuration and eligible Git-tracked dependency files. Files with
-the exact BCF generated-workflow provenance header are excluded because action
-pins must be changed in their canonical source and rendered mechanically. An
-Actions update with no project-owned surface fails adoption. Fresh installs do
-not activate write automation. Automation contract v1.1 assigns every admitted
-dependency path a typed manifest decoder. The reconciler compares authenticated
-base and head blobs and writes the dependency name plus exact previous and new
-versions; an unsupported, ambiguous, or versionless change fails before write
-authority is used. It does not use PR prose and cannot approve or merge.
-
-If a dependency input owns generated copies, register bounded
-`mechanical_projections` for its exact-copy targets and SHA-256 manifest entries.
-The trusted reconciler verifies and derives those bytes from authenticated Git
-objects in the same changelog commit without running candidate code. Repeated
-Dependabot adoption preserves this project-owned configuration.
-
-Before opening a pull request, reproduce its exact remote context:
+Run from the repository root using the separate environments described in setup:
 
 ```bash
-bcf ci local-pr --repo-root . --remote origin
+BCF_TOOL=.artifacts/bcf-tool # non-authoritative local tool environment
+"$BCF_TOOL/bin/bcf" validate --repo-root .
+"$BCF_TOOL/bin/bcf" exposure-scan --repo-root .
+"$BCF_TOOL/bin/bcf" reconcile --repo-root . --python .venv/bin/python --check
+"$BCF_TOOL/bin/bcf" ci graph validate --repo-root .
+"$BCF_TOOL/bin/bcf" ci graph audit --repo-root .
+.venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+.venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+.venv/bin/python scripts/check_build_plan.py --self-test
+.venv/bin/python -m pytest -q
+.venv/bin/python tools/qualification/quality.py lint
+.venv/bin/python tools/qualification/quality.py typecheck
 ```
 
-The helper fetches the remote default branch, checks ancestry, and supplies the
-actual base SHA and pull-request event context to preflight.
+The qualified baseline collected 40 tests. Test manifests and gate contracts own
+exact populations; this count is a baseline observation, not a fixed test target.
+Local process success is a diagnostic. Accepted BCF receipts also bind source,
+commands, artifacts, controls, dependencies, interpreter and evidence session.
 
-For the governed submission path, provide only semantic intent:
+## Isolated Docker smoke
+
+With Docker and Compose available:
 
 ```bash
-bcf ci submit --repo-root . --intent pr
+PYTHONPATH=backend/src:tools:. .venv/bin/python tools/qualification/runtime.py
 ```
 
-Use `workitem` only when authored lifecycle state derives one completed bounded
-target, and `closure` only after authored phase completion. Submission derives
-repository, bounded target, commit, and tree; executes the canonical prospective
-train; rechecks immutable custody; and pushes only the exact proved commit.
-Agents do not sequence its internal checks.
+The probe creates a unique Compose project and ephemeral credentials, sends
+synthetic signals, rejects invalid authentication and malformed JSON, checks
+ClickHouse row counts and archive protobuf fidelity, then restarts the Collector
+to check archive persistence. It removes its project containers, networks and
+volumes on exit. It uses a container helper on the project network, so the Docker
+daemon can be outside the development container. Never globally prune a shared
+Docker host to clean up a failed probe.
 
-Profile v3 plans by claim and execution group. It reauthenticates immutable
-source receipts and recomputes their dependency closure, qualification, controls,
-producer, subject, session, and provider custody. Applicable groups may be reused;
-invalidated groups execute once; ambiguity falls back to canonical execution.
-Preflight observations are structural diagnostics and cannot satisfy behavioral
-evidence.
+The local `.artifacts/runtime-smoke.json` report is non-authoritative until
+captured and retained by BCF. `deploy/compose.yml`, `deploy/collector.Dockerfile`
+and `config/otel/qualification.yml` own the digest-pinned runtime configuration.
+Collector 0.148.0 and ClickHouse 26.3 are the qualified baseline versions.
+This is synthetic integration evidence, not proof of live source completeness or
+365-day capacity. Do not use the qualification Compose file as a production deployment.
 
-Persistent trusted-controller operation is optional. Ordinary adopters use fresh
-candidate workers and do not install BCF's self-authority Apps, recovery lane,
-release credentials, or publication authority. A repository that explicitly
-enables the controller extension receives the typed provider-backed transition;
-operators do not author or copy its artifact, run, confirmation, or pin values.
+## Inspect an archive record
 
-If the repo layout differs from the starter backend shape, update `architecture-boundaries.yml` before relying on `make architecture-test`.
-
-For existing repositories, install with `--adoption-mode existing` to include conversion playbooks; keep the first adoption commit focused on governance artifacts, inventory, and gate wiring.
-
-## Governance Helpers
+Provide one OTLP JSON export record on standard input and choose its signal:
 
 ```bash
-python3 scripts/validate_governance_yaml.py
-python3 scripts/governance_evidence.py run --gate test --output .artifacts/bcf/test # non-authoritative local bundle; retain by sha256 as a CI artifact
-python3 scripts/governance_truth.py --evidence-dir .artifacts/bcf # non-authoritative local report; retain by sha256 as a CI artifact
-python3 scripts/scaffold_governance_artifacts.py phase --help
-python3 scripts/scaffold_governance_artifacts.py hotfix --help
+PYTHONPATH=backend/src .venv/bin/python -m clauditor.archive.infrastructure.inspect_cli logs < /path/to/record.json
 ```
 
-Generate real hotfix logs with the scaffold helper rather than copying the template example file; the governed filename convention is `phases/phase-NN-hotfix##.yml`.
-Governance validation should cover structural schema checks from `schemas/`, repo-relative `document.path` checks, configured release-gate checks, and semantic cross-artifact consistency checks.
+Use `traces` or `metrics` for the other signals. The CLI emits decoded protobuf
+bytes as hexadecimal. Its input limit is 4 MiB; malformed records, unsupported
+fields and empty envelopes fail validation. OTLP trace/span IDs, nested AnyValue,
+large integers and binary values are covered by the archive tests. Inspection
+reads input only; it does not index, persist or authenticate source provenance.
 
-Structural validation never promotes lifecycle state. Phase logs may author
-`completed`; `verified`, `closed`, and release readiness are computed by the
-truth engine from current-tree evidence and canonical finding accounting.
-New receipt and truth schemas are `3.0`; supported legacy bundles retain their
-exact-subject compatibility, while 0.5 bundles fail as
-`unsupported_schema_version` and must be recaptured.
+## Security checks and limits
 
-Standalone tooling is exported under the private `scripts/_bcf_runtime/`
-namespace; public scripts are thin wrappers. Keep runtime modules below 800 LOC
-and split future growth by stable validation surface, not incidental helper
-sharing.
+`tools/qualification/quality.py` accepts `security-secret-scan`,
+`security-dependency-audit`, `security-sbom` and `security-vulnerability-scan`.
+The gates respectively scan owned source/configuration, audit the pinned Python
+runtime dependencies, generate a dependency SBOM with pinned image identities,
+and scan product Python source with Bandit. Full container OS-package SBOM and
+vulnerability qualification remain release work. See [Security](../SECURITY.md).
 
-## Cleanup Helpers
+## CI and evidence
 
-Use `bcf cleanup` from an installed BCF CLI when this repo accumulates audit or governance drift:
+[Draft PR #3](https://github.com/mjgolaszewski/clauditor/pull/3) carries the
+qualification branch. [Run 40041068072](https://github.com/mjgolaszewski/clauditor/actions/runs/40041068072)
+passed for head `7bd1239a2dfe94637d9a923c4b5197a558dfebe0` before this editorial
+refresh. GitHub evaluated a PR merge commit whose tree matched that head exactly.
+The run identifies that baseline; later edits require their own checks.
 
-```bash
-bcf cleanup --repo-root .
-bcf cleanup --repo-root . --format json --compact
-```
+The generated workflow runs cheap preflight, project Ruff lint, four evidence
+shards and terminal governance truth. Twenty gate contracts are registered;
+four claims are satisfied during preflight and sixteen gates produce qualified
+receipts. Receipt-producing gates run positives and typed causal negative controls
+in pristine worktrees. Terminal truth checks one immutable session and exact run
+attempt. A queued job or uploaded bundle alone does not establish a passing result.
 
-The command is dry-run by default. Safe apply mode moves legacy audit/review evidence into `audits/` and rewrites exact path references:
+`governance/ci-graph.yml` and its registered digest-locked extension own CI.
+Use canonical `bcf reconcile --apply` to update generated workflows and other
+derived files, then check reconciliation and graph audit. Do not edit workflow
+YAML directly. Make targets are developer aliases; `make release-check` exercises
+the registered gates but grants no release approval. Optional CI authority
+certification remains deferred. No persistent controller or release is installed.
 
-```bash
-bcf cleanup --repo-root . --apply
-```
+For local PR context, use the verifier's `bcf ci local-pr --repo-root . --python
+.venv/bin/python`; it resolves the real origin comparison base. Consult the pinned
+CLI's `--help` when requesting evidence capture or scoped truth. Never combine
+receipts from different candidates or sessions, fabricate lifecycle truth, or
+interpret product telemetry as regulatory compliance evidence.
 
-Interactive apply asks for confirmation. In non-TTY automation, append `--yes`
-only after the dry-run has been reviewed; otherwise cleanup refuses before any
-mutation.
+## Maintenance and coordination
 
-Product source or tests may use an `audit` or `audits` package beneath the roots
-declared in `architecture-boundaries.yml` and `AGENTS.yml`. Governance validation
-admits only regular recognized code there; evidence-like files still belong in
-the canonical `audits/` root. Cleanup considers only the fixed legacy evidence
-locations in its contract and never moves first-party audit-domain code.
+Keep execution notes in the active phase log and reports under `audits/`.
+Ignored `.artifacts/` paths are non-authoritative local storage; retain referenced
+proof with hashes and provider artifact identity. Cleanup is dry-run first;
+follow [Repo cleanup](../governance/REPO_CLEANUP.md) and preserve reachable evidence.
+Every PR updates [CHANGELOG.md](../CHANGELOG.md).
 
-Do not use cleanup as a substitute for semantic review. Product specs, phase history, architecture docs, security docs, runbooks, and vendored governance require owner judgment before rewriting or removal. Phase-history entries must stay compact and point to retained artifacts or git-history refs with hashes.
-Use `governance/repo-cleanup-contract.yml` for machine-readable cleanup rules and `governance/REPO_CLEANUP.md` for the human sequence.
-
-To opt into strict historical phase retention, run one of the retention modes:
-
-```bash
-bcf cleanup --repo-root . --phase-retention-mode --apply
-bcf cleanup --repo-root . --phase-retention-mode archive --truth-report .artifacts/bcf/truth.json --apply # non-authoritative path; verify sha256 against its CI artifact
-```
-
-Append `--yes` to either retention command in noninteractive automation.
-
-The first command uses `git-history` retention and removes stale completed phase
-artifacts after recording hashes and Git refs. Add a current `--truth-report`
-only to preserve a mechanically derived closeout snapshot; without one, the
-compact row records authored completion only. Archive mode requires a passing
-closed report and moves stale artifacts into ignored
-`governance/archive/phase-artifacts/` storage. Phase-scoped hotfix logs and
-matching hotfix lane records leave active governance with their related phase.
-With no phase-retention switch, cleanup keeps existing historical triplet and
-hotfix behavior.
-
-## Runtime Diagnostics
-
-Document service health, release metadata, metrics, traces, logs, and operator-safe diagnostic endpoints here.
-
-## CI Resource Ownership
-
-When CI-backed evidence supports a release claim, workflow display names are
-operator presentation only. Authority binds numeric repository and workflow
-identity, active path and trusted bytes, event, run and attempt, and the exact
-candidate commit and tree. Candidate code belongs on fresh disposable workers;
-persistent trusted jobs do not check out or execute it. Use `bcf ci adopt
-github` only as an explicit transaction after reviewing the generated topology
-and supplying the required routing and producer arguments.
-
-Give every CI run a unique identifier and label every Docker resource it owns
-with `io.bcf-governance.ci-run=<run-id>`. Use a run-scoped Compose project such
-as `bcf-ci-<run-id>`, run-scoped image tags, and the same label on containers,
-networks, volumes, and images created outside Compose. Build labels should use
-the same key and value where the builder supports OCI labels.
-
-Preview cleanup first, then apply it explicitly in automation:
-
-```bash
-bcf ci-cleanup --run-id "$BCF_CI_RUN_ID"
-bcf ci-cleanup --run-id "$BCF_CI_RUN_ID" --apply --yes
-```
-
-The helper selects only resources with that exact label, then re-inspects the
-exact ID and label immediately before each deletion. Container deletion also
-removes attached anonymous volumes. It never infers ownership from names,
-accepts caller globs, or performs global Docker or build-cache pruning.
-Do not hard-code runner labels into the governance pack; runner selection is a
-repository-owned CI decision.
-
-Prune expired local evidence sessions separately:
-
-```bash
-bcf ci-cleanup --repo-root . --prune-evidence-sessions
-bcf ci-cleanup --repo-root . --prune-evidence-sessions --apply --yes
-```
-
-Retention comes from `governance/artifact-manifest.yml`. Cleanup considers only
-valid non-authoritative local entries under `.artifacts/bcf/sessions` and revalidates exact manifest
-identity and filesystem ownership before deletion.
-
-## Secrets Policy
-
-- Do not store live secrets in governance files.
-- Use environment variables or the approved secrets manager.
-- Keep `.env.example` files free of real credentials.
-
-## Evidence Policy
-
-Keep narrative execution notes in the active phase log. Store measurable
-evidence bundles and truth reports outside the tracked tree, normally under
-ignored `.artifacts/bcf/`, and retain them in CI artifact or release storage by sha256.
-Receipt result fields are descriptive only: BCF recomputes results from process
-outcomes, raw artifact hashes, test reports, declared expectations, and probes.
+AgentBus is optional workspace coordination, separate from product runtime and
+BCF authority. The Clauditor conversation enrolled successfully, acknowledged its
+policy and posted its introduction after a fresh approval request. Prior HTTP 403
+observations are historical. Use the installed AgentBus skill and this chat's
+identity; preserve staged requests on uncertain failures, check controls, and
+never copy another chat's credentials. No service token belongs in this repository.

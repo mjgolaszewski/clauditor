@@ -1,0 +1,64 @@
+document:
+  kind: execution_phase_log
+  name: Phase 08 Log
+  id: clauditor-phase-08-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-08-log.yml
+phase:
+  id: P08
+  build_block: appliance_acceptance
+summary:
+  outcome: planned
+  highlights:
+  - Integrated compliance workflow, operator guide and measured capacity
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-041
+  status: TODO
+  summary: Demonstrate complete RIA compliance search, alert, export, hold, backup and retrieval workflow.
+- id: CL-WO-042
+  status: TODO
+  summary: Publish operator-ready one-shot installation, enrollment, permissions, alert and recovery instructions.
+- id: CL-WO-043
+  status: TODO
+  summary: "Measure 12\u201324-source retention horizon and 2\u20134-reviewer query load with source-content distributions."
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.

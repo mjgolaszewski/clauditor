@@ -3,10 +3,37 @@ include .artifacts/bcf/local-cli.mk
 BCF_PROJECT_PYTHON = $(BCF) ci project-python --repo-root .
 BCF_EVIDENCE_DIR ?= .artifacts/bcf
 
-.PHONY: governance-truthfulness release-check governance-exposure-scan governance-validate
+.PHONY: governance-truthfulness release-check architecture-context-membership architecture-cqrs-side architecture-duplication architecture-import-boundaries architecture-layer-membership architecture-module-size architecture-router-thinness architecture-test contract-test governance-exposure-scan governance-validate lint runtime-smoke security-dependency-audit security-sbom security-secret-scan security-vulnerability-scan semantic-ownership test typecheck
 
 governance-truthfulness:
 	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; "$$python" scripts/governance_truth.py --repo-root . --evidence-dir $(BCF_EVIDENCE_DIR)
+
+architecture-context-membership:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-context-membership
+
+architecture-cqrs-side:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-cqrs-side
+
+architecture-duplication:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-duplication
+
+architecture-import-boundaries:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-import-boundaries
+
+architecture-layer-membership:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-layer-membership
+
+architecture-module-size:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-module-size
+
+architecture-router-thinness:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-router-thinness
+
+architecture-test:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py architecture-test
+
+contract-test:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py contract-test
 
 governance-exposure-scan:
 	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && "$$python" scripts/check_governance_exposure.py --repo-root .
@@ -14,10 +41,40 @@ governance-exposure-scan:
 governance-validate:
 	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && "$$python" scripts/validate_governance_yaml.py --repo-root .
 
+lint:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py lint
+
+runtime-smoke:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && BCF_EXECUTION_PROFILE=qualification PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/runtime.py
+
+security-dependency-audit:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py security-dependency-audit
+
+security-sbom:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py security-sbom
+
+security-secret-scan:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py security-secret-scan
+
+security-vulnerability-scan:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py security-vulnerability-scan
+
+semantic-ownership:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && "$$python" scripts/semantic_ownership.py --repo-root .
+
+test:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/tests.py test
+
+typecheck:
+	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; cd . && PYTHONPATH=backend/src:tools:. "$$python" tools/qualification/quality.py typecheck
+
 release-check:
 	@python="$$($(BCF_PROJECT_PYTHON))" || exit $$?; \
 	mkdir -p $(BCF_EVIDENCE_DIR); \
-	for gate in governance-exposure-scan governance-validate; do \
-		"$$python" scripts/governance_evidence.py --repo-root . run --gate $$gate --output $(BCF_EVIDENCE_DIR)/$$gate --python "$$python" || exit $$?; \
-	done; \
-	"$$python" scripts/governance_truth.py --repo-root . --evidence-dir $(BCF_EVIDENCE_DIR)
+	preflight_output="$$("$$python" scripts/preflight_governance.py --repo-root . --mode release --python "$$python" --artifact-root $(BCF_EVIDENCE_DIR) --expected-producer local --local-producer-id local --format text)" || exit $$?; \
+	printf '%s\n' "$$preflight_output"; \
+	session="$$(printf '%s\n' "$$preflight_output" | tail -n 1)"; \
+	test -n "$$session" && test -f "$$session" || { echo 'preflight did not produce an evidence session' >&2; exit 1; }; \
+	session_dir="$${session%/evidence-session.json}"; \
+	"$$python" scripts/capture_governance_shard.py --repo-root . --all-planned --output-root "$$session_dir" --session-manifest "$$session" || exit $$?; \
+	"$$python" scripts/governance_truth.py --repo-root . --evidence-dir "$$session_dir"

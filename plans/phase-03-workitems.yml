@@ -1,0 +1,150 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 03 Workitems
+  id: clauditor-phase-03-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-03-workitems.yml
+  phase_id: P03
+workitems:
+- id: CL-WO-014
+  priority: P0
+  status: TODO
+  summary: Construct reproducible single-host Linux Docker Compose OSS services with restricted interfaces.
+  acceptance:
+  - packet:CL-WO-014
+  - requirement:cl.req.022.v1
+  - requirement:cl.req.027.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-003
+  - predecessor-output:CL-WO-004
+  - predecessor-output:CL-WO-012
+  - predecessor-output:CL-WO-013
+  - Cold start persists data and runs no paid dependencies
+  - Fresh single-host install completes
+  - Every required runtime component has qualifying OSS license
+  - New operator proves log+metric+span test
+  - 'Reject: Floating image, public SQL, insecure volume or false health blocks acceptance'
+  - 'Reject: Green containers without test telemetry not ready'
+  - 'Reject: Paid/hosted-only component is excluded'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-015
+  priority: P0
+  status: TODO
+  summary: Implement ClickHouse DDL, idempotent migrations, read-only reporting and restricted ingestion users.
+  acceptance:
+  - packet:CL-WO-015
+  - requirement:cl.req.013.v1
+  - requirement:cl.req.014.v1
+  - requirement:cl.req.017.v1
+  - requirement:cl.req.018.v1
+  - requirement:cl.req.034.v1
+  - predecessor-output:CL-WO-008
+  - predecessor-output:CL-WO-010
+  - requires-workitem-closure:CL-WO-014
+  - Typed sample values survive SQL roundtrip and viewer can SELECT only
+  - Retry does not double count
+  - Cleanup respects selected horizon and holds
+  - Reviewer views permitted dashboards
+  - Same-source exact-key timeline
+  - Histogram/counter/gauge test round trips
+  - 'Reject: DDL/write through reporting principal or lossy metrics fail'
+  - 'Reject: No silent float conversion or detail drop'
+  - 'Reject: Retention decrease without approval fails'
+  - 'Reject: Reviewer cannot alter DB or secrets'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  - 'Reject: No hidden type loss or invalid temporality'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-016
+  priority: P0
+  status: TODO
+  summary: Configure OTLP/HTTP proto+JSON and optional gRPC with authenticated local/remote receiver boundary.
+  acceptance:
+  - packet:CL-WO-016
+  - requirement:cl.req.009.v1
+  - requirement:cl.req.010.v1
+  - requirement:cl.req.026.v1
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-007
+  - requires-workitem-closure:CL-WO-014
+  - All supported signal types arrive only from enrolled sources
+  - Three signal kinds decoded and validated
+  - Verified API destination test succeeds
+  - Revoked secret stops old sender
+  - 'Reject: Anonymous/bad-token/oversize intake cannot create accepted record'
+  - 'Reject: Reject wrong content type, malformed payload and limits'
+  - 'Reject: Unauthorized public post fails with no trusted receipt'
+  - 'Reject: Token never appears in app logs or evidence export'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-017
+  priority: P0
+  status: TODO
+  summary: Persist source-faithful typed OTLP with bounded segments, manifest identities and verifiable replay.
+  acceptance:
+  - packet:CL-WO-017
+  - requirement:cl.req.012.v1
+  - requirement:cl.req.015.v1
+  - requirement:cl.req.031.v1
+  - predecessor-output:CL-WO-007
+  - predecessor-output:CL-WO-008
+  - requires-workitem-closure:CL-WO-014
+  - requires-workitem-closure:CL-WO-016
+  - Nested AnyValue and hashes survive retry/replay and restarts
+  - Typed AnyValue reconstituted across archive
+  - Archive manifest verifies selected bytes
+  - Restart resumes committed queue entries
+  - 'Reject: Alpha exporter format drift or missing bytes fails qualification'
+  - 'Reject: Flattened string-only projection does not replace archive'
+  - 'Reject: Ordinary checksum not represented as WORM certification'
+  - 'Reject: Loss not concealed under success'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-018
+  priority: P0
+  status: TODO
+  summary: Configure tested Collector→ClickHouse pipelines for logs, traces and metrics.
+  acceptance:
+  - packet:CL-WO-018
+  - requirement:cl.req.012.v1
+  - requirement:cl.req.013.v1
+  - requirement:cl.req.034.v1
+  - predecessor-output:CL-WO-008
+  - requires-workitem-closure:CL-WO-015
+  - requires-workitem-closure:CL-WO-016
+  - All supported signals are queryable with source traceability
+  - Typed AnyValue reconstituted across archive
+  - Retry does not double count
+  - Histogram/counter/gauge test round trips
+  - 'Reject: NULL/zero conversions, incorrect metrics or silent attribute drop fail'
+  - 'Reject: Flattened string-only projection does not replace archive'
+  - 'Reject: No silent float conversion or detail drop'
+  - 'Reject: No hidden type loss or invalid temporality'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-019
+  priority: P0
+  status: TODO
+  summary: Qualify WAL/queue, backpressure, retries, deduplication and stage reconciliation across archive/SQL.
+  acceptance:
+  - packet:CL-WO-019
+  - requirement:cl.req.011.v1
+  - requirement:cl.req.013.v1
+  - requirement:cl.req.031.v1
+  - predecessor-output:CL-WO-007
+  - requires-workitem-closure:CL-WO-017
+  - requires-workitem-closure:CL-WO-018
+  - Replayed data indexes exactly once logically, loss risk reported
+  - Each stage has recorded identity
+  - Retry does not double count
+  - Restart resumes committed queue entries
+  - 'Reject: Archive-only or SQL-only receipt cannot claim full durability/indexing'
+  - 'Reject: Receiver HTTP success is not durable receipt'
+  - 'Reject: No silent float conversion or detail drop'
+  - 'Reject: Loss not concealed under success'
+  acceptance_evidence:
+  - governance-validate

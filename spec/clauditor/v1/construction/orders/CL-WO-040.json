@@ -14,7 +14,8 @@
     "parallelizable": "conditional_if_nonoverlapping_writes_locks_and_all_predecessors_admitted",
     "out_of_order": "conditional_if_all_dependencies_and_authority_are_satisfied",
     "exclusive_write_roots": [
-      "tests/alerts/integration/"
+      "tests/alerts/integration/",
+      ".artifacts/clauditor/CL-WO-040/"
     ],
     "exclusive_resource_locks": [
       "isolated-alerts"
@@ -47,7 +48,7 @@
     "exact_source": {
       "repo": "mjgolaszewski/clauditor",
       "baseline_git_commit": "44ca22d86ea15b6c9e76d84217cbabf37bd5cda9",
-      "model_git_blob": "c5a2894c4767e7ff3595461a0d28b656e07879de",
+      "model_git_blob": "3e516bcb3468ebbbb03a08ec4309e226e1c3a14b",
       "registry_git_blob": "dcb679edb51132b4954fd5eabb12c0db64134c3b",
       "bcf": "v2.3.6 Lite; proposed Standard 3.0 controller-free"
     },
@@ -104,7 +105,7 @@
       {
         "order_id": "CL-WO-027",
         "required_artifact_id": "CL-WO-027:primary",
-        "artifact_path": "tests/e2e/first-vertical/report.json",
+        "artifact_path": ".artifacts/clauditor/CL-WO-027/report.json",
         "qualification": "exact authenticated output identity required; not yet assigned"
       },
       {
@@ -139,7 +140,7 @@
       {
         "order_id": "CL-WO-027",
         "required_artifact_id": "CL-WO-027:primary",
-        "artifact_path": "tests/e2e/first-vertical/report.json",
+        "artifact_path": ".artifacts/clauditor/CL-WO-027/report.json",
         "qualification": "exact authenticated output identity required; not yet assigned"
       },
       {
@@ -171,9 +172,10 @@
   },
   "D_proposed_permitted_cut": {
     "write_roots": [
-      "tests/alerts/integration/"
+      "tests/alerts/integration/",
+      ".artifacts/clauditor/CL-WO-040/"
     ],
-    "primary_output": "tests/alerts/integration/evidence.json",
+    "primary_output": ".artifacts/clauditor/CL-WO-040/evidence.json",
     "allowed_edits": "Only owner-approved bounded files and directly necessary tests",
     "forbidden_edits": [
       "Other owners' contracts, unrelated product features and uncontrolled dependency upgrades",
@@ -205,7 +207,8 @@
       "cl.flow.017.v1"
     ],
     "side_effect_scope": [
-      "tests/alerts/integration/"
+      "tests/alerts/integration/",
+      ".artifacts/clauditor/CL-WO-040/"
     ],
     "concurrency": "Exact input and exclusive writer; no silent sharing of state/queues",
     "recovery": "Typed rejection, bounded replay or explicit operator reconciliation",
@@ -283,7 +286,7 @@
   "J_completion_handoff": {
     "primary_output": {
       "id": "CL-WO-040:primary",
-      "path": "tests/alerts/integration/evidence.json",
+      "path": ".artifacts/clauditor/CL-WO-040/evidence.json",
       "status": "future_not_built"
     },
     "evidence": "Observed positive/negative proofs with authenticated exact-input receipts where required",

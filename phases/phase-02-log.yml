@@ -1,0 +1,94 @@
+document:
+  kind: execution_phase_log
+  name: Phase 02 Log
+  id: clauditor-phase-02-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-02-log.yml
+phase:
+  id: P02
+  build_block: qualified_contracts
+summary:
+  outcome: planned
+  highlights:
+  - Source, semantic, privacy and operations contracts
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-001
+  status: TODO
+  summary: Bind owner intent, baseline and change authority before constructing dependent contracts.
+- id: CL-WO-002
+  status: TODO
+  summary: Qualify Cowork, Claude Code, API and SDK signal/content capabilities and source enrollment prerequisites.
+- id: CL-WO-003
+  status: TODO
+  summary: Qualify free self-hosted image/plugin versions, dependencies, stability and ClickHouse exporter behavior.
+- id: CL-WO-004
+  status: TODO
+  summary: Fix local admin/viewer, secret, SQL, content privacy and OSS audit expectations.
+- id: CL-WO-005
+  status: TODO
+  summary: Reconcile canonical semantics, independent required paths and typed state/edge exclusions.
+- id: CL-WO-006
+  status: TODO
+  summary: Build anonymized fixtures for OTLP signals, content limits and provider source types.
+- id: CL-WO-007
+  status: TODO
+  summary: Contract OTLP authorization, partial success, durable queues and multi-stage receipts.
+- id: CL-WO-008
+  status: TODO
+  summary: Contract semantically typed OTLP preservation, ClickHouse projections and deduplication.
+- id: CL-WO-009
+  status: TODO
+  summary: Define 365/90/31-day retention, holds, export custody and capacity downgrade controls.
+- id: CL-WO-010
+  status: TODO
+  summary: Contract reviewer SQL access, correlation confidence, native Grafana capability and bounded exports.
+- id: CL-WO-011
+  status: TODO
+  summary: Contract observed compliance and health alert predicates, notification and uncertainty.
+- id: CL-WO-012
+  status: TODO
+  summary: Specify one-host runtime budgets, persistent volumes, backup/restore and host TLS responsibilities.
+- id: CL-WO-013
+  status: TODO
+  summary: Review and reconcile approved candidate ownership with existing BCF root authorities without destructive replacement.
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.

@@ -1,70 +1,75 @@
 document:
   kind: active_execution_phase_ledger
-  name: "Clauditor Active Phase Ledger"
-  id: "clauditor-phase-ledger"
+  name: Clauditor Active Phase Ledger
+  id: clauditor-phase-ledger
   version: 1.0.0
-  generated_at_utc: "2026-10-23T00:00:00Z"
-  status: active_phase_planned
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: active_phase_paused
   path: plans/phase-ledger.yml
 build_plan_mandate:
   format: yaml
   required_fields:
-    - tightly_scoped_deliverables
-    - parallelizable_workstreams
-    - hard_dependencies
-    - docker_first_local_runtime
-    - completeness_standard
+  - tightly_scoped_deliverables
+  - parallelizable_workstreams
+  - hard_dependencies
+  - docker_first_local_runtime
+  - completeness_standard
   completeness_standard: full_completeness_for_declared_scope
 active_phase:
   id: P01
-  build_block: "foundation"
+  build_block: foundation
   plan: plans/phase-01-plan.yml
   workitems: plans/phase-01-workitems.yml
   log: phases/phase-01-log.yml
   memory: MEMORY.yml
   spec: plans/product-spec.yml
   build_plan: plans/build-plan.yml
-  lifecycle_status: planned
-  owner: "codex"
+  lifecycle_status: paused
+  owner: codex
   validation_commands:
-    - make governance-validate
-    - make architecture-test
-    - make lint
-    - make typecheck
-    - make test
-    - make release-check
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  paused_reason: Owner requested stop after Standard 3.0 promotion verification and push.
+  resume_condition: Owner assigns the next construction task.
 hotfix_lane:
   scaffold_script: scripts/scaffold_governance_artifacts.py
   default_mode: full
   modes:
     lite:
       allowed_when:
-        - single_commit_fix
-        - no_public_contract_change
-        - no_security_scope_change
+      - single_commit_fix
+      - no_public_contract_change
+      - no_security_scope_change
     full:
       required_when:
-        - default_branch_red_ci
-        - release_blocking_regression
-        - security_or_expiring_external_breakage
+      - default_branch_red_ci
+      - release_blocking_regression
+      - security_or_expiring_external_breakage
   open_records: []
   remediation_history: []
 operator_requirements_choices_disambiguations:
-  - type: decision
-    statement: all governance, memory, specs, plans, workitem ledgers, and phase logs remain YAML-native
+- type: decision
+  statement: all governance, memory, specs, plans, workitem ledgers, and phase logs remain YAML-native
+- type: authorization
+  statement: Adopt canonical roadmap; attempt Standard profile contract 3.0 before substantial construction, then pause. If actual prerequisites require construction, stop and report blockers.
+- type: authorization
+  statement: User now authorizes construction through genuine Standard-v3 promotion eligibility, promotion and verification, push to origin, then end turn. No product release.
 active_delivery_priorities:
   current_tranche:
-    - "foundation"
+  - Paused after verified Standard 3.0 promotion; no further construction, deployment or release.
 release_trains:
   release_1:
-    target_version: "0.2.0"
+    target_version: 0.2.0
     status: active
     focus:
-      - governed_foundation
+    - governed_foundation
 release_readiness:
   computed_by: bcf truth
   requirements_source: governance/evidence-policy.yml
   validating_command: make release-check
 definition_of_ready_before_execution:
-  - active phase has a plan, workitem ledger, and log
-  - validation commands are listed before implementation starts
+- active phase has a plan, workitem ledger, and log
+- validation commands are listed before implementation starts

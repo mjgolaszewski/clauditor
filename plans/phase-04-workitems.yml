@@ -1,0 +1,114 @@
+document:
+  kind: execution_phase_workitem_ledger
+  name: Phase 04 Workitems
+  id: clauditor-phase-04-workitems
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-04-workitems.yml
+  phase_id: P04
+workitems:
+- id: CL-WO-020
+  priority: P0
+  status: TODO
+  summary: Enable Cowork OTLP with precise desktop/cloud content-policy prerequisites.
+  acceptance:
+  - packet:CL-WO-020
+  - requirement:cl.req.001.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.007.v1
+  - requirement:cl.req.008.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-002
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-016
+  - predecessor-output:CL-WO-019
+  - Observed Cowork events and coverage gaps are reviewable
+  - Supported Cowork event is queryable
+  - Searchable supported captured content
+  - Source capture settings documented and verifiable
+  - State accurately shown on events and exports
+  - Capture readiness matrix per source
+  - New operator proves log+metric+span test
+  - 'Reject: Metadata-only cloud sessions cannot masquerade as full conversation content'
+  - 'Reject: Never fabricate unavailable conversation content'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: [image] marker cannot count as original image bytes'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-021
+  priority: P0
+  status: TODO
+  summary: Enable Claude Code content-aware OTLP logs, metrics and optional traces.
+  acceptance:
+  - packet:CL-WO-021
+  - requirement:cl.req.002.v1
+  - requirement:cl.req.005.v1
+  - requirement:cl.req.006.v1
+  - requirement:cl.req.007.v1
+  - requirement:cl.req.008.v1
+  - predecessor-output:CL-WO-002
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-016
+  - predecessor-output:CL-WO-019
+  - Qualified source events are attributable and queryable
+  - Code logs/metrics/spans round-trip
+  - Searchable supported captured content
+  - Source capture settings documented and verifiable
+  - State accurately shown on events and exports
+  - Capture readiness matrix per source
+  - 'Reject: Placeholders or uninstrumented spans are not recreated'
+  - 'Reject: Disabled trace or content yields no invented span/body'
+  - 'Reject: No artifact bytes are fetched or inferred if not emitted'
+  - 'Reject: Do not silently enable raw body/system prompt capture'
+  - 'Reject: [image] marker cannot count as original image bytes'
+  - 'Reject: Unavailable source not represented as healthy or complete'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-022
+  priority: P0
+  status: TODO
+  summary: Support hosted API server traces with required public HTTPS endpoint and source authentication.
+  acceptance:
+  - packet:CL-WO-022
+  - requirement:cl.req.003.v1
+  - requirement:cl.req.010.v1
+  - requirement:cl.req.035.v1
+  - predecessor-output:CL-WO-002
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-016
+  - predecessor-output:CL-WO-019
+  - API OTLP protobuf traces land on authenticated receiver
+  - API test span is visible
+  - Verified API destination test succeeds
+  - New operator proves log+metric+span test
+  - 'Reject: Failed remote delivery does not imply user inactivity or complete capture'
+  - 'Reject: Best-effort dropped spans are not counted as complete'
+  - 'Reject: Unauthorized public post fails with no trusted receipt'
+  - 'Reject: Unqualified source never claimed monitored'
+  acceptance_evidence:
+  - governance-validate
+- id: CL-WO-023
+  priority: P0
+  status: TODO
+  summary: Document SDK trace instrumentation and safe W3C correlation to API traces.
+  acceptance:
+  - packet:CL-WO-023
+  - requirement:cl.req.004.v1
+  - requirement:cl.req.018.v1
+  - predecessor-output:CL-WO-002
+  - predecessor-output:CL-WO-006
+  - predecessor-output:CL-WO-016
+  - predecessor-output:CL-WO-019
+  - Qualified SDK spans join only on actual authenticated context
+  - SDK plus API connected trace
+  - Same-source exact-key timeline
+  - 'Reject: Uninstrumented requests and coincident names cannot be joined'
+  - 'Reject: Unrelated spans remain unjoined'
+  - 'Reject: Similar text/timestamps do not imply exact linkage'
+  acceptance_evidence:
+  - governance-validate

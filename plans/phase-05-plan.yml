@@ -1,0 +1,142 @@
+document:
+  kind: execution_phase_plan
+  name: Phase 05 Plan
+  id: clauditor-phase-05-plan
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: plans/phase-05-plan.yml
+phase:
+  id: P05
+  build_block: reviewer_vertical
+  planner: codex
+  date: '2026-10-23'
+  scope_source:
+  - AGENTS.yml
+  - plans/product-spec.yml
+  - plans/build-plan.yml
+  - plans/phase-ledger.yml
+  - MEMORY.yml
+delivery_contract:
+  tightly_scoped_deliverables:
+  - Project exact source-available prompts, response, tool, connector, skill and artifact metadata with content-availability
+    states.
+  - Create source-bound timeline reconstruction with session, prompt and trace sequence uncertainty.
+  - Provision Grafana OSS local administrator/reviewer roles and non-writable SQL datasource.
+  - "Prove first MVP Cowork/Claude Code prompt\u2192archive\u2192SQL\u2192authenticated session view using fixtures."
+  - Provision Grafana views for conversation, tools, MCP, connectors, skills, content and coverage.
+  - Provide per-user/source/model token, latency, cost estimate and storage dashboarding.
+  - Deliver role-protected bounded CSV/JSON exports with exact query scope and signed or hashed source manifest.
+  parallelizable_workstreams:
+  - id: P05-WS1
+    name: Qualified dependency-first packets; isolated resources and no overlapping write roots
+  hard_dependencies:
+  - P01
+  - P02
+  - P03
+  - P04
+  docker_first_local_runtime: Isolated Linux Docker Compose projects for component tests; pinned local Python for planning
+    checks
+  completeness_standard: full_completeness_for_declared_scope
+scope_lock:
+- order: 1
+  statement: Latest user authorization permits minimum actual construction needed for genuine Standard-v3 eligibility, promotion,
+    verification and push; stop after success. Full MVP remains planned.
+- order: 2
+  statement: BCF owns root lifecycle and registries. Test sources are not runtime evidence; use .artifacts/ and durable phase-log
+    references. (non-authoritative planned output; capture exact digest before use)
+- order: 3
+  statement: Each future acceptance_evidence must be supplemented by real scoped receipt-producing gates before execution;
+    governance-validate alone cannot accept product behavior.
+- order: 4
+  statement: 'CL-WO-024: read construction/context.json and construction/orders/CL-WO-024.json with exact model/source blob
+    bindings.'
+- order: 5
+  statement: 'CL-WO-024: predecessor outputs CL-WO-006, CL-WO-008, CL-WO-015, CL-WO-017, CL-WO-018 require actual identity/currentness
+    before consumption; output sql/views/content/normalized.sql.'
+- order: 6
+  statement: 'CL-WO-024: owner cl.owner.storage.v1; permitted roots sql/views/content/, tests/content/; locks content-query-writer.'
+- order: 7
+  statement: 'CL-WO-024: steps Build versioned SQL views and reason codes using source fixtures; trace conversions back to
+    archive; reject false completeness'
+- order: 8
+  statement: 'CL-WO-025: read construction/context.json and construction/orders/CL-WO-025.json with exact model/source blob
+    bindings.'
+- order: 9
+  statement: 'CL-WO-025: predecessor outputs CL-WO-006, CL-WO-010, CL-WO-019, CL-WO-024 require actual identity/currentness
+    before consumption; output sql/views/correlation/timeline.sql.'
+- order: 10
+  statement: 'CL-WO-025: owner cl.owner.query.v1; permitted roots sql/views/correlation/, tests/correlation/; locks correlation-writer.'
+- order: 11
+  statement: 'CL-WO-025: steps Join using source-issued IDs, sequence and exact sender scope; test duplicate IDs, missing
+    response and clock skew'
+- order: 12
+  statement: 'CL-WO-026: read construction/context.json and construction/orders/CL-WO-026.json with exact model/source blob
+    bindings.'
+- order: 13
+  statement: 'CL-WO-026: predecessor outputs CL-WO-004, CL-WO-010, CL-WO-014, CL-WO-015 require actual identity/currentness
+    before consumption; output grafana/provisioning/datasources/clickhouse.yaml.'
+- order: 14
+  statement: 'CL-WO-026: owner cl.owner.security.v1; permitted roots grafana/provisioning/datasources/, config/grafana/security/,
+    tests/security/roles/; locks grafana-auth.'
+- order: 15
+  statement: 'CL-WO-026: steps Use local login, anonymous disabled and ClickHouse readonly grants; test role changes, token
+    exposure and audit limitations'
+- order: 16
+  statement: 'CL-WO-027: read construction/context.json and construction/orders/CL-WO-027.json with exact model/source blob
+    bindings.'
+- order: 17
+  statement: 'CL-WO-027: predecessor outputs CL-WO-019, CL-WO-020, CL-WO-021, CL-WO-024, CL-WO-025, CL-WO-026 require actual
+    identity/currentness before consumption; output .artifacts/clauditor/CL-WO-027/report.json. (non-authoritative planned
+    output; capture exact digest before use)'
+- order: 18
+  statement: 'CL-WO-027: owner cl.owner.query.v1; permitted roots tests/e2e/first-vertical/, .artifacts/clauditor/CL-WO-027/;
+    locks isolated-first-vertical. (non-authoritative planned output; capture exact digest before use)'
+- order: 19
+  statement: 'CL-WO-027: steps Exercise genuine-shaped prompt/tool/response and missing-content variants on isolated stack;
+    restart and query'
+- order: 20
+  statement: 'CL-WO-028: read construction/context.json and construction/orders/CL-WO-028.json with exact model/source blob
+    bindings.'
+- order: 21
+  statement: 'CL-WO-028: predecessor outputs CL-WO-024, CL-WO-025, CL-WO-026, CL-WO-027 require actual identity/currentness
+    before consumption; output grafana/dashboards/conversations/conversation.json.'
+- order: 22
+  statement: 'CL-WO-028: owner cl.owner.query.v1; permitted roots grafana/dashboards/conversations/, tests/dashboard/conversations/;
+    locks conversation-dashboards.'
+- order: 23
+  statement: 'CL-WO-028: steps Build parameterized SQL-backed views by user/session/time/source; expose source IDs, gaps,
+    redaction and archive references'
+- order: 24
+  statement: 'CL-WO-029: read construction/context.json and construction/orders/CL-WO-029.json with exact model/source blob
+    bindings.'
+- order: 25
+  statement: 'CL-WO-029: predecessor outputs CL-WO-015, CL-WO-024, CL-WO-025, CL-WO-026 require actual identity/currentness
+    before consumption; output grafana/dashboards/usage/usage.json.'
+- order: 26
+  statement: 'CL-WO-029: owner cl.owner.query.v1; permitted roots grafana/dashboards/usage/, tests/dashboard/usage/; locks
+    usage-dashboards.'
+- order: 27
+  statement: 'CL-WO-029: steps Aggregate source-deduped metrics and cost provenance; demonstrate units, null vs zero and missing
+    price behavior'
+- order: 28
+  statement: 'CL-WO-030: read construction/context.json and construction/orders/CL-WO-030.json with exact model/source blob
+    bindings.'
+- order: 29
+  statement: 'CL-WO-030: predecessor outputs CL-WO-009, CL-WO-010, CL-WO-017, CL-WO-025, CL-WO-026 require actual identity/currentness
+    before consumption; output tools/export/manifest-contract.json.'
+- order: 30
+  statement: 'CL-WO-030: owner cl.owner.query.v1; permitted roots tools/export/, tests/export/; locks export-writer.'
+- order: 31
+  statement: 'CL-WO-030: steps Test Grafana native export; implement minimal scoped helper only for missing provenance/permissions;
+    sanitize CSV formulas'
+- order: 32
+  statement: Phase hard_dependencies identify upstream output providers, not whole-phase barriers; independently admitted
+    ready packets may run with disjoint locks. No successor phase activation in this run.
+verification_plan:
+- .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+- .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+- .venv/bin/python scripts/check_build_plan.py --self-test
+- make governance-validate
+- make governance-exposure-scan
+- Each packet target_tests invocation, environment, timeouts and outputs must qualify before admission.

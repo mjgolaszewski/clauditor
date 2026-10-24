@@ -1,0 +1,45 @@
+# Qualification slice only: synthetic OTLP, no live-provider or retention claim.
+services:
+  archive-init:
+    image: python@sha256:4c47124a8391cb7a9f571164147d154777cf012a4ece5f86097130d7a4478111
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [CHOWN]
+    command: [python, -c, "import os; os.chown('/data', 10001, 10001)"]
+    volumes: [archive:/data]
+  clickhouse:
+    image: clickhouse/clickhouse-server@sha256:3cbe484d8571988bae07dfe98bb0f62778a5ad8225745be9366acf5f1debd9e8
+    environment:
+      CLICKHOUSE_DB: clauditor
+      CLICKHOUSE_USER: ingest
+      CLICKHOUSE_PASSWORD: ${CLAUDITOR_SQL_PASSWORD:?ephemeral or operator secret required}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: '1'
+    ports: ['127.0.0.1::8123']
+    volumes: [clickhouse:/var/lib/clickhouse]
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETUID, SETGID, DAC_OVERRIDE, FOWNER, KILL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD-SHELL, 'clickhouse-client --host clickhouse --user "$$CLICKHOUSE_USER" --password "$$CLICKHOUSE_PASSWORD" --query "SELECT 1"']
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  collector:
+    build:
+      context: ..
+      dockerfile: deploy/collector.Dockerfile
+    environment:
+      CLAUDITOR_INGEST_TOKEN: ${CLAUDITOR_INGEST_TOKEN:?ephemeral or operator secret required}
+      CLAUDITOR_SQL_PASSWORD: ${CLAUDITOR_SQL_PASSWORD:?ephemeral or operator secret required}
+    ports: ['127.0.0.1::4318']
+    volumes: [archive:/var/lib/otelcol]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    depends_on:
+      archive-init: {condition: service_completed_successfully}
+      clickhouse: {condition: service_healthy}
+volumes:
+  archive: {}
+  clickhouse: {}

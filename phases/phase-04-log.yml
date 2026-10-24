@@ -1,0 +1,67 @@
+document:
+  kind: execution_phase_log
+  name: Phase 04 Log
+  id: clauditor-phase-04-log
+  version: 1.0.0
+  generated_at_utc: '2026-10-23T00:00:00Z'
+  status: planned
+  path: phases/phase-04-log.yml
+phase:
+  id: P04
+  build_block: source_onboarding
+summary:
+  outcome: planned
+  highlights:
+  - Qualified Cowork, Claude Code, API and SDK onboarding
+  - No product execution or promotion success is claimed.
+workitems:
+- id: CL-WO-020
+  status: TODO
+  summary: Enable Cowork OTLP with precise desktop/cloud content-policy prerequisites.
+- id: CL-WO-021
+  status: TODO
+  summary: Enable Claude Code content-aware OTLP logs, metrics and optional traces.
+- id: CL-WO-022
+  status: TODO
+  summary: Support hosted API server traces with required public HTTPS endpoint and source authentication.
+- id: CL-WO-023
+  status: TODO
+  summary: Document SDK trace instrumentation and safe W3C correlation to API traces.
+execution_evidence:
+  planned_commands:
+  - .venv/bin/python spec/clauditor/v1/tools/check.py --self-test
+  - .venv/bin/python spec/clauditor/v1/construction/tools/check.py --self-test
+  - .venv/bin/python scripts/check_build_plan.py --self-test
+  - make governance-validate
+  - make governance-exposure-scan
+  executed_commands: []
+  notes:
+  - Candidate packet runtime reports use .artifacts/; accepted BCF evidence needs exact subject, dependency and provider authority.
+    (non-authoritative planned output; capture exact digest before use)
+closeout_requirements:
+  claims:
+    workitems_closed:
+      required_evidence:
+      - governance-validate
+    required_suites_green:
+      required_evidence: []
+    architecture_gates_green:
+      required_evidence: []
+    health_checks_green:
+      required_evidence: []
+    security_review_complete:
+      required_evidence: []
+    findings_resolved:
+      required_evidence:
+      - governance-validate
+  reconciliation:
+    required_evidence:
+    - governance-exposure-scan
+    - governance-validate
+  finding_registry: governance/findings.yml
+known_constraints:
+- User authorizes eligibility construction; verify Standard 3.0, push origin, then stop.
+- Source eligibility, metrics fidelity, OSS audit floor, host TLS/443 and measured retention remain dependency-specific blockers.
+next_work:
+- Qualify scoped packet gates and predecessor outputs only after execution authorization and Standard-v3 pause is explicitly
+  resumed.
