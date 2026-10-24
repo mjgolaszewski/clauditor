@@ -22,6 +22,8 @@ a passing governance run does not publish a product release.
 
 ### Changed
 
+- Reorganized the README around product purpose, available capabilities and getting started; moved adoption chronology and evidence detail to the linked records.
+
 - Promoted canonical BCF 2.3.6 from Lite to Standard profile contract 3.0 with
   actual-source semantic owners, twenty gate contracts, causal controls and
   generated preflight, lint, evidence-shard and terminal-truth CI.
